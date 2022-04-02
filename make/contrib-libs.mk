@@ -1344,7 +1344,7 @@ $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 	$(REMOVE)/libdreamdvd
 	set -e; if [ -d $(ARCHIVE)/libdreamdvd.git ]; \
 		then cd $(ARCHIVE)/libdreamdvd.git; git pull; \
-		else cd $(ARCHIVE); git clone git://github.com/mirakels/libdreamdvd.git libdreamdvd.git; \
+		else cd $(ARCHIVE); git clone https://github.com/mirakels/libdreamdvd.git libdreamdvd.git; \
 		fi
 	cp -ra $(ARCHIVE)/libdreamdvd.git $(BUILD_TMP)/libdreamdvd
 	$(CHDIR)/libdreamdvd; \
@@ -1928,7 +1928,7 @@ $(D)/libopenthreads: $(D)/bootstrap $(ARCHIVE)/$(LIBOPENTHREADS_SOURCE)
 #
 LIBRTMP_VER = ad70c64
 LIBRTMP_SOURCE = rtmpdump-git-$(LIBRTMP_VER).tar.bz2
-LIBRTMP_URL = git://github.com/oe-alliance/rtmpdump.git
+LIBRTMP_URL = https://github.com/oe-alliance/rtmpdump.git
 LIBRTMP_PATCH = rtmpdump-git-$(LIBRTMP_VER).patch
 
 $(ARCHIVE)/$(LIBRTMP_SOURCE):

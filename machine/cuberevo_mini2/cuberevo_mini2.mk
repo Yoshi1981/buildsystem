@@ -155,7 +155,7 @@ driver-symlink:
 #
 # driver
 #
-driver: $(D)/driver
+driver: $(D)/driver $(D)/driver-symlink
 $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CONFIG_DEBUG_SECTION_MISMATCH=y \
