@@ -36,6 +36,8 @@ release-common: $(RELEASE_DEPS)
 	install -d $(RELEASE_DIR)/mnt/{hdd,nfs,usb}
 	install -d $(RELEASE_DIR)/mnt/mnt{0..7}
 	install -d $(RELEASE_DIR)/usr/{bin,lib,sbin,share}
+	install -d $(RELEASE_DIR)/usr/lib/locale
+	cp -aR $(SKEL_ROOT)/usr/lib/locale/* $(RELEASE_DIR)/usr/lib/locale
 	install -d $(RELEASE_DIR)/usr/local/{bin,sbin}
 	install -d $(RELEASE_DIR)/usr/share/{tuxbox,udhcpc,zoneinfo,lua,fonts}
 	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino
