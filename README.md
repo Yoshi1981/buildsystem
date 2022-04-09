@@ -13,6 +13,8 @@ $:~ sudo ./prepare-for-bs.sh
 **machine configuration:**
 ```bash
 $:~ make init
+or
+$:~ make
 ```
 **build image:**
 ```bash
