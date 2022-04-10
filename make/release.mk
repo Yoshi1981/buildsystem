@@ -310,7 +310,7 @@ release-neutrino: $(D)/neutrino $(D)/neutrino-plugins
 	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
 
 #
-# httpd/icons/locale/themes/fonts/iso-codes/python/lcdd
+# httpd/icons/themes/fonts/iso-codes/python/lcdd
 #
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/* $(RELEASE_DIR)/usr/share/tuxbox
 
