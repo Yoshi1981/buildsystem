@@ -19,10 +19,6 @@ $(D)/neutrinohd2-plugins.config.status: $(D)/bootstrap neutrino
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--with-boxtype=$(BOXTYPE) \
-			--with-plugindir=/var/tuxbox/plugins \
-			--with-datadir=/usr/share/tuxbox \
-			--with-configdir=/var/tuxbox/config \
-			--with-localedir=/var/tuxbox/locale \
 			--enable-silent-rules \
 			$(NHD2_OPTS) \
 			PKG_CONFIG=$(PKG_CONFIG) \

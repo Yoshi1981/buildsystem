@@ -302,16 +302,9 @@ release-neutrino: $(D)/neutrino $(D)/neutrino-plugins
 # neutrino
 #
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
+#	cp -af $(TARGET_DIR)/usr/local/share $(RELEASE_DIR)/usr/local/
 	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
-
-#
-# config / plugins
-#
 	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
-
-#
-# httpd/icons/themes/fonts/iso-codes/python/lcdd
-#
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/* $(RELEASE_DIR)/usr/share/tuxbox
 
 #
