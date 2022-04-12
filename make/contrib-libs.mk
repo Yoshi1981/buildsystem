@@ -1337,7 +1337,7 @@ $(D)/libdvdread: $(D)/bootstrap $(ARCHIVE)/$(LIBDVDREAD_SOURCE)
 #
 # libdreamdvd
 #
-LIBDREAMDVD_PATCH = libdreamdvd-1.0-sh4-support.patch
+LIBDREAMDVD_PATCH = libdreamdvd-1.0-sh4-support.patch libdreamdvd.patch
 
 $(D)/libdreamdvd: $(D)/bootstrap $(D)/libdvdnav
 	$(START_BUILD)
