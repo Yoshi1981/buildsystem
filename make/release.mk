@@ -258,7 +258,6 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 	rm -f $(RELEASE_DIR)/sbin/jfs_tune
 	rm -f $(RELEASE_DIR)/etc/ssl/certs/ca-certificates.crt
 endif
-	rm -f $(RELEASE_DIR)/usr/lib/lua/5.2/*.la
 	rm -rf $(RELEASE_DIR)/lib/autofs
 	rm -f $(RELEASE_DIR)/lib/libSegFault*
 	rm -f $(RELEASE_DIR)/lib/libstdc++.*-gdb.py
@@ -293,6 +292,16 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	rm -rf $(RELEASE_DIR)/ram
 	rm -rf $(RELEASE_DIR)/root
 endif
+
+#
+# release-neutrino
+#
+release-neutrino: $(D)/neutrino $(D)/neutrino-plugins
+	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
+#	cp -af $(TARGET_DIR)/usr/local/share $(RELEASE_DIR)/usr/local/
+	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
+	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
+	cp -aR $(TARGET_DIR)/usr/share/tuxbox/* $(RELEASE_DIR)/usr/share/tuxbox
 
 #
 # lua
@@ -410,16 +419,6 @@ ifeq ($(INTERFACE), lua-python)
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/words/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VERSION).egg-info
 endif
-
-#
-# release-neutrino
-#
-release-neutrino: $(D)/neutrino $(D)/neutrino-plugins
-	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
-#	cp -af $(TARGET_DIR)/usr/local/share $(RELEASE_DIR)/usr/local/
-	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
-	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
-	cp -aR $(TARGET_DIR)/usr/share/tuxbox/* $(RELEASE_DIR)/usr/share/tuxbox
 	
 #
 # release
