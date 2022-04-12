@@ -143,21 +143,16 @@ NEUTRINO_HD2_PATCHES =
 
 $(D)/neutrinohd2.do_prepare: $(NEUTRINO_DEPS)
 	$(START_BUILD)
-	rm -rf $(SOURCE_DIR)/neutrinohd2
-	rm -rf $(SOURCE_DIR)/neutrinohd2.org
-	rm -rf $(SOURCE_DIR)/neutrinohd2.git
-	[ -d "$(ARCHIVE)/neutrinohd2.git" ] && \
-	(cd $(ARCHIVE)/neutrinohd2.git; git pull;); \
-	[ -d "$(ARCHIVE)/neutrinohd2.git" ] || \
-	git clone https://github.com/mohousch/neutrinohd2.git $(ARCHIVE)/neutrinohd2.git; \
-	cp -ra $(ARCHIVE)/neutrinohd2.git $(SOURCE_DIR)/neutrinohd2.git; \
-	ln -s $(SOURCE_DIR)/neutrinohd2.git/nhd2-exp $(SOURCE_DIR)/neutrinohd2;\
-	set -e; cd $(SOURCE_DIR)/neutrinohd2; \
+	[ -d "$(SOURCE_DIR)/neutrinohd2" ] && \
+	(cd $(SOURCE_DIR)/neutrinohd2; git pull;); \
+	[ -d "$(SOURCE_DIR)/neutrinohd2" ] || \
+	git clone https://github.com/mohousch/neutrinohd2.git $(SOURCE_DIR)/neutrinohd2; \
+	set -e; cd $(SOURCE_DIR)/neutrinohd2/nhd2-exp; \
 		$(call apply_patches,$(NEUTRINO_HD2_PATCHES))
 	@touch $@
 
 $(D)/neutrinohd2.config.status:
-	cd $(SOURCE_DIR)/neutrinohd2; \
+	cd $(SOURCE_DIR)/neutrinohd2/nhd2-exp; \
 		./autogen.sh; \
 		$(BUILDENV) \
 		./configure \
@@ -166,7 +161,6 @@ $(D)/neutrinohd2.config.status:
 			--enable-silent-rules \
 			--enable-maintainer-mode \
 			--with-boxtype=$(BOXTYPE) \
-			--with-targetprefix=$(TARGET_DIR) \
 			$(NHD2_OPTS) \
 			$(N_CONFIG_OPTS) \
 			PKG_CONFIG=$(PKG_CONFIG) \
@@ -175,23 +169,25 @@ $(D)/neutrinohd2.config.status:
 	@touch $@
 
 $(D)/neutrinohd2.do_compile: $(D)/neutrinohd2.config.status
-	cd $(SOURCE_DIR)/neutrinohd2; \
+	cd $(SOURCE_DIR)/neutrinohd2/nhd2-exp; \
 		$(MAKE) all
 	@touch $@
 
 $(D)/neutrino: $(D)/neutrinohd2.do_prepare $(D)/neutrinohd2.do_compile
-	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2 install DESTDIR=$(TARGET_DIR)
+	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/nhd2-exp install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/.version
 	touch $(D)/$(notdir $@)
 	$(TUXBOX_CUSTOMIZE)
 
 neutrino-clean:
 	rm -f $(D)/neutrino
-	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2 clean
+	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/nhd2-exp clean
 
 neutrino-distclean:
-	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2 distclean
-	rm -rf $(SOURCE_DIR)/neutrinohd2/config.status
+	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/nhd2-exp distclean
+	rm -rf $(SOURCE_DIR)/neutrinohd2/nhd2-exp/config.status
+	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/plugins distclean
+	rm -f $(SOURCE_DIR)/neutrinohd2/plugins/config.status
 	rm -f $(D)/neutrino*
 	rm -f $(D)/neutrino-plugins*
 
