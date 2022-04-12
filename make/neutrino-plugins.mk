@@ -48,11 +48,8 @@ neutrino-plugins-clean:
 	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2-plugins clean
 
 neutrino-plugins-distclean:
-	-$(MAKE) -C $(SOURCE_DIR)/neutrinohd2-plugins distclean
+	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2-plugins distclean
 	rm -f $(SOURCE_DIR)/neutrinohd2-plugins/config.status
-	rm -f $(D)/neutrinohd2-plugins.build
-	rm -f $(D)/neutrinohd2-plugins.config.status
-	rm -f $(D)/neutrinohd2-plugins.do_prepare
-	rm -f $(D)/neutrinohd2-plugins.do_compile
+	rm -f $(D)/neutrinohd2-plugins*
 
 

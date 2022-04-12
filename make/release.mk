@@ -423,16 +423,11 @@ ifeq ($(INTERFACE), lua-python)
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/words/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VERSION).egg-info
 endif
-
-#
-# release-base
-#
-release-base: release-common release-$(BOXTYPE)
 	
 #
 # release
 #
-$(D)/release: release-base release-neutrino
+$(D)/release: release-common release-$(BOXTYPE) release-neutrino
 	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
 	rm -fr $(RELEASE_DIR)/etc
 	ln -sf /var/etc $(RELEASE_DIR)
