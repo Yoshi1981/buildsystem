@@ -143,10 +143,11 @@ NEUTRINO_HD2_PATCHES =
 
 $(D)/neutrinohd2.do_prepare: $(NEUTRINO_DEPS)
 	$(START_BUILD)
-	[ -d "$(SOURCE_DIR)/neutrinohd2" ] && \
-	(cd $(SOURCE_DIR)/neutrinohd2; git pull;); \
-	[ -d "$(SOURCE_DIR)/neutrinohd2" ] || \
-	git clone https://github.com/mohousch/neutrinohd2.git $(SOURCE_DIR)/neutrinohd2; \
+	[ -d "$(SOURCE_DIR)/neutrinohd2.git" ] && \
+	(cd $(SOURCE_DIR)/neutrinohd2.git; git pull;); \
+	[ -d "$(SOURCE_DIR)/neutrinohd2.git" ] || \
+	git clone https://github.com/mohousch/neutrinohd2.git $(SOURCE_DIR)/neutrinohd2.git; \
+	cp -ra $(SOURCE_DIR)/neutrinohd2.git $(SOURCE_DIR)/neutrinohd2; \
 	set -e; cd $(SOURCE_DIR)/neutrinohd2/nhd2-exp; \
 		$(call apply_patches,$(NEUTRINO_HD2_PATCHES))
 	@touch $@
@@ -186,10 +187,7 @@ neutrino-clean:
 neutrino-distclean:
 	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/nhd2-exp distclean
 	rm -rf $(SOURCE_DIR)/neutrinohd2/nhd2-exp/config.status
-	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/plugins distclean
-	rm -f $(SOURCE_DIR)/neutrinohd2/plugins/config.status
 	rm -f $(D)/neutrino*
-	rm -f $(D)/neutrino-plugins*
 
 #
 #
