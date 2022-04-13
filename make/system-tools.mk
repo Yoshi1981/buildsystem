@@ -4,7 +4,6 @@
 SYSTEM_TOOLS  = $(D)/busybox
 SYSTEM_TOOLS += $(D)/zlib
 SYSTEM_TOOLS += $(D)/sysvinit
-SYSTEM_TOOLS += $(D)/diverse-tools
 SYSTEM_TOOLS += $(D)/e2fsprogs
 SYSTEM_TOOLS += $(D)/hdidle
 SYSTEM_TOOLS += $(D)/portmap
@@ -20,6 +19,7 @@ SYSTEM_TOOLS += $(D)/fbshot
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 #SYSTEM_TOOLS += $(D)/ofgwrite
 endif
+SYSTEM_TOOLS += $(D)/diverse-tools
 
 $(D)/system-tools: $(SYSTEM_TOOLS) $(TOOLS)
 	@touch $@

@@ -242,7 +242,7 @@ printenv:
 	@echo "CICAM            : $(CICAM)"
 	@echo "SCART            : $(SCART)"
 	@echo "LCD              : $(LCD)"
-	@echo "FKEYS            : $(FKEYS)"
+	@echo "F-KEYS            : $(FKEYS)"
 	@echo "TESTING          : $(TESTING)"
 	@echo "PARALLEL_JOBS    : $(PARALLEL_JOBS)"
 	@echo '================================================================================'
@@ -307,14 +307,15 @@ include make/root-etc.mk
 include make/python.mk
 include make/lua.mk
 include make/tools.mk
-include make/neutrino.mk
-include make/neutrino-plugins.mk
 include make/release.mk
 include make/flashimage.mk
 include make/cleantargets.mk
 include make/patches.mk
 include make/bootstrap.mk
 include make/system-tools.mk
+include make/neutrino.mk
+include make/neutrino-plugins.mk
+include make/release-neutrino.mk
 
 update:
 	@if test -d $(BASE_DIR); then \
