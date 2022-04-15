@@ -124,7 +124,7 @@ do
 			;;
 		*) echo "*"
 			echo -e "\033[01;31mERROR: $rtv\033[00m"
-			init 6
+			sync
 			;;
 	esac
 done
