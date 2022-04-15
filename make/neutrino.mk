@@ -143,6 +143,7 @@ NEUTRINO_HD2_PATCHES =
 
 $(D)/neutrinohd2.do_prepare: $(NEUTRINO_DEPS)
 	$(START_BUILD)
+	rm -rf $(SOURCE_DIR)/neutrinohd2
 	[ -d "$(SOURCE_DIR)/neutrinohd2.git" ] && \
 	(cd $(SOURCE_DIR)/neutrinohd2.git; git pull;); \
 	[ -d "$(SOURCE_DIR)/neutrinohd2.git" ] || \

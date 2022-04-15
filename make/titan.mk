@@ -1,15 +1,23 @@
 #
 # titan
 #
-TITAN_DEPS  = bootstrap libcurl curlftpfs rarfs djmount freetype libjpeg libpng ffmpeg titan-libdreamdvd $(MEDIAFW_DEP) tuxtxt32bpp 
-#tools-libmme_host tools-libmme_image
+TITAN_DEPS  = bootstrap libcurl curlftpfs rarfs djmount freetype libjpeg libpng ffmpeg titan-libdreamdvd $(MEDIAFW_DEP) tuxtxt32bpp tools-libmme_host tools-libmme_image
+
+N_CPPFLAGS     = -I$(TARGET_DIR)/usr/include
+#N_CPPFLAGS    += -I$(APPS_DIR)/tools/libeplayer3/include
+N_CPPFLAGS    += -I$(APPS_DIR)/tools/libmme_image
+
+ifeq ($(BOXARCH), sh4)
+N_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
+N_CPPFLAGS    += -I$(KERNEL_DIR)/include
+endif
 
 #
 #
 #
 $(D)/titan.do_prepare: | $(TITAN_DEPS)
 	[ -d "$(SOURCE_DIR)/titan" ] && \
-	(cd $(SOURCE_DIR)/titan; svn up; cd "$(BUILD_TMP)";); \
+	(cd $(SOURCE_DIR)/titan; svn up); \
 	[ -d "$(SOURCE_DIR)/titan" ] || \
 	svn checkout --username public --password public http://sbnc.dyndns.tv/svn/titan $(SOURCE_DIR)/titan; \
 	COMPRESSBIN=gzip; \
@@ -38,23 +46,17 @@ $(D)/titan.do_prepare: | $(TITAN_DEPS)
 #
 #
 #
-$(SOURCE_DIR)/titan/config.status:
-	export PATH=$(hostprefix)/bin:$(PATH) && \
+$(SOURCE_DIR)/titan/config.status: $(D)/titan.do_prepare
 	cd $(SOURCE_DIR)/titan && \
 		./autogen.sh; \
-		libtoolize --force && \
-		aclocal -I $(TARGET_DIR)/usr/share/aclocal && \
-		autoconf && \
-		automake --foreign --add-missing && \
 		$(BUILDENV) \
 		./configure \
 			--host=$(TARGET) \
 			--build=$(BUILD) \
 			--prefix=/usr/local \
-			PKG_CONFIG=$(HOSTPREFIX)/bin/$(TARGET)-pkg-config \
-			PKG_CONFIG_PATH=$(TARGET_DIR)/usr/lib/pkgconfig \
+			PKG_CONFIG=$(PKG_CONFIG) \
+			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CPPFLAGS="$(N_CPPFLAGS)"
-		$(MAKE)
 	touch $@
 
 $(D)/titan.do_compile: $(SOURCE_DIR)/titan/config.status
@@ -62,7 +64,7 @@ $(D)/titan.do_compile: $(SOURCE_DIR)/titan/config.status
 		$(MAKE) all
 	touch $@
 
-$(D)/titan: titan.do_prepare titan.do_compile
+$(D)/titan: $(D)/titan.do_prepare $(D)/titan.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/titan install DESTDIR=$(TARGET_DIR)
 	$(TARGET)-strip $(TARGET_DIR)/usr/local/bin/titan
 	touch $@
@@ -74,6 +76,8 @@ titan-clean:
 		$(MAKE) clean
 
 titan-distclean:
+	$(MAKE) -C $(SOURCE_DIR)/titan distclean
+	rm -rf $(SOURCE_DIR)/titan/config.status
 	rm -f $(D)/titan*
 
 titan-updateyaud: titan-clean titan
@@ -234,6 +238,34 @@ $(D)/tuxtxt32bpp: $(D)/bootstrap $(D)/tuxtxtlib
 		$(MAKE) install prefix=/usr DESTDIR=$(TARGET_DIR)
 	$(REWRITE_LIBTOOL)/libtuxtxt32bpp.la
 	$(REMOVE)/tuxtxt
+	touch $@
+	
+#
+#
+#
+$(SOURCE_DIR)/titan/libeplayer3/config.status:
+	export PATH=$(hostprefix)/bin:$(PATH) && \
+	cd $(SOURCE_DIR)/titan/libeplayer3 && \
+		./autogen.sh; \
+		libtoolize --force && \
+		aclocal -I $(TARGET_DIR)/usr/share/aclocal && \
+		autoconf && \
+		automake --foreign --add-missing && \
+		$(BUILDENV) \
+		./configure \
+			--build=$(BUILD) \
+			--host=$(TARGET) \
+			--prefix=/usr && \
+		$(MAKE) all
+	touch $@
+
+$(D)/titan-libeplayer3.do_compile: $(SOURCE_DIR)/titan/libeplayer3/config.status
+	cd $(SOURCE_DIR)/titan/libeplayer3 && \
+		$(MAKE)
+	touch $@
+
+$(D)/titan-libeplayer3: titan-libeplayer3.do_compile
+	$(MAKE) -C $(SOURCE_DIR)/titan/libeplayer3 install DESTDIR=$(TARGET_DIR)
 	touch $@
 
 
