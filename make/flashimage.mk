@@ -1,7 +1,7 @@
 #
 # flashimage
 #
-flashimage: release
+flashimage: release-$(FLAVOUR)
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 ufs910 ufs922 ipbox55 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
 	$(MAKE) flash-image-$(BOXTYPE)
 endif
@@ -38,9 +38,6 @@ endif
 ifeq ($(BOXTYPE), gb800se)
 	$(MAKE) flash-image-gb800se
 endif
-ifeq ($(BOXTYPE), bre2zet2c)
-	$(MAKE) flash-image-bre2zet2c
-endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), osnino osninoplus osninopro))
 	$(MAKE) flash-image-$(BOXTYPE)
 endif
@@ -49,6 +46,9 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), osmio4k osmio4kplus osmini4k))
 endif
 ifeq ($(BOXTYPE), bre2ze4k)
 	$(MAKE) flash-image-bre2ze4k-multi-disk flash-image-bre2ze4k-multi-rootfs
+endif
+ifeq ($(BOXTYPE), bre2zet2c)
+	$(MAKE) flash-image-bre2zet2c
 endif
 ifeq ($(BOXTYPE), h7)
 	$(MAKE) flash-image-h7-multi-disk flash-image-h7-multi-rootfs

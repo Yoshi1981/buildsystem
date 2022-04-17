@@ -39,7 +39,7 @@ release-common: $(RELEASE_DEPS)
 	install -d $(RELEASE_DIR)/usr/lib/locale
 	cp -aR $(SKEL_ROOT)/usr/lib/locale/* $(RELEASE_DIR)/usr/lib/locale
 	install -d $(RELEASE_DIR)/usr/local/{bin,sbin}
-	install -d $(RELEASE_DIR)/usr/share/{tuxbox,udhcpc,zoneinfo,lua,fonts}
+	install -d $(RELEASE_DIR)/usr/share/{tuxbox,udhcpc,zoneinfo,lua,fonts,iso-codes}
 	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
 	install -d $(RELEASE_DIR)/var/{bin,etc,httpd,lib,net,tuxbox}
@@ -70,6 +70,7 @@ release-common: $(RELEASE_DEPS)
 	cp -aR $(SKEL_ROOT)/usr/share/udhcpc/* $(RELEASE_DIR)/usr/share/udhcpc/
 	cp -aR $(SKEL_ROOT)/usr/share/zoneinfo/* $(RELEASE_DIR)/usr/share/zoneinfo/
 	cp -aR $(SKEL_ROOT)/usr/share/fonts/* $(RELEASE_DIR)/usr/share/fonts/
+	cp -aR $(SKEL_ROOT)/usr/share/iso-codes/* $(RELEASE_DIR)/usr/share/iso-codes/
 	cp $(SKEL_ROOT)/bin/autologin $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/bin/vdstandby $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
@@ -294,9 +295,9 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 endif
 	
 #
-# release
+# release-none
 #
-$(D)/release: release-common release-$(BOXTYPE) release-neutrino
+$(D)/release-none: release-common release-$(BOXTYPE)
 	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
 	rm -fr $(RELEASE_DIR)/etc
 	ln -sf /var/etc $(RELEASE_DIR)
@@ -305,7 +306,7 @@ $(D)/release: release-common release-$(BOXTYPE) release-neutrino
 	ln -s /tmp $(RELEASE_DIR)/var/run
 	ln -s /tmp $(RELEASE_DIR)/var/tmp
 	$(TUXBOX_CUSTOMIZE)
-	@touch $@
+	@touch $@ 
 
 #
 # linux-strip all
@@ -313,11 +314,7 @@ $(D)/release: release-common release-$(BOXTYPE) release-neutrino
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	@echo "***************************************************************"
-	@echo -e "\033[01;32m"
-	@echo " Build of Neutrino Release for $(BOXTYPE) successfully completed."
-	@echo -e "\033[00m"
-	@echo "***************************************************************"
+
 #
 # release-clean
 #

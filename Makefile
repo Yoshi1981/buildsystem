@@ -151,6 +151,19 @@ init:
 	esac; \
 	echo "WLAN=$$WLAN" >> config
 	@echo ""
+# Flavour
+	@echo -e "\nFlavour:"
+	@echo "   1) neutrino"
+	@echo "   2) none"
+	@echo -e "   \033[01;32m3) pre-defined\033[00m"
+	@read -p "Select Flavour (1-3)?" FLAVOUR; \
+	FLAVOUR=$${FLAVOUR}; \
+	case "$$FLAVOUR" in \
+		1) echo "FLAVOUR=neutrino" >> config;; \
+		2) echo "FLAVOUR=none" >> config;; \
+		3|*) echo "FLAVOUR=neutrino" >> config;; \
+	esac; \
+	echo ""
 # Media framework
 	@echo -e "\nMedia Framework:"
 	@echo "   1) libeplayer3"
@@ -238,6 +251,7 @@ printenv:
 	@echo "BOXTYPE          : $(BOXTYPE)"
 	@echo "KERNEL_VERSION   : $(KERNEL_VER)"
 	@echo "OPTIMIZATIONS    : $(OPTIMIZATIONS)"
+	@echo "FLAVOUR          : $(FLAVOUR)"
 	@echo "MEDIAFW          : $(MEDIAFW)"
 	@echo "WLAN             : $(WLAN)"
 	@echo "INTERFACE        : $(INTERFACE)"
@@ -277,7 +291,7 @@ help:
 	@echo " make update			- update the build system, apps, driver and flash"
 	@echo ""
 	@echo "release or image:"
-	@echo " make release			- build neutrino with full release dir"
+	@echo " make release-neutrino			- build neutrino with full release dir"
 	@echo " make flashimage		- build flashimage"
 	@echo ""
 	@echo "to update neutrino"
@@ -316,7 +330,6 @@ include make/patches.mk
 include make/bootstrap.mk
 include make/system-tools.mk
 include make/neutrino.mk
-include make/neutrino-plugins.mk
 include make/release-neutrino.mk
 include make/titan.mk
 include make/enigma2.mk
