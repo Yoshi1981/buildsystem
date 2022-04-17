@@ -21,19 +21,17 @@ $(TARGET_DIR)/lib/libc.so.6:
 # crosstool-ng
 #
 CROSSTOOL_NG_VER = 872341e3
-#CROSSTOOL_NG_VER = 7bd6bb00
-#CROSSTOOL_NG_VER = 4e5bc436
 CROSSTOOL_NG_SOURCE = crosstool-ng-git-$(CROSSTOOL_NG_VER).tar.bz2
 CROSSTOOL_NG_URL = https://github.com/crosstool-ng/crosstool-ng.git
 ifeq ($(BOXARCH), arm)
 GCC_VER = linaro-6.3-2017.05
-#GCC_VER = 6.5.0
-#GCC_VER = 9.3.0
 endif
 ifeq ($(BOXARCH), mips)
+ifeq ($(BOXTYPE), bre2zet2c)
+GCC_VER = 6.3.0
+else
 GCC_VER = 4.9.4
-#GCC_VER = 6.5.0
-#GCC_VER = 9.3.0
+endif
 endif
 
 CUSTOM_KERNEL_VER ?= $(KERNEL_VER)
@@ -48,7 +46,7 @@ $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(CROSSTOOL_NG_URL) $(CROSSTOOL_NG_VER) $(notdir $@) $(ARCHIVE)
 
 CROSSTOOL = crosstool
-crosstool:
+crosstool: $(D)/directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE) kernel.do_prepare
 	if test -e $(CROSSTOOL_NG_BACKUP); then \
 		make crosstool-restore; \
 	else \
@@ -59,7 +57,7 @@ crosstool:
 	fi
 	@touch $(D)/$(notdir $@)
 
-crosstool-ng: $(D)/directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE) kernel.do_prepare
+crosstool-ng:
 	make $(BUILD_TMP)
 	if [ ! -e $(CROSS_DIR) ]; then \
 		mkdir -p $(CROSS_DIR); \

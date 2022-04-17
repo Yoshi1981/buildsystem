@@ -11,52 +11,47 @@ FKEYS = fkeys
 #
 # kernel
 #
-KERNEL_VER             = 3.9.6
-KERNEL_DATE            = 20140904
-KERNEL_SRC             = gigablue-linux-$(KERNEL_VER)-$(KERNEL_DATE).tgz
-KERNEL_URL             = http://source.mynonpublic.com/gigablue/linux
+KERNEL_VER             = 4.1.24
+KERNEL_DATE            = 20170220
+KERNEL_SRC 		= broadmedia-linux-$(KERNEL_VER)-$(KERNEL_DATE).tar.xz
+KERNEL_URL		= http://source.mynonpublic.com/broadmedia/$(KERNERL_SRC)
 KERNEL_CONFIG          = defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux-$(KERNEL_VER)
 KERNELNAME             = vmlinux
 CUSTOM_KERNEL_VER      = $(KERNEL_VER)
 
 KERNEL_PATCHES_MIPSEL  = \
-		nor-maps-gb800solo.patch \
-       	add-dmx-source-timecode.patch \
-    		af9015-output-full-range-SNR.patch \
-    		af9033-output-full-range-SNR.patch \
-    		as102-adjust-signal-strength-report.patch \
-    		as102-scale-MER-to-full-range.patch \
-    		cinergy_s2_usb_r2.patch \
-    		cxd2820r-output-full-range-SNR.patch \
-    		dvb-usb-dib0700-disable-sleep.patch \
-    		dvb_usb_disable_rc_polling.patch \
-    		it913x-switch-off-PID-filter-by-default.patch \
-    		tda18271-advertise-supported-delsys.patch \
-    		fix-dvb-siano-sms-order.patch \
-    		mxl5007t-add-no_probe-and-no_reset-parameters.patch \
-    		nfs-max-rwsize-8k.patch \
-    		0001-rt2800usb-add-support-for-rt55xx.patch \
-    		linux-sata_bcm.patch \
-    		brcmnand.patch \
-    		fix_fuse_for_linux_mips_3-9.patch \
-    		rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
-		linux-3.9-gcc-4.9.3-build-error-fixed.patch \
-    		rtl8712-fix-warnings.patch \
-    		rtl8187se-fix-warnings.patch \
-    		kernel-add-support-for-gcc-5.patch \
-    		kernel-add-support-for-gcc6.patch \
-    		kernel-add-support-for-gcc7.patch \
-    		kernel-add-support-for-gcc8.patch \
-    		kernel-add-support-for-gcc9.patch \
-		0001-Support-TBS-USB-drivers-3.9.patch \
-    		0001-STV-Add-PLS-support.patch \
-    		0001-STV-Add-SNR-Signal-report-parameters.patch \
-    		0001-stv090x-optimized-TS-sync-control.patch \
-    		blindscan2.patch \
-    		genksyms_fix_typeof_handling.patch \
-    		0002-cp1emu-do-not-use-bools-for-arithmetic.patch \
-    		0003-log2-give-up-on-gcc-constant-optimizations.patch
+			0001-regmap-add-regmap_write_bits.patch \
+			0002-af9035-fix-device-order-in-ID-list.patch \
+			0003-Add-support-for-dvb-usb-stick-Hauppauge-WinTV-soloHD.patch \
+			0004-af9035-add-USB-ID-07ca-0337-AVerMedia-HD-Volar-A867.patch \
+			0005-Add-support-for-EVOLVEO-XtraTV-stick.patch \
+			0006-dib8000-Add-support-for-Mygica-Geniatech-S2870.patch \
+			0007-dib0700-add-USB-ID-for-another-STK8096-PVR-ref-desig.patch \
+			0008-add-Hama-Hybrid-DVB-T-Stick-support.patch \
+			0009-Add-Terratec-H7-Revision-4-to-DVBSky-driver.patch \
+			0010-media-Added-support-for-the-TerraTec-T1-DVB-T-USB-tu.patch \
+			0011-media-tda18250-support-for-new-silicon-tuner.patch \
+			0012-media-dib0700-add-support-for-Xbox-One-Digital-TV-Tu.patch \
+			0013-mn88472-Fix-possible-leak-in-mn88472_init.patch \
+			0014-staging-media-Remove-unneeded-parentheses.patch \
+			0015-staging-media-mn88472-simplify-NULL-tests.patch \
+			0016-mn88472-fix-typo.patch \
+			0017-mn88472-finalize-driver.patch \
+			kernel-add-support-for-gcc6.patch \
+			kernel-add-support-for-gcc7.patch \
+			kernel-add-support-for-gcc8.patch \
+			kernel-add-support-for-gcc9.patch \
+			kernel-add-support-for-gcc10.patch \
+			kernel-add-support-for-gcc11.patch \
+			0001-Support-TBS-USB-drivers-for-4.1-kernel.patch \
+			0001-TBS-fixes-for-4.1-kernel.patch \
+			0001-STV-Add-PLS-support.patch \
+			0001-STV-Add-SNR-Signal-report-parameters.patch \
+			blindscan2.patch \
+			0001-stv090x-optimized-TS-sync-control.patch \
+			0002-log2-give-up-on-gcc-constant-optimizations.patch \
+			move-default-dialect-to-SMB3.patch
 
 KERNEL_PATCHES = $(KERNEL_PATCHES_MIPSEL)
 
@@ -66,7 +61,7 @@ $(ARCHIVE)/$(KERNEL_SRC):
 $(D)/kernel.do_prepare: $(ARCHIVE)/$(KERNEL_SRC) $(BASE_DIR)/machine/$(BOXTYPE)/files/$(KERNEL_CONFIG)
 	$(START_BUILD)
 	rm -rf $(KERNEL_DIR)
-	$(UNTARGZ)/$(KERNEL_SRC)
+	$(UNTAR)/$(KERNEL_SRC)
 	set -e; cd $(KERNEL_DIR); \
 		for i in $(KERNEL_PATCHES); do \
 			echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; \
@@ -100,10 +95,10 @@ $(D)/kernel: $(D)/bootstrap $(D)/kernel.do_compile
 #
 # driver
 #
-DRIVER_VER = 3.9.6
-DRIVER_DATE = 20170803
-DRIVER_SRC = gigablue-drivers-$(DRIVER_VER)-BCM7325-$(DRIVER_DATE).zip
-DRIVER_URL = http://source.mynonpublic.com/gigablue/drivers
+DRIVER_VER = 4.1.24
+DRIVER_DATE = 20170623
+DRIVER_SRC 		= bre2zet2c-drivers-$(DRIVER_VER)-6.3.0-$(DRIVER_DATE).zip
+DRIVER_URL		= http://source.mynonpublic.com/broadmedia
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(WGET) $(DRIVER_URL)/$(DRIVER_SRC)
@@ -118,7 +113,7 @@ $(D)/driver: $(ARCHIVE)/$(DRIVER_SRC) $(D)/bootstrap $(D)/kernel
 #
 # release
 #
-release-gb800se:
+release-bre2zet2c:
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/*.ko $(RELEASE_DIR)/lib/modules/
 	install -m 0755 $(BASE_DIR)/machine/$(BOXTYPE)/files/halt $(RELEASE_DIR)/etc/init.d/
 	cp -f $(BASE_DIR)/machine/$(BOXTYPE)/files/fstab $(RELEASE_DIR)/etc/
@@ -127,9 +122,9 @@ release-gb800se:
 #
 # flashimage
 #
-FLASHIMAGE_PREFIX = gigablue/se
+FLASHIMAGE_PREFIX = bre2ze_t2c
 
-flash-image-gb800se:
+flash-image-bre2zet2c:
 	# Create final USB-image
 	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
 	mkdir -p $(FLASH_DIR)/$(BOXTYPE)
@@ -137,9 +132,9 @@ flash-image-gb800se:
 	cp $(SKEL_ROOT)/boot/splash.bin $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
 	echo "rename this file to 'force' to force an update without confirmation" > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/noforce;
 	# kernel
-	gzip -f -c < "$(TARGET_DIR)/boot/vmlinux" > "$(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/kernel.bin"
+	gzip -9c < "$(TARGET_DIR)/boot/vmlinux" > "$(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/kernel.bin"
 	# rootfs
-	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.ubi -m 2048 -e 126976 -c 4096
+	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.ubi -m 2048 -e 126976 -c 8092
 	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
 	echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
 	echo 'image=$(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.ubi' >> $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg

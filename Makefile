@@ -71,6 +71,7 @@ init:
 	@echo ""
 	@echo "  WWIO"
 	@echo "   80)  WWIO BRE2ZE 4K"
+	@echo "   81)  WWIO BRE2ZE T2C"
 	@echo ""
 	@echo "  Air Digital"
 	@echo "   90)  Zgemma h7"
@@ -114,6 +115,7 @@ init:
 		65) BOXTYPE="osmini4k";; \
 		70) BOXTYPE="gb800se";; \
 		80) BOXTYPE="bre2ze4k";; \
+		81) BOXTYPE="bre2zet2c";; \
 		90) BOXTYPE="h7";; \
 		*) BOXTYPE="gb800se";; \
 	esac; \

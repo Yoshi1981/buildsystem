@@ -38,6 +38,9 @@ endif
 ifeq ($(BOXTYPE), gb800se)
 	$(MAKE) flash-image-gb800se
 endif
+ifeq ($(BOXTYPE), bre2zet2c)
+	$(MAKE) flash-image-bre2zet2c
+endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), osnino osninoplus osninopro))
 	$(MAKE) flash-image-$(BOXTYPE)
 endif

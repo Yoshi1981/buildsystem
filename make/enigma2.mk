@@ -44,8 +44,8 @@ E_CPPFLAGS   += $(PLATFORM_CPPFLAGS)
 #
 # yaud-enigma2
 #
-yaud-enigma2: yaud-none $(D)/enigma2 $(D)/enigma2-plugins $(D)/enigma2_release
-	$(TUXBOX_YAUD_CUSTOMIZE)
+#yaud-enigma2: yaud-none $(D)/enigma2 $(D)/enigma2-plugins $(D)/enigma2_release
+#	$(TUXBOX_YAUD_CUSTOMIZE)
 
 #
 # enigma2
