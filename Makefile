@@ -155,7 +155,7 @@ init:
 	@echo -e "\nFlavour:"
 	@echo "   1) neutrino"
 	@echo "   2) none"
-	@echo -e "   \033[01;32m3) pre-defined\033[00m"
+	@echo -e "   \033[01;32m3) neutrino\033[00m"
 	@read -p "Select Flavour (1-3)?" FLAVOUR; \
 	FLAVOUR=$${FLAVOUR}; \
 	case "$$FLAVOUR" in \
@@ -177,34 +177,33 @@ init:
 		3|*) ;; \
 	esac; \
 	echo ""
-# Plugins Interface (lua/python)
-	@echo -e "\nWhich neutrino interface do you want to build?:"
-	@echo "   1)  lua"
-	@echo "   2)  python (experimental)"
-	@echo "   3)  lua and python (experimental)"
-	@echo "   4)  none"
-	@echo -e "   \033[01;32m5) pre-defined\033[00m"
-	@read -p "Select Interface to build (1-5)?" INTERFACE; \
-	INTERFACE=$${INTERFACE}; \
-	case "$$INTERFACE" in \
-		1) echo "INTERFACE=lua" >> config;; \
-		2) echo "INTERFACE=python" >> config;; \
-		3) echo "INTERFACE=lua-python" >> config;; \
-		4) echo "INTERFACE=" >> config;; \
-		5|*) ;; \
+# lua
+	@echo -e "\nlua support ?:"
+	@echo "   1)  yes"
+	@echo "   2)  no"
+	@echo -e "   \033[01;32m3) pre-defined\033[00m"
+	@read -p "Select lua support (1-3)?" LUA; \
+	LUA=$${LUA}; \
+	case "$$LUA" in \
+		1) echo "LUA=lua" >> config;; \
+		2) echo "LUA=" >> config;; \
+		3|*) ;; \
 	esac; \
 	echo ""
-# testing
-	@echo -e "\nTesting Support?:"
-	@echo "   1)  testing"
-	@echo -e "   \033[01;32m2) none\033[00m"
-	@read -p "Select with Tesing or not (1-2)?" TESTING; \
-	TESTING=$${TESTING}; \
-	case "$$TESTING" in \
-		1) TESTING="testing";; \
-		2|*) TESTING="";; \
+# python
+	@echo -e "\npython support ?:"
+	@echo "   1)  yes"
+	@echo "   2)  no"
+	@echo -e "   \033[01;32m3) pre-defined\033[00m"
+	@read -p "Select python support (1-3)?" PYTHON; \
+	PYTHON=$${PYTHON}; \
+	case "$$PYTHON" in \
+		1) echo "PYTHON=python" >> config;; \
+		2) echo "PYTHON=" >> config;; \
+		3|*) ;; \
 	esac; \
-	echo "TESTING=$$TESTING" >> config
+	echo ""
+#	
 	@echo ""
 	@make printenv
 	@echo "Your next step could be:"
@@ -254,12 +253,12 @@ printenv:
 	@echo "FLAVOUR          : $(FLAVOUR)"
 	@echo "MEDIAFW          : $(MEDIAFW)"
 	@echo "WLAN             : $(WLAN)"
-	@echo "INTERFACE        : $(INTERFACE)"
+	@echo "LUA        	 : $(LUA)"
+	@echo "PYTHON        	 : $(PYTHON)"
 	@echo "CICAM            : $(CICAM)"
 	@echo "SCART            : $(SCART)"
 	@echo "LCD              : $(LCD)"
-	@echo "F-KEYS            : $(FKEYS)"
-	@echo "TESTING          : $(TESTING)"
+	@echo "F-KEYS           : $(FKEYS)"
 	@echo "PARALLEL_JOBS    : $(PARALLEL_JOBS)"
 	@echo '================================================================================'
 	@make --no-print-directory toolcheck

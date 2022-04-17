@@ -2,11 +2,12 @@ BOXARCH = mips
 OPTIMIZATIONS ?= size
 WLAN ?= 
 MEDIAFW ?= gstreamer
-INTERFACE ?= lua
+LUA ?=lua
+PYTHON ?=
 CICAM = ci-cam
-SCART =
-LCD = 4-digits
-FKEYS = fkeys
+SCART ?= scart
+LCD ?= 4-digits
+FKEYS ?= fkeys
 
 #
 # kernel

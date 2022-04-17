@@ -2,11 +2,12 @@ BOXARCH = sh4
 OPTIMIZATIONS ?= size
 WLAN ?= 
 MEDIAFW ?= buildinplayer
-INTERFACE ?=lua
-CICAM = ci-cam
-SCART = scart
-LCD = vfd
-FKEYS =
+LUA ?=lua
+PYTHON ?=
+CICAM ?= ci-cam
+SCART ?= scart
+LCD ?= vfd
+FKEYS ?=
 
 #
 # kernel
