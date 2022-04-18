@@ -4,10 +4,10 @@ WLAN ?=
 MEDIAFW ?= gstreamer
 LUA ?=lua
 PYTHON ?=
-CICAM = ci-cam
-SCART =
-LCD = 4-digits
-FKEYS = fkeys
+CICAM ?= ci-cam
+SCART ?=
+LCD ?= 4-digits
+FKEYS ?=
 
 #
 # kernel

@@ -26,12 +26,13 @@ CROSSTOOL_NG_URL = https://github.com/crosstool-ng/crosstool-ng.git
 ifeq ($(BOXARCH), arm)
 GCC_VER = linaro-6.3-2017.05
 endif
+
 ifeq ($(BOXARCH), mips)
-ifeq ($(BOXTYPE), bre2zet2c)
-GCC_VER = 6.3.0
-else
 GCC_VER = 4.9.4
 endif
+
+ifeq ($(BOXTYPE), bre2zet2c)
+GCC_VER = 6.3.0
 endif
 
 CUSTOM_KERNEL_VER ?= $(KERNEL_VER)
@@ -57,7 +58,7 @@ crosstool: $(D)/directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_NG_S
 	fi
 	@touch $(D)/$(notdir $@)
 
-crosstool-ng:
+crosstool-ng: $(D)/directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE) kernel.do_prepare
 	make $(BUILD_TMP)
 	if [ ! -e $(CROSS_DIR) ]; then \
 		mkdir -p $(CROSS_DIR); \

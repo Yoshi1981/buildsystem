@@ -4,6 +4,7 @@
 SYSTEM_TOOLS  = $(D)/busybox
 SYSTEM_TOOLS += $(D)/zlib
 SYSTEM_TOOLS += $(D)/sysvinit
+SYSTEM_TOOLS += $(D)/util_linux
 SYSTEM_TOOLS += $(D)/e2fsprogs
 SYSTEM_TOOLS += $(D)/hdidle
 SYSTEM_TOOLS += $(D)/portmap

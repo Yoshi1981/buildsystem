@@ -1,9 +1,9 @@
 # how to build image: #
 
 ```bash
-$:~ git clone https://github.com/mohousch/buildsystem-hd2.git
+$:~ git clone https://github.com/mohousch/buildsystem.git
 
-cd buildsystem-hd2
+cd buildsystem
 ```
 
 **for first use:**
