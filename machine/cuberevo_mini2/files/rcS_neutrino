@@ -167,6 +167,3 @@ if [ ! -e /var/etc/.firstboot ]; then
    done
 fi
 
-#/bin/fp_control -t "REBOOT CUBEREVO"
-#echo "REBOOT CUBEREVO"
-#init 6
