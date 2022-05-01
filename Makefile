@@ -152,15 +152,14 @@ init:
 	echo ""
 # Flavour
 	@echo -e "\nFlavour:"
-	@echo "   1) neutrino"
+	@echo -e "   \033[01;32m1) neutrino\033[00m"
 	@echo "   2) none"
-	@echo -e "   \033[01;32m3) neutrino\033[00m"
-	@read -p "Select Flavour (1-3)?" FLAVOUR; \
+	@read -p "Select Flavour (1-2)?" FLAVOUR; \
 	FLAVOUR=$${FLAVOUR}; \
 	case "$$FLAVOUR" in \
 		1) echo "FLAVOUR=neutrino" >> config;; \
 		2) echo "FLAVOUR=none" >> config;; \
-		3|*) echo "FLAVOUR=neutrino" >> config;; \
+		*) echo "FLAVOUR=neutrino" >> config;; \
 	esac; \
 	echo ""
 # Media framework
