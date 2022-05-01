@@ -243,6 +243,3 @@ flash-image-vuduo4k-online:
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
-
-
-

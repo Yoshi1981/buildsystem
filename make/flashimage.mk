@@ -21,13 +21,13 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
 	$(MAKE) flash-image-tf7700
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
-	$(MAKE) flash-image-hd51-multi-disk flash-image-hd51-multi-rootfs
+	$(MAKE) flash-image-hd51-multi-rootfs
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd60))
 	$(MAKE) flash-image-hd60-multi-disk
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
-	$(MAKE) flash-image-vusolo4k-multi-disk flash-image-vusolo4k-multi-rootfs
+	$(MAKE) flash-image-vusolo4k-multi-rootfs
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
 	$(MAKE) flash-image-vusolo4k-multi-rootfs
@@ -42,19 +42,19 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), osnino osninoplus osninopro))
 	$(MAKE) flash-image-$(BOXTYPE)
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), osmio4k osmio4kplus osmini4k))
-	$(MAKE) flash-image-$(BOXTYPE)-multi-disk flash-image-$(BOXTYPE)-multi-rootfs
+	$(MAKE) flash-image-$(BOXTYPE)-multi-rootfs
 endif
 ifeq ($(BOXTYPE), bre2ze4k)
-	$(MAKE) flash-image-bre2ze4k-multi-disk flash-image-bre2ze4k-multi-rootfs
+	$(MAKE) flash-image-bre2ze4k-multi-rootfs
 endif
 ifeq ($(BOXTYPE), bre2zet2c)
 	$(MAKE) flash-image-bre2zet2c
 endif
 ifeq ($(BOXTYPE), h7)
-	$(MAKE) flash-image-h7-multi-disk flash-image-h7-multi-rootfs
+	$(MAKE) flash-image-h7-multi-rootfs
 endif
 ifeq ($(BOXTYPE), hd61)
-	$(MAKE) flash-image-hd61-multi-disk flash-image-hd61-multi-rootfs
+	$(MAKE) flash-image-hd61-multi-rootfs
 endif
 ifeq ($(BOXTYPE), vuduo2)
 	$(MAKE) flash-image-vuduo2
@@ -114,6 +114,10 @@ ifeq ($(BOXTYPE), vuzero4k)
 	$(MAKE) flash-image-vuzero4k-online
 endif
 	$(TUXBOX_CUSTOMIZE)
+	
+#
+# multi-disk
+#
 
 #
 # flash-clean

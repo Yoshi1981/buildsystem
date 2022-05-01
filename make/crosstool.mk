@@ -20,43 +20,44 @@ $(TARGET_DIR)/lib/libc.so.6:
 #
 # crosstool-ng
 #
-CROSSTOOL_NG_VER = 872341e3
-CROSSTOOL_NG_SOURCE = crosstool-ng-git-$(CROSSTOOL_NG_VER).tar.bz2
-CROSSTOOL_NG_URL = https://github.com/crosstool-ng/crosstool-ng.git
-ifeq ($(BOXARCH), arm)
-GCC_VER = linaro-6.3-2017.05
-endif
-
-ifeq ($(BOXARCH), mips)
-GCC_VER = 4.9.4
-endif
+CROSSTOOL_NG_VER = 6737cfa
+GCC_VER = 8.5.0
 
 ifeq ($(BOXTYPE), bre2zet2c)
+CROSSTOOL_NG_VER = 872341e3
 GCC_VER = 6.3.0
 endif
 
-CUSTOM_KERNEL_VER ?= $(KERNEL_VER)
+#ifeq ($(BOXTYPE), gb800se)
+#CROSSTOOL_NG_VER = 872341e3
+#GCC_VER = 4.9.4
+#endif
+
+CROSSTOOL_NG_SOURCE = crosstool-ng-git-$(CROSSTOOL_NG_VER).tar.bz2
+CROSSTOOL_NG_URL = https://github.com/crosstool-ng/crosstool-ng.git
 
 ifeq ($(CROSSTOOL_NG_VER), 872341e3)
-CROSSTOOL_NG_PATCH = ct-ng/crosstool-872341e3-bash.patch
+CROSSTOOL_NG_PATCH = ct-ng/crosstool-ng-872341e3-bash.patch
 endif
+
+CUSTOM_KERNEL_VER ?= $(KERNEL_VER)
 
 CROSSTOOL_NG_BACKUP = $(ARCHIVE)/crosstool-ng-$(CROSSTOOL_NG_VER)-$(BOXARCH)-gcc-$(GCC_VER)-kernel-$(KERNEL_VER)-backup.tar.gz
 
 $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(CROSSTOOL_NG_URL) $(CROSSTOOL_NG_VER) $(notdir $@) $(ARCHIVE)
 
+ifeq ($(wildcard $(CROSS_DIR)/build.log.bz2),)
 CROSSTOOL = crosstool
 crosstool: $(D)/directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE) kernel.do_prepare
 	if test -e $(CROSSTOOL_NG_BACKUP); then \
 		make crosstool-restore; \
 	else \
 		make MAKEFLAGS=--no-print-directory crosstool-ng; \
-		if [ ! -e $(CROSSTOOL_NG_BACKUP) ]; then \
+		if [ -e $(CROSS_DIR)/build.log.bz2 ] && [ ! -e $(CROSSTOOL_NG_BACKUP) ]; then \
 			make crosstool-backup; \
 		fi; \
 	fi
-	@touch $(D)/$(notdir $@)
 
 crosstool-ng: $(D)/directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE) kernel.do_prepare
 	make $(BUILD_TMP)
@@ -90,6 +91,7 @@ crosstool-ng: $(D)/directories $(ARCHIVE)/$(KERNEL_SRC) $(ARCHIVE)/$(CROSSTOOL_N
 	test -e $(CROSS_DIR)/$(TARGET)/lib || ln -sf sys-root/lib $(CROSS_DIR)/$(TARGET)/
 	rm -f $(CROSS_DIR)/$(TARGET)/sys-root/lib/libstdc++.so.6.0.20-gdb.py
 	$(REMOVE)/crosstool-ng-git-$(CROSSTOOL_NG_VER)
+endif
 
 #
 # crosstool-backup
