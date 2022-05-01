@@ -79,7 +79,7 @@ endif
 #
 # online-image
 #
-online-image: release
+onlineimage: release-$(FLAVOUR)
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
 	$(MAKE) flash-image-hd51-online
 endif
@@ -116,8 +116,13 @@ endif
 	$(TUXBOX_CUSTOMIZE)
 	
 #
-# multi-disk
+# diskimage
 #
+diskimage: release-$(FLAVOUR)
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
+	$(MAKE) flash-image-$(BOXTYPE)-multi-disk
+endif
+	$(TUXBOX_CUSTOMIZE)
 
 #
 # flash-clean
