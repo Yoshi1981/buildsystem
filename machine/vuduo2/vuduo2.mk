@@ -1,13 +1,14 @@
 BOXARCH = mips
 OPTIMIZATIONS ?= size
 WLAN ?= 
-MEDIAFW ?= gstreamer
 LUA ?=lua
 PYTHON ?=
-CICAM = ci-cam
-SCART = scart
-LCD = 4-digits
-FKEYS =
+FLAVOUR ?= neutrino
+MEDIAFW ?= gstreamer
+CICAM ?= ci-cam
+SCART ?= scart
+LCD ?= 4-digits
+FKEYS ?=
 
 #
 # kernel

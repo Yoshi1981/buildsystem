@@ -1,9 +1,10 @@
 BOXARCH = mips
 OPTIMIZATIONS ?= size
-WLAN ?= 
-MEDIAFW ?= gstreamer
+WLAN ?=
 LUA ?=lua
 PYTHON ?=
+FLAVOUR ?= neutrino 
+MEDIAFW ?= gstreamer
 CICAM ?= ci-cam
 SCART ?= scart
 LCD ?= 4-digits

@@ -1,13 +1,14 @@
 BOXARCH = arm
 OPTIMIZATIONS ?= size
-WLAN ?= 
-MEDIAFW ?= buildinplayer
+WLAN ?=
 LUA ?=lua
 PYTHON ?=
-CICAM = ci-cam
-SCART = scart
-LCD = 4-digits
-FKEYS =
+FLAVOUR ?= neutrino 
+MEDIAFW ?= gstreamer
+CICAM ?= ci-cam
+SCART ?= scart
+LCD ?= 4-digits
+FKEYS ?=
 
 #
 # kernel

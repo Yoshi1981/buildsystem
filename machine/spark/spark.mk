@@ -1,9 +1,10 @@
 BOXARCH = sh4
 OPTIMIZATIONS ?= size
-WLAN ?= 
-MEDIAFW ?= buildinplayer
+WLAN ?=
 LUA ?=lua
 PYTHON ?=
+FLAVOUR ?= neutrino 
+MEDIAFW ?= buildinplayer
 CICAM ?= ci-cam
 SCART ?= scart
 LCD ?= vfd
