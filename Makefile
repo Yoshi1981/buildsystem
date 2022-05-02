@@ -213,6 +213,9 @@ init:
 	@echo "to check your build enviroment:"
 	@echo "  make printenv"
 	@echo ""
+	
+init-clean:
+	rm -f config
 
 include make/buildenv.mk
 

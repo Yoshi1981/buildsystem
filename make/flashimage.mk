@@ -119,7 +119,7 @@ endif
 # diskimage
 #
 diskimage: release-$(FLAVOUR)
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 h7))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 hd60 hd61 h7 osmio4k osmini4k osmio4kplus))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-disk
 endif
 	$(TUXBOX_CUSTOMIZE)
