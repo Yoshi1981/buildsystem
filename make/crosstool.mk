@@ -28,16 +28,11 @@ CROSSTOOL_NG_VER = 872341e3
 GCC_VER = 6.3.0
 endif
 
-#ifeq ($(BOXTYPE), gb800se)
-#CROSSTOOL_NG_VER = 872341e3
-#GCC_VER = 4.9.4
-#endif
-
 CROSSTOOL_NG_SOURCE = crosstool-ng-git-$(CROSSTOOL_NG_VER).tar.bz2
 CROSSTOOL_NG_URL = https://github.com/crosstool-ng/crosstool-ng.git
 
 ifeq ($(CROSSTOOL_NG_VER), 872341e3)
-CROSSTOOL_NG_PATCH = ct-ng/crosstool-ng-872341e3-bash.patch
+CROSSTOOL_NG_PATCH = ct-ng/crosstool-ng-872341e3-bash.patch ct-ng/crosstool-ng-git-872341e3-isl.patch
 endif
 
 CUSTOM_KERNEL_VER ?= $(KERNEL_VER)
