@@ -112,7 +112,6 @@ DRIVER_SRC = vuplus-dvb-modules-bm750-$(DRIVER_VER)-$(DRIVER_DATE).tar.gz
 DRIVER_URL = http://code.vuplus.com/download/release/vuplus-dvb-modules
 
 $(ARCHIVE)/$(DRIVER_SRC):
-#	$(WGET) http://archive.vuplus.com/download/drivers/$(DRIVER_SRC)
 	$(WGET) $(DRIVER_URL)/$(DRIVER_SRC)
 	
 

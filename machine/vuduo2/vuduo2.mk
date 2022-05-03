@@ -15,7 +15,8 @@ FKEYS ?=
 #
 KERNEL_VER             = 3.13.5
 KERNEL_SRC             = stblinux-${KERNEL_VER}.tar.bz2
-KERNEL_URL             = http://archive.vuplus.com/download/kernel
+#KERNEL_URL             = http://archive.vuplus.com/download/kernel
+KERNEL_URL		= http://code.vuplus.com/download/release/kernel
 KERNEL_CONFIG          = defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNELNAME             = vmlinux
@@ -111,7 +112,8 @@ DRIVER_VER = 3.13.5
 DRIVER_DATE = 20190429
 DRIVER_REV = r0
 DRIVER_SRC = vuplus-dvb-proxy-vuduo2-$(DRIVER_VER)-$(DRIVER_DATE).$(DRIVER_REV).tar.gz
-DRIVER_URL = http://archive.vuplus.com/download/build_support/vuplus
+#DRIVER_URL = http://archive.vuplus.com/download/build_support/vuplus
+DRIVER_URL = http://code.vuplus.com/download/release/vuplus-dvb-proxy
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(WGET) $(DRIVER_URL)/$(DRIVER_SRC)

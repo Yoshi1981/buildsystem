@@ -16,7 +16,8 @@ FKEYS ?=
 KERNEL_VER             = 4.1.20-1.9
 KERNEL_SRC_VER         = 4.1-1.9
 KERNEL_SRC             = stblinux-${KERNEL_SRC_VER}.tar.bz2
-KERNEL_URL             = http://archive.vuplus.com/download/kernel
+#KERNEL_URL             = http://archive.vuplus.com/download/kernel
+KERNEL_URL		= http://code.vuplus.com/download/release/kernel
 KERNEL_CONFIG          = defconfig
 KERNEL_DIR             = $(BUILD_TMP)/linux
 KERNELNAME             = zImage
@@ -114,7 +115,8 @@ DRIVER_VER = 4.1.20
 DRIVER_DATE = 20190424
 DRIVER_REV = r0
 DRIVER_SRC = vuplus-dvb-proxy-vuuno4kse-$(DRIVER_VER)-$(DRIVER_DATE).$(DRIVER_REV).tar.gz
-DRIVER_URL = http://archive.vuplus.com/download/build_support/vuplus
+#DRIVER_URL = http://archive.vuplus.com/download/build_support/vuplus
+DRIVER_URL = http://code.vuplus.com/download/release/vuplus-dvb-proxy
 
 $(ARCHIVE)/$(DRIVER_SRC):
 	$(WGET) $(DRIVER_URL)/$(DRIVER_SRC)
