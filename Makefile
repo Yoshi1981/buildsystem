@@ -147,7 +147,7 @@ init:
 	case "$$WLAN" in \
 		1) echo "WLAN=" >> config;; \
 		2) echo "WLAN=wlandriver" >> config;; \
-		*) echo "WLAN=" >> config;; \
+		*) ;; \
 	esac; \
 	echo ""
 # Flavour
