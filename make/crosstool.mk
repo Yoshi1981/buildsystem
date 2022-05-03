@@ -104,7 +104,6 @@ crosstool-restore: $(CROSSTOOL_NG_BACKUP)
 		mkdir -p $(CROSS_DIR); \
 	fi;
 	tar xzvf $(CROSSTOOL_NG_BACKUP) -C $(CROSS_DIR)
-	@touch $(D)/crosstool
 
 #
 # crossmenuconfig
