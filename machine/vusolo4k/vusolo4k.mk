@@ -24,25 +24,35 @@ KERNELNAME             = zImage
 CUSTOM_KERNEL_VER      = $(KERNEL_SRC_VER)
 
 KERNEL_PATCHES_ARM     = \
-		bcm_genet_disable_warn.patch \
-		linux_dvb-core.patch \
-		rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
-		usb_core_hub_msleep.patch \
-		rtl8712_fix_build_error.patch \
-		0001-Support-TBS-USB-drivers.patch \
-		0001-STV-Add-PLS-support.patch \
-		0001-STV-Add-SNR-Signal-report-parameters.patch \
-		0001-stv090x-optimized-TS-sync-control.patch \
-		linux_dvb_adapter.patch \
-		kernel-gcc6.patch \
-		genksyms_fix_typeof_handling.patch \
-		0001-tuners-tda18273-silicon-tuner-driver.patch \
-		01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
-		02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
-		0003-cxusb-Geniatech-T230-support.patch \
-		CONFIG_DVB_SP2.patch \
-		dvbsky.patch \
-		rtl2832u-2.patch
+			bcm_genet_disable_warn.patch \
+		    	linux_dvb-core.patch \
+		    	rt2800usb_fix_warn_tx_status_timeout_to_dbg.patch \
+			usb_core_hub_msleep.patch \
+		    	rtl8712_fix_build_error.patch \
+		    	kernel-add-support-for-gcc6.patch \
+		    	kernel-add-support-for-gcc7.patch \
+		    	kernel-add-support-for-gcc8.patch \
+		    	kernel-add-support-for-gcc9.patch \
+		    	kernel-add-support-for-gcc10.patch \
+		    	kernel-add-support-for-gcc11.patch \
+		    	0001-Support-TBS-USB-drivers.patch \
+		    	0001-STV-Add-PLS-support.patch \
+		    	0001-STV-Add-SNR-Signal-report-parameters.patch \
+		    	0001-stv090x-optimized-TS-sync-control.patch \
+		    	blindscan2.patch \
+		    	genksyms_fix_typeof_handling.patch \
+		    	0001-tuners-tda18273-silicon-tuner-driver.patch \
+		    	01-10-si2157-Silicon-Labs-Si2157-silicon-tuner-driver.patch \
+		    	02-10-si2168-Silicon-Labs-Si2168-DVB-T-T2-C-demod-driver.patch \
+		    	0003-cxusb-Geniatech-T230-support.patch \
+		    	CONFIG_DVB_SP2.patch \
+		    	dvbsky.patch \
+		    	rtl2832u-2.patch \
+		    	0004-log2-give-up-on-gcc-constant-optimizations.patch \
+		    	0005-uaccess-dont-mark-register-as-const.patch \
+		    	0006-makefile-disable-warnings.patch \
+		    	move-default-dialect-to-SMB3.patch \
+		    	fix-multiple-defs-yyloc.patch
 
 KERNEL_PATCHES = $(KERNEL_PATCHES_ARM)
 
