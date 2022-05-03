@@ -245,9 +245,9 @@ flash-image-$(BOXTYPE)-multi-disk: $(D)/host_resize2fs
 	# Truncate on purpose
 	dd if=$(IMAGE_BUILD_DIR)/$(FLASH_IMAGE_LINK) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(ROOTFS_PARTITION_OFFSET) \* $(BLOCK_SECTOR)) count=$(shell expr $(FLASH_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR))
 	mv $(IMAGE_BUILD_DIR)/disk.img $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/
-	cd $(IMAGE_BUILD_DIR)/ && \
+	cd $(IMAGE_BUILD_DIR) && \
 	echo $(BOXTYPE)_$(FLAVOUR)_usb_$(shell date '+%d%m%Y-%H%M%S') > $(FLASHIMAGE_PREFIX)/imageversion
-	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_disk_img_$(shell date '+%d.%m.%Y-%H.%M').zip $(FLASHIMAGE_PREFIX)/disk.img $(FLASHIMAGE_PREFIX)/imageversion
+	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_diskimg_$(shell date '+%d.%m.%Y-%H.%M').zip $(FLASHIMAGE_PREFIX)/disk.img $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
@@ -277,6 +277,4 @@ flash-image-$(BOXTYPE)-online:
 	tar -cvzf $(FLASH_DIR)/$(FLASHIMAGE_PREFIX)/$(BOXTYPE)_$(FLAVOUR)_online_$(shell date '+%d.%m.%Y-%H.%M').tgz $(FLASHIMAGE_PREFIX)/rootfs.tar.bz2 $(FLASHIMAGE_PREFIX)/kernel.bin $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
-
-
 

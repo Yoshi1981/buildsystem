@@ -136,7 +136,7 @@ ifeq ($(BOXARCH), sh4)
 	cd $(FLASH_DIR)/ufs913 && $(SUDOCMD) rm -rf ./tmp ./out
 	cd $(FLASH_DIR)/tf7700 && $(SUDOCMD) rm -rf ./tmp ./out
 else
-	cd $(FLASH_DIR)/$(BOXTYPE) && rm -rf *.*
+	cd $(FLASH_DIR)/$(BOXTYPE) && rm -rf *
 endif
 
 

@@ -101,32 +101,32 @@ release-osninopro:
 #
 # flashimage
 #
-OSNINO_PREFIX = edision/osninopro
+FLASHIMAGE_PREFIX = edision/osninopro
 
 flash-image-osninopro:
 	# Create final USB-image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)
+	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
 	mkdir -p $(FLASH_DIR)/$(BOXTYPE)
 	# splash
-	cp $(SKEL_ROOT)/boot/splash.bin $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)
-	echo "rename this file to 'force' to force an update without confirmation" > $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/noforce;
+	cp $(SKEL_ROOT)/boot/splash.bin $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
+	echo "rename this file to 'force' to force an update without confirmation" > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/noforce;
 	# kernel
-	gzip -9c < "$(TARGET_DIR)/boot/vmlinux" > "$(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/kernel.bin"
+	gzip -9c < "$(TARGET_DIR)/boot/vmlinux" > "$(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/kernel.bin"
 	# rootfs
-	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/rootfs.ubi -m 2048 -e 126976 -c 4096 -F
-	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/ubinize.cfg
-	echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/ubinize.cfg
-	echo 'image=$(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/rootfs.ubi' >> $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/ubinize.cfg
-	echo 'vol_id=0' >> $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/ubinize.cfg
-	echo 'vol_type=dynamic' >> $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/ubinize.cfg
-	echo 'vol_name=rootfs' >> $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/ubinize.cfg
-	echo 'vol_flags=autoresize' >> $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/ubinize.cfg
-	ubinize -o $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/rootfs.bin -m 2048 -p 128KiB $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
-	rm -f $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/rootfs.ubi
-	rm -f $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/ubinize.cfg
-	echo $(BOXTYPE)_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(OSNINO_PREFIX)/imageversion
+	mkfs.ubifs -r $(RELEASE_DIR) -o $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.ubi -m 2048 -e 126976 -c 4096 -F
+	echo '[ubifs]' > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
+	echo 'mode=ubi' >> $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
+	echo 'image=$(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.ubi' >> $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
+	echo 'vol_id=0' >> $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
+	echo 'vol_type=dynamic' >> $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
+	echo 'vol_name=rootfs' >> $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
+	echo 'vol_flags=autoresize' >> $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
+	ubinize -o $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.bin -m 2048 -p 128KiB $(IMAGE_BUILD_DIR)/$(VUDUO_PREFIX)/ubinize.cfg
+	rm -f $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.ubi
+	rm -f $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
+	echo $(BOXTYPE)_usb_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
 	cd $(IMAGE_BUILD_DIR)/ && \
-	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(OSNINO_PREFIX)*
+	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_usb_$(shell date '+%d.%m.%Y-%H.%M').zip $(FLASHIMAGE_PREFIX)*
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
