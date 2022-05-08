@@ -315,8 +315,9 @@ $(D)/portmap: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(PORTMAP_SOURCE) $(ARCHIVE)/po
 # e2fsprogs
 #
 E2FSPROGS_VER = 1.45.6
+
 E2FSPROGS_SOURCE = e2fsprogs-$(E2FSPROGS_VER).tar.gz
-E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VER).patch
+E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VER).patch e2fsprogs-$(E2FSPROGS_VER)-gettext-patch.patch
 
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 E2FSPROGS_ARGS = --enable-resizer
@@ -341,20 +342,24 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 			--mandir=/.remove \
 			--infodir=/.remove \
 			--disable-rpath \
+			--disable-profile \
 			--disable-testio-debug \
 			--disable-defrag \
-			--disable-nls \
 			--disable-jbd-debug \
 			--disable-blkid-debug \
 			--disable-testio-debug \
 			--disable-debugfs \
 			--disable-imager \
-			--disable-resizer \
+			$(E2FSPROGS_ARGS) \
 			--disable-backtrace \
+			--disable-nls \
 			--disable-mmp \
 			--disable-tdb \
 			--disable-bmap-stats \
 			--disable-fuse2fs \
+			--disable-bmap-stats \
+			--disable-bmap-stats-ops \
+			--enable-e2initrd-helper \
 			--enable-elf-shlibs \
 			--enable-fsck \
 			--enable-libblkid \
@@ -364,6 +369,8 @@ $(D)/e2fsprogs: $(D)/bootstrap $(D)/util_linux $(ARCHIVE)/$(E2FSPROGS_SOURCE)
 			--without-libintl-prefix \
 			--without-libiconv-prefix \
 			--with-root-prefix="" \
+			--with-gnu-ld \
+			--with-crond-dir=no \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR); \
