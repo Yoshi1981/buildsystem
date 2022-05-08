@@ -23,7 +23,19 @@ KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 KERNELNAME             = zImage
 CUSTOM_KERNEL_VER      = $(KERNEL_VER)-arm
 
-KERNEL_PATCHES_ARM     = \
+#KERNEL_PATCHES_ARM     = \
+#		TBS-fixes-for-4.10-kernel.patch \
+#		0001-Support-TBS-USB-drivers-for-4.6-kernel.patch \
+#		0001-TBS-fixes-for-4.6-kernel.patch \
+#		0001-STV-Add-PLS-support.patch \
+#		0001-STV-Add-SNR-Signal-report-parameters.patch \
+#		blindscan2.patch \
+#		0001-stv090x-optimized-TS-sync-control.patch \
+#		reserve_dvb_adapter_0.patch \
+#		blacklist_mmc0.patch \
+#		export_pmpoweroffprepare.patch
+KERNEL_PATCHES_ARM	= \
+		export_pmpoweroffprepare.patch \
 		TBS-fixes-for-4.10-kernel.patch \
 		0001-Support-TBS-USB-drivers-for-4.6-kernel.patch \
 		0001-TBS-fixes-for-4.6-kernel.patch \
@@ -31,9 +43,12 @@ KERNEL_PATCHES_ARM     = \
 		0001-STV-Add-SNR-Signal-report-parameters.patch \
 		blindscan2.patch \
 		0001-stv090x-optimized-TS-sync-control.patch \
-		reserve_dvb_adapter_0.patch \
-		blacklist_mmc0.patch \
-		export_pmpoweroffprepare.patch
+		t230c2.patch \
+		add-more-devices-rtl8xxxu.patch \
+		move-default-dialect-to-SMB3.patch \
+		0005-xbox-one-tuner-4.10.patch \
+		0006-dvb-media-tda18250-support-for-new-silicon-tuner.patch \
+		fix-multiple-defs-yyloc.patch
 
 KERNEL_PATCHES = $(KERNEL_PATCHES_ARM)
 
