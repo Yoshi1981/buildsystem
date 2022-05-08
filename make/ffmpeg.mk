@@ -2,46 +2,9 @@
 # ffmpeg
 #
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-FFM = 1
-else ifeq ($(BOXTYPE), $(filter $(BOXTYPE), $(LOCAL_FFMPEG_BOXTYPE_LIST)))
-FFM = 1
-endif
-
-ifeq ($(FFM), 1)
-ifeq ($(FFMPEG_SNAPSHOT), 1)
-FFMPEG_VER = snapshot
-FFMPEG_SNAP =
-FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-aac.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-hls.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_mpegts.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mips64_cpu_detection.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-corrupt-h264-frames.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-FFmpeg-devel-amfenc-Add-support-for-pict_type-field.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-INT64-fix.patch
-else
-ifeq ($(FFMPEG_EXPERIMENTAL), 1)
-FFMPEG_VER = 4.2.2
-FFMPEG_SNAP = -$(FFMPEG_VER)
-FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-aac.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-buffer-size.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-hls.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_mpegts.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mips64_cpu_detection.patch
-#FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-remove_avpriv_request_sample.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-corrupt-h264-frames.patch
-FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-FFmpeg-devel-amfenc-Add-support-for-pict_type-field.patch
-#FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-mpeg-quarter-sample.patch
-FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
-else
 FFMPEG_VER = 3.3
 FFMPEG_SNAP = -$(FFMPEG_VER)
+
 FFMPEG_PATCH = ffmpeg-$(FFMPEG_VER)-aac.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-add_dash_demux.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-allow_to_choose_rtmp_impl_at_runtime.patch
@@ -51,59 +14,31 @@ FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-hls.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_mpegts.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
-FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
-endif
-endif
 
-FFMPEG_DEPS = $(D)/librtmp
+FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
+
 FFMPEG_CONF_OPTS  = --enable-librtmp
-ifeq ($(FFMPEG_SNAPSHOT), 1)
-FFMPEG_CONF_OPTS  += --enable-libxml2
-FFMPEG_CONF_OPTS  += --enable-libfreetype
-FFMPEG_CONF_OPTS  += --disable-x86asm
-FFMPEG_CONF_OPTS  += --enable-decoder=adpcm_zork
-else
-ifeq ($(FFMPEG_EXPERIMENTAL), 1)
-FFMPEG_CONF_OPTS  += --enable-libxml2
-FFMPEG_CONF_OPTS  += --enable-libfreetype
-FFMPEG_CONF_OPTS  += --disable-x86asm
-FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
-else
 FFMPEG_CONF_OPTS  += --disable-yasm
 FFMPEG_CONF_OPTS  += --disable-ffserver
 FFMPEG_CONF_OPTS  += --enable-decoder=pcm_zork
-endif
-endif
 
 ifeq ($(BOXARCH), arm)
 FFMPEG_CONF_OPTS  += --cpu=cortex-a15
 endif
+
 ifeq ($(BOXARCH), $(filter $(BOXARCH), mips sh4))
 FFMPEG_CONF_OPTS  += --cpu=generic
 endif
 
 FFMPRG_EXTRA_CFLAGS  = -I$(TARGET_DIR)/usr/include/libxml2
 
-ifeq ($(FFMPEG_SNAPSHOT), 1)
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib $(D)/libass $(D)/libxml2 $(D)/libroxml $(FFMPEG_DEPS)
-else
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib $(D)/libass $(D)/libxml2 $(D)/libroxml $(FFMPEG_DEPS) $(ARCHIVE)/$(FFMPEG_SOURCE)
-endif
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib $(D)/libass $(D)/libxml2 $(D)/libroxml $(D)/librtmp $(ARCHIVE)/$(FFMPEG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg$(FFMPEG_SNAP)
-
-ifeq ($(FFMPEG_SNAPSHOT), 1)
-	set -e; if [ -d $(ARCHIVE)/ffmpeg.git ]; \
-		then cd $(ARCHIVE)/ffmpeg.git; git pull; \
-		else cd $(ARCHIVE); git clone git://git.ffmpeg.org/ffmpeg.git ffmpeg.git; \
-		fi
-	cp -ra $(ARCHIVE)/ffmpeg.git $(BUILD_TMP)/ffmpeg$(FFMPEG_SNAP)
-else
 	$(UNTAR)/$(FFMPEG_SOURCE)
-endif
 	$(CHDIR)/ffmpeg$(FFMPEG_SNAP); \
 		$(call apply_patches, $(FFMPEG_PATCH)); \
 		./configure $(SILENT_OPT) \
@@ -384,14 +319,13 @@ endif
 			--enable-shared \
 			--enable-network \
 			--enable-nonfree \
-			--enable-small \
-			--enable-stripping \
 			--disable-static \
 			--disable-debug \
 			--disable-runtime-cpudetect \
 			--enable-pic \
 			--enable-pthreads \
 			--enable-hardcoded-tables \
+			--disable-optimizations \
 			\
 			--pkg-config=pkg-config \
 			--enable-cross-compile \
@@ -423,17 +357,14 @@ endif
 ################################################################################
 
 ifeq ($(BOXARCH), sh4)
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), $(LOCAL_FFMPEG_BOXTYPE_LIST)))
-
 FFMPEG_VER = 2.8.16
-FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 FFMPEG_PATCH  = ffmpeg-$(FFMPEG_VER)-buffer-size.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hds-libroxml.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-aac.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-kodi.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-tls.patch
 #FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-remove_avpriv_request_sample.patch
-
+FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 FFMPEG_DEPS =
 FFMPEG_CONF_OPTS = 
 FFMPRG_EXTRA_CFLAGS =
@@ -596,13 +527,10 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 			--enable-demuxer=vc1 \
 			--enable-demuxer=wav \
 			\
-			--disable-protocol=cache \
 			--disable-protocol=concat \
-			--disable-protocol=crypto \
 			--disable-protocol=data \
 			--disable-protocol=ftp \
 			--disable-protocol=gopher \
-			--disable-protocol=hls \
 			--disable-protocol=httpproxy \
 			--disable-protocol=md5 \
 			--disable-protocol=pipe \
@@ -661,6 +589,6 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(
 	test -e $(PKG_CONFIG_PATH)/libswscale.pc && $(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libswscale.pc || true
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(TOUCH)
+	
+endif
 
-endif
-endif
