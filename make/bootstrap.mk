@@ -123,49 +123,49 @@ $(D)/host_mkcramfs: $(D)/directories $(ARCHIVE)/$(HOST_MKCRAMFS_SOURCE)
 	$(TOUCH)
 
 #
-# host_mksquashfs3
+# host_mksquashfs
 #
-HOST_MKSQUASHFS3_VER = 3.3
-HOST_MKSQUASHFS3_SOURCE = squashfs$(HOST_MKSQUASHFS3_VER).tar.gz
+HOST_MKSQUASHFS_VER = 3.3
+HOST_MKSQUASHFS_SOURCE = squashfs$(HOST_MKSQUASHFS_VER).tar.gz
 
-$(ARCHIVE)/$(HOST_MKSQUASHFS3_SOURCE):
-	$(WGET) https://sourceforge.net/projects/squashfs/files/OldFiles/$(HOST_MKSQUASHFS3_SOURCE)
+$(ARCHIVE)/$(HOST_MKSQUASHFS_SOURCE):
+	$(WGET) https://sourceforge.net/projects/squashfs/files/OldFiles/$(HOST_MKSQUASHFS_SOURCE)
 
-$(D)/host_mksquashfs3: directories $(ARCHIVE)/$(HOST_MKSQUASHFS3_SOURCE)
+$(D)/host_mksquashfs: directories $(ARCHIVE)/$(HOST_MKSQUASHFS_SOURCE)
 	$(START_BUILD)
-	$(REMOVE)/squashfs$(HOST_MKSQUASHFS3_VER)
-	$(UNTAR)/$(HOST_MKSQUASHFS3_SOURCE)
-	$(CHDIR)/squashfs$(HOST_MKSQUASHFS3_VER)/squashfs-tools; \
+	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_VER)
+	$(UNTAR)/$(HOST_MKSQUASHFS_SOURCE)
+	$(CHDIR)/squashfs$(HOST_MKSQUASHFS_VER)/squashfs-tools; \
 		$(MAKE) CC=gcc all
-		mv $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS3_VER)/squashfs-tools/mksquashfs $(HOST_DIR)/bin/mksquashfs3.3
-		mv $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS3_VER)/squashfs-tools/unsquashfs $(HOST_DIR)/bin/unsquashfs3.3
-	$(REMOVE)/squashfs$(HOST_MKSQUASHFS3_VER)
+		mv $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS_VER)/squashfs-tools/mksquashfs $(HOST_DIR)/bin/mksquashfs3.3
+		mv $(BUILD_TMP)/squashfs$(HOST_MKSQUASHFS_VER)/squashfs-tools/unsquashfs $(HOST_DIR)/bin/unsquashfs3.3
+	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_VER)
 	$(TOUCH)
 
 #
 # host_mksquashfs with LZMA support
 #
-HOST_MKSQUASHFS_VER = 4.2
-HOST_MKSQUASHFS_SOURCE = squashfs$(HOST_MKSQUASHFS_VER).tar.gz
-HOST_MKSQUASHFS_PATCH = squashfs-$(HOST_MKSQUASHFS_VER)-sysmacros.patch
+HOST_MKSQUASHFS_LZMA_VER = 4.2
+HOST_MKSQUASHFS_LZMA_SOURCE = squashfs$(HOST_MKSQUASHFS_LZMA_VER).tar.gz
+HOST_MKSQUASHFS_LZMA_PATCH = squashfs-$(HOST_MKSQUASHFS_LZMA_VER)-sysmacros.patch
 
 LZMA_VER = 4.65
 LZMA_SOURCE = lzma-$(LZMA_VER).tar.bz2
 
-$(ARCHIVE)/$(HOST_MKSQUASHFS_SOURCE):
-	$(WGET) https://sourceforge.net/projects/squashfs/files/squashfs/squashfs$(HOST_MKSQUASHFS_VER)/$(HOST_MKSQUASHFS_SOURCE)
+$(ARCHIVE)/$(HOST_MKSQUASHFS_LZMA_SOURCE):
+	$(WGET) https://sourceforge.net/projects/squashfs/files/squashfs/squashfs$(HOST_MKSQUASHFS_VER)/$(HOST_MKSQUASHFS_LZMA_SOURCE)
 
 $(ARCHIVE)/$(LZMA_SOURCE):
 	$(WGET) http://downloads.openwrt.org/sources/$(LZMA_SOURCE)
 
-$(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MKSQUASHFS_SOURCE)
+$(D)/host_mksquashfs_lzma: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MKSQUASHFS_LZMA_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/lzma-$(LZMA_VER)
 	$(UNTAR)/$(LZMA_SOURCE)
-	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_VER)
-	$(UNTAR)/$(HOST_MKSQUASHFS_SOURCE)
-	$(CHDIR)/squashfs$(HOST_MKSQUASHFS_VER); \
-		$(call apply_patches,$(HOST_MKSQUASHFS_PATCH)); \
+	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_LZMA_VER)
+	$(UNTAR)/$(HOST_MKSQUASHFS_LZMA_SOURCE)
+	$(CHDIR)/squashfs$(HOST_MKSQUASHFS_LZMA_VER); \
+		$(call apply_patches,$(HOST_MKSQUASHFS_LZMA_PATCH)); \
 		$(MAKE) -C squashfs-tools \
 			LZMA_SUPPORT=1 \
 			LZMA_DIR=$(BUILD_TMP)/lzma-$(LZMA_VER) \
@@ -173,7 +173,7 @@ $(D)/host_mksquashfs: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HOST_MK
 			XATTR_DEFAULT=0 \
 			install INSTALL_DIR=$(HOST_DIR)/bin
 	$(REMOVE)/lzma-$(LZMA_VER)
-	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_VER)
+	$(REMOVE)/squashfs$(HOST_MKSQUASHFS_LZMA_VER)
 	$(TOUCH)
 
 #
@@ -282,10 +282,12 @@ BOOTSTRAP += $(D)/ccache
 BOOTSTRAP += $(CROSSTOOL)
 BOOTSTRAP += $(TARGET_DIR)/lib/libc.so.6
 BOOTSTRAP += $(D)/host_pkgconfig
+ifeq ($(BOXARCH), sh4)
 BOOTSTRAP += $(D)/host_module_init_tools
 BOOTSTRAP += $(D)/host_mtd_utils
 BOOTSTRAP += $(D)/host_mkcramfs
-BOOTSTRAP += $(D)/host_mksquashfs
+BOOTSTRAP += $(D)/host_mksquashfs_lzma
+endif
 ifeq ($(BOXARCH), arm)
 BOOTSTRAP += $(D)/host_resize2fs
 BOOTSTRAP += $(D)/cortex_strings

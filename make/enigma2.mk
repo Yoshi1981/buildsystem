@@ -1,19 +1,33 @@
 #
 # enigma2
 #
-ENIGMA2_DEPS  = $(D)/bootstrap $(D)/opkg $(D)/ncurses $(LIRC) $(D)/libcurl $(D)/libid3tag $(D)/libmad
-ENIGMA2_DEPS += $(D)/libpng $(D)/libjpeg $(D)/giflib $(D)/freetype
-ENIGMA2_DEPS += $(D)/alsa_utils $(D)/ffmpeg
-ENIGMA2_DEPS += $(D)/libfribidi $(D)/libsigc $(D)/expat $(D)/libdvbsi $(D)/libusb
-ENIGMA2_DEPS += $(D)/sdparm $(D)/minidlna $(D)/ethtool
+ENIGMA2_DEPS  = $(D)/bootstrap 
+ENIGMA2_DEPS += $(D)/opkg 
+ENIGMA2_DEPS += $(D)/ncurses 
+ENIGMA2_DEPS += $(LIRC) 
+ENIGMA2_DEPS += $(D)/libcurl 
+ENIGMA2_DEPS += $(D)/libid3tag 
+ENIGMA2_DEPS += $(D)/libmad
+ENIGMA2_DEPS += $(D)/libpng 
+ENIGMA2_DEPS += $(D)/libjpeg 
+ENIGMA2_DEPS += $(D)/giflib 
+ENIGMA2_DEPS += $(D)/freetype
+ENIGMA2_DEPS += $(D)/alsa_utils 
+ENIGMA2_DEPS += $(D)/ffmpeg
+ENIGMA2_DEPS += $(D)/libfribidi 
+ENIGMA2_DEPS += $(D)/libsigc 
+ENIGMA2_DEPS += $(D)/expat 
+ENIGMA2_DEPS += $(D)/libdvbsi 
+ENIGMA2_DEPS += $(D)/libusb
+ENIGMA2_DEPS += $(D)/sdparm 
+ENIGMA2_DEPS += $(D)/minidlna 
+ENIGMA2_DEPS += $(D)/ethtool
 ENIGMA2_DEPS += $(D)/avahi
 ENIGMA2_DEPS += python-all
-ENIGMA2_DEPS += $(D)/libdreamdvd $(D)/enigma2_tuxtxt32bpp $(D)/enigma2_hotplug_e2_helper
+ENIGMA2_DEPS += $(D)/libdreamdvd 
+ENIGMA2_DEPS += $(D)/enigma2_tuxtxt32bpp 
+ENIGMA2_DEPS += $(D)/enigma2_hotplug_e2_helper
 ENIGMA2_DEPS += $(LOCAL_ENIGMA2_DEPS)
-
-ifeq ($(IMAGE), enigma2-wlandriver)
-ENIGMA2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
-endif
 
 ifeq ($(MEDIAFW), eplayer3)
 ENIGMA2_DEPS  += $(D)/tools-libeplayer3

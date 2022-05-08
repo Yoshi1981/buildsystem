@@ -21,7 +21,6 @@ SCRIPTS_DIR           = $(BASE_DIR)/scripts
 SKEL_ROOT             = $(BASE_DIR)/root
 
 # BOXTYPE
-#BOXTYPE ?= gb800se
 -include $(BASE_DIR)/config
 
 #

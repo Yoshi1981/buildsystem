@@ -1,7 +1,19 @@
 #
 # titan
 #
-TITAN_DEPS  = bootstrap libcurl curlftpfs rarfs djmount freetype libjpeg libpng ffmpeg titan-libdreamdvd $(MEDIAFW_DEP) tuxtxt32bpp tools-libmme_host tools-libmme_image
+TITAN_DEPS = libcurl 
+TITAN_DEPS += curlftpfs 
+TITAN_DEPS += rarfs 
+TITAN_DEPS += djmount 
+TITAN_DEPS += freetype 
+TITAN_DEPS += libjpeg 
+TITAN_DEPS += libpng 
+TITAN_DEPS += ffmpeg 
+TITAN_DEPS += titan-libdreamdvd 
+TITAN_DEPS += $(MEDIAFW_DEP) 
+TITAN_DEPS += tuxtxt32bpp 
+TITAN_DEPS += tools-libmme_host 
+TITAN_DEPS += tools-libmme_image
 
 N_CPPFLAGS     = -I$(TARGET_DIR)/usr/include
 #N_CPPFLAGS    += -I$(APPS_DIR)/tools/libeplayer3/include
@@ -59,27 +71,42 @@ $(SOURCE_DIR)/titan/config.status: $(D)/titan.do_prepare
 			CPPFLAGS="$(N_CPPFLAGS)"
 	touch $@
 
+#
+#
+#
 $(D)/titan.do_compile: $(SOURCE_DIR)/titan/config.status
 	cd $(SOURCE_DIR)/titan; \
 		$(MAKE) all
 	touch $@
 
+#
+#
+#
 $(D)/titan: $(D)/titan.do_prepare $(D)/titan.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/titan install DESTDIR=$(TARGET_DIR)
 	$(TARGET)-strip $(TARGET_DIR)/usr/local/bin/titan
 	touch $@
-	
+
+#
+#
+#	
 titan-clean:
 	rm -f $(D)/titan
 	rm -f $(D)/titan.do_prepare
 	cd $(SOURCE_DIR)/titan && \
 		$(MAKE) clean
 
+#
+#
+#
 titan-distclean:
 	$(MAKE) -C $(SOURCE_DIR)/titan distclean
 	rm -rf $(SOURCE_DIR)/titan/config.status
 	rm -f $(D)/titan*
 
+#
+#
+#
 titan-updateyaud: titan-clean titan
 	mkdir -p $(prefix)/release/usr/local/bin
 	cp $(TARGET_DIR)/usr/local/bin/titan $(prefix)/release_titan/usr/local/bin/
@@ -133,7 +160,6 @@ titan-libdreamdvd-distclean:
 #
 # titan-plugins
 #
-
 #$(D)/titan-plugins.do_prepare: | libpng libjpeg libfreetype libcurl
 $(D)/titan-plugins.do_prepare: | libpng libjpeg freetype libcurl
 	[ -d "$(SOURCE_DIR)/titan" ] && \

@@ -326,7 +326,6 @@ include make/tools.mk
 include make/release.mk
 include make/flashimage.mk
 include make/cleantargets.mk
-include make/patches.mk
 include make/bootstrap.mk
 include make/system-tools.mk
 include make/neutrino.mk
