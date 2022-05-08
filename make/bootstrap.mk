@@ -153,7 +153,7 @@ LZMA_VER = 4.65
 LZMA_SOURCE = lzma-$(LZMA_VER).tar.bz2
 
 $(ARCHIVE)/$(HOST_MKSQUASHFS_LZMA_SOURCE):
-	$(WGET) https://sourceforge.net/projects/squashfs/files/squashfs/squashfs$(HOST_MKSQUASHFS_VER)/$(HOST_MKSQUASHFS_LZMA_SOURCE)
+	$(WGET) https://sourceforge.net/projects/squashfs/files/squashfs/squashfs$(HOST_MKSQUASHFS_LZMA_VER)/$(HOST_MKSQUASHFS_LZMA_SOURCE)
 
 $(ARCHIVE)/$(LZMA_SOURCE):
 	$(WGET) http://downloads.openwrt.org/sources/$(LZMA_SOURCE)
@@ -166,7 +166,7 @@ $(D)/host_mksquashfs_lzma: directories $(ARCHIVE)/$(LZMA_SOURCE) $(ARCHIVE)/$(HO
 	$(UNTAR)/$(HOST_MKSQUASHFS_LZMA_SOURCE)
 	$(CHDIR)/squashfs$(HOST_MKSQUASHFS_LZMA_VER); \
 		$(call apply_patches,$(HOST_MKSQUASHFS_LZMA_PATCH)); \
-		$(MAKE) -C squashfs-tools \
+		$(MAKE) -C squashfs-tools EXTRA_CFLAGS=-fgnu89-inline \
 			LZMA_SUPPORT=1 \
 			LZMA_DIR=$(BUILD_TMP)/lzma-$(LZMA_VER) \
 			XATTR_SUPPORT=0 \
