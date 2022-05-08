@@ -317,7 +317,8 @@ $(D)/portmap: $(D)/bootstrap $(D)/lsb $(ARCHIVE)/$(PORTMAP_SOURCE) $(ARCHIVE)/po
 E2FSPROGS_VER = 1.45.6
 
 E2FSPROGS_SOURCE = e2fsprogs-$(E2FSPROGS_VER).tar.gz
-E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VER).patch e2fsprogs-$(E2FSPROGS_VER)-gettext-patch.patch
+#E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VER).patch e2fsprogs-$(E2FSPROGS_VER)-gettext-patch.patch
+E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VER).patch
 
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 E2FSPROGS_ARGS = --enable-resizer
