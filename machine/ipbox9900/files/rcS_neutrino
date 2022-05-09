@@ -104,10 +104,12 @@ if [ ! -e /var/etc/.firstboot ]; then
    mdev -s
 
    stfbcontrol a 255
+   
+   echo "neutrino" > /dev/dbox/vfd
+   echo "starting neutrino->"
+      
    until false
    do
-      echo "neutrino" > /dev/dbox/vfd
-      echo "starting neutrino->"
       /usr/local/bin/neutrino
       rtv=$?
       echo "neutrino ended <- RTV: " $rtv

@@ -122,12 +122,11 @@ if [ ! -e /var/etc/.firstboot ]; then
    echo /sbin/mdev >/proc/sys/kernel/hotplug
    mdev -s
 
-   echo "run" > /dev/vfd
+   echo "LOADING neutrino" > /dev/vfd
    echo "LOADING neutrino"
 
    until false
    do
-      echo "starting neutrino ->"
       /usr/local/bin/neutrino
       rtv=$?
       echo "neutrino ended <- RTV: " $rtv

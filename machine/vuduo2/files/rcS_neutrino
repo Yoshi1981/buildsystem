@@ -240,9 +240,10 @@ if [ -e /var/tuxbox/config/.bootlogo ]; then
     killall -9 showiframe
 fi
 
+echo "[rcS] starting neutrino GUI ->"
+
 until false
 do
-    	echo "starting GUI ->"
 	/usr/local/bin/neutrino
 	rtv=$?
 	echo "GUI ended <- RTV: " $rtv

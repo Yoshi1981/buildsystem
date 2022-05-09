@@ -95,11 +95,12 @@ if [ ! -e /var/etc/.firstboot ]; then
    #mdev as hotplug
    echo /sbin/mdev >/proc/sys/kernel/hotplug
    mdev -s
+   
+   echo "neutrino" >/dev/vfd
+   echo "starting neutrino ->"
 
    until false
    do
-      echo "neutrino" >/dev/vfd
-      echo "starting neutrino ->"
       /usr/local/bin/neutrino
       rtv=$?
       echo "neutrino ended <- RTV: " $rtv
@@ -118,5 +119,4 @@ if [ ! -e /var/etc/.firstboot ]; then
       esac
    done
 fi
-
 

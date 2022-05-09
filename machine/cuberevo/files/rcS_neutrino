@@ -133,12 +133,13 @@ if [ ! -e /var/etc/.firstboot ]; then
    stfbcontrol a 255
 
     /bin/evremote2 10 140 &
+    
+    echo "starting neutrino ->"
+     killall -9 showiframe
+   /bin/fp_control -t "LOADING neutrino"
 
    until false
    do
-   killall -9 showiframe
-   /bin/fp_control -t "LOADING neutrino"
-   echo "starting neutrino ->"
    /usr/local/bin/neutrino
      rtv=$?
       echo "neutrino ended <- RTV: " $rtv
@@ -157,4 +158,5 @@ if [ ! -e /var/etc/.firstboot ]; then
       esac
    done
 fi
+
 

@@ -85,10 +85,11 @@ else
 	rm -f /tmp/ntpd.pid
 fi
 
+echo "[rcS] starting neutrino GUI ->"
+
 #
 until false
 do
-	echo "[rcS] starting neutrino GUI ->"
 	/usr/local/bin/neutrino
 	rtv=$?
 	echo "GUI ended <- RTV: " $rtv
@@ -115,5 +116,4 @@ do
 			;;
 	esac
 done
-
 

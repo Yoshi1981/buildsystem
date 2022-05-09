@@ -81,9 +81,10 @@ date -s "2018-01-01 00:00"
 
 killall -9 showiframe
 
+echo "[rcS] starting neutrino GUI ->"
+
 until false
 do
-	echo "[rcS] starting neutrino GUI ->"
 	/usr/local/bin/neutrino
 	rtv=$?
 	echo "GUI ended <- RTV: " $rtv
@@ -110,6 +111,4 @@ do
 			;;
 	esac
 done
-
-
 

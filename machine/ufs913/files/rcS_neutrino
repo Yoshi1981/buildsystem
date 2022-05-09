@@ -133,10 +133,11 @@ if [ ! -e /var/etc/.firstboot ]; then
    /usr/sbin/inetd
 
    stfbcontrol a 255
+   
+   echo "[rcS] starting neutrino GUI ->"
 
    until false
    do
-      echo "starting neutrino ->"
       /usr/local/bin/neutrino
       rtv=$?
       echo "neutrino ended <- RTV: " $rtv

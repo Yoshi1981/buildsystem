@@ -94,10 +94,10 @@ else
 	rm -f /tmp/ntpd.pid
 fi
 
+echo "starting neutrino ->"
 
 until false
 do
-	echo "[rcS] starting GUI ->"
 	if [ -e /var/bin/neutrino ];then
 		/var/bin/neutrino
 	else
@@ -128,9 +128,4 @@ do
 			;;
 	esac
 done
-#echo "      *-*       " > /dev/dbox/oled0
 
-#never reached
-#echo "REBOOT $model" > /dev/dbox/oled0
-#echo "REBOOT $model"
-#reboot -f

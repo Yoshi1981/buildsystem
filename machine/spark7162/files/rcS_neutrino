@@ -132,12 +132,11 @@ if [ ! -e /var/etc/.firstboot ]; then
    #tuner workaround
    export FE_OFFSET=1
 
-   echo "run" > /dev/vfd
+   echo "LOADING neutrino" > /dev/vfd
    echo "LOADING neutrino"
 
    until false
    do
-      echo "starting neutrino ->"
       /usr/local/bin/neutrino
       rtv=$?
       echo "neutrino ended <- RTV: " $rtv

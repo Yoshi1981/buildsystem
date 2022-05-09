@@ -124,10 +124,11 @@ if [ ! -e /var/etc/.firstboot ]; then
          /etc/init.d/networking start
       fi
    fi
+   
+   echo "[rcS] starting neutrino GUI ->"
 
    until false
    do
-      echo "starting neutrino ->"
       /usr/local/bin/neutrino
       rtv=$?
       echo "neutrino ended <- RTV: " $rtv

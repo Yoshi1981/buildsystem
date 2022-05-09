@@ -132,10 +132,11 @@ if [ ! -e /var/etc/.firstboot ]; then
       fi
    fi
 
+   fp_control -t "LOADING neutrino"
+   echo "starting neutrino ->"
+      
    until false
    do
-      fp_control -t "LOADING neutrino"
-      echo "starting neutrino ->"
       /usr/local/bin/neutrino
       rtv=$?
       echo "neutrino ended <- RTV: " $rtv
@@ -155,7 +156,3 @@ if [ ! -e /var/etc/.firstboot ]; then
    done
 fi
 
-#never reached
-#echo "REBOOT AV7500" > /dev/vfd
-#echo "REBOOT AV7500"
-#init 6

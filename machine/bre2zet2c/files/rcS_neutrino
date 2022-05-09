@@ -98,9 +98,10 @@ else
 	rm -f /tmp/ntpd.pid
 fi
 
+echo "starting neutrino ->"
+
 until false
 do
-	echo "[rcS] starting neutrino GUI ->"
 	if [ -e /var/bin/neutrino ];then
 		/var/bin/neutrino
 	else
@@ -123,9 +124,8 @@ do
 			;;
 		*) echo "*"
 			echo -e "\033[01;31mERROR: $rtv\033[00m"
-			sync
+			init 6
 			;;
 	esac
 done
-
 
