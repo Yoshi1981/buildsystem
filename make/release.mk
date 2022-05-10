@@ -383,6 +383,11 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 
 #
+# release
+#
+release: release-$(FLAVOUR)
+
+#
 # release-clean
 #
 release-clean:
