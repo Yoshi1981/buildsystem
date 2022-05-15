@@ -289,7 +289,7 @@ MAKE_OPTS := \
 #
 WLAN ?= wlandriver
 ifeq ($(WLAN), wlandriver)
-WLANDRIVER         = WLANDRIVER=wlandriver
+WLANDRIVER = WLANDRIVER=wlandriver
 endif
 
 DEPMOD = $(HOST_DIR)/bin/depmod
