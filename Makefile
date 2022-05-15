@@ -271,7 +271,7 @@ ifeq ($(MAINTAINER),)
 	@echo
 endif
 	@if ! test -e $(BASE_DIR)/config; then \
-		echo;echo "If you want to create or modify the configuration, run './make.sh'"; \
+		echo;echo "If you want to create or modify the configuration, run 'make init or make'"; \
 		echo; fi
 
 help:
