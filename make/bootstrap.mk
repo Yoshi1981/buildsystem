@@ -50,7 +50,6 @@ $(D)/host_pkgconfig: $(D)/directories $(ARCHIVE)/$(HOST_PKGCONFIG_SOURCE)
 			--program-prefix=$(TARGET)- \
 			--disable-host-tool \
 			--with-pc_path=$(PKG_CONFIG_PATH) \
-			--with-internal-glib \
 		; \
 		$(MAKE); \
 		$(MAKE) install
