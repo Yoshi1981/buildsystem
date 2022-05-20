@@ -16,7 +16,8 @@ endif
 #
 GSTREAMER_VER = 1.12.3
 GSTREAMER_SOURCE = gstreamer-$(GSTREAMER_VER).tar.xz
-GSTREAMER_PATCH = gstreamer-$(GSTREAMER_VER)-revert-use-new-gst-adapter-get-buffer.patch GSTREAMER_PATCH += gstreamer-fix-builds-with-make-4.3.patch
+GSTREAMER_PATCH = gstreamer-$(GSTREAMER_VER)-revert-use-new-gst-adapter-get-buffer.patch 
+GSTREAMER_PATCH += gstreamer-fix-builds-with-make-4.3.patch
 
 $(ARCHIVE)/$(GSTREAMER_SOURCE):
 	$(WGET) https://gstreamer.freedesktop.org/src/gstreamer/$(GSTREAMER_SOURCE)
