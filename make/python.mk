@@ -26,10 +26,11 @@ PYTHON_INSTALL = \
 # host_python
 #
 PYTHON_VER_MAJOR = 2.7
-PYTHON_VER_MINOR = 13
+PYTHON_VER_MINOR = 18
 PYTHON_VER = $(PYTHON_VER_MAJOR).$(PYTHON_VER_MINOR)
 PYTHON_SOURCE = Python-$(PYTHON_VER).tar.xz
 HOST_PYTHON_PATCH = python-$(PYTHON_VER).patch
+HOST_PYTHON_PATCH += python-$(PYTHON_VER)-support_64bit.patch
 
 $(ARCHIVE)/$(PYTHON_SOURCE):
 	$(WGET) https://www.python.org/ftp/python/$(PYTHON_VER)/$(PYTHON_SOURCE)
