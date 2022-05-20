@@ -1478,6 +1478,7 @@ $(D)/libpsl: $(D)/bootstrap $(D)/host_python
 			--host=$(TARGET) \
 			--prefix=/usr \
 			--enable-man=no \
+			--enable-gtk-doc=no \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)

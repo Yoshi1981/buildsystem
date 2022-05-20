@@ -117,7 +117,7 @@ PACKAGES="\
 	${UBUNTU:+u-boot-tools}                                                                                       \
 	${UBUNTU:+simg2img}                                                                                           \
 	${UBUNTU:+lua5.2}                                                                                             \
-    	${UBUNTU:+python2-dev}                                                                                         \
+    	${UBUNTU:+python2-dev}                                                                                        \
 ";
 
 if [ "$UBUNTU" == 1 ]; then

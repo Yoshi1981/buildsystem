@@ -189,7 +189,7 @@ VUSOLO4K_IMAGE_NAME = disk
 VUSOLO4K_BOOT_IMAGE = boot.img
 VUSOLO4K_IMAGE_LINK = $(VUSOLO4K_IMAGE_NAME).ext4
 VUSOLO4K_IMAGE_ROOTFS_SIZE = 294912
-VUSOLO4K_PREFIX = vuplus/solo4k
+FLASHIMAGE_PREFIX = vuplus/solo4k
 
 # emmc image
 EMMC_IMAGE_SIZE = 3817472
@@ -225,7 +225,7 @@ SWAP_PARTITION_OFFSET = $(shell expr $(SWAP_DATA_PARTITION_OFFSET) \+ $(SWAP_DAT
 
 flash-image-vusolo4k-multi-disk: $(D)/host_resize2fs
 	rm -rf $(IMAGE_BUILD_DIR)
-	mkdir -p $(IMAGE_BUILD_DIR)/$(VUSOLO4K_PREFIX)
+	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
 	mkdir -p $(FLASH_DIR)/$(BOXTYPE)
 	# Create a sparse image block
 	dd if=/dev/zero of=$(IMAGE_BUILD_DIR)/$(VUSOLO4K_IMAGE_LINK) seek=$(shell expr $(VUSOLO4K_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR)) count=0 bs=$(BLOCK_SIZE)
@@ -252,21 +252,21 @@ flash-image-vusolo4k-multi-disk: $(D)/host_resize2fs
 	$(HOST_DIR)/bin/resize2fs $(IMAGE_BUILD_DIR)/$(VUSOLO4K_IMAGE_LINK) $(ROOTFS_PARTITION_SIZE_MULTI)k
 	# Truncate on purpose
 	dd if=$(IMAGE_BUILD_DIR)/$(VUSOLO4K_IMAGE_LINK) of=$(EMMC_IMAGE) bs=$(BLOCK_SIZE) seek=$(shell expr $(ROOTFS_PARTITION_OFFSET) \* $(BLOCK_SECTOR)) count=$(shell expr $(VUSOLO4K_IMAGE_ROOTFS_SIZE) \* $(BLOCK_SECTOR))
-	mv $(IMAGE_BUILD_DIR)/disk.img $(IMAGE_BUILD_DIR)/$(VUSOLO4K_PREFIX)/
+	mv $(IMAGE_BUILD_DIR)/disk.img $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/
 
 flash-image-vusolo4k-multi-rootfs:
 	# Create final USB-image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(VUSOLO4K_PREFIX)
+	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
 	mkdir -p $(FLASH_DIR)/$(BOXTYPE)
-	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7366c0 $(IMAGE_BUILD_DIR)/$(VUSOLO4K_PREFIX)/initrd_auto.bin
-	cp $(TARGET_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(VUSOLO4K_PREFIX)/kernel_auto.bin
+	cp $(TARGET_DIR)/boot/vmlinuz-initrd-7366c0 $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/initrd_auto.bin
+	cp $(TARGET_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/kernel_auto.bin
 	cd $(RELEASE_DIR); \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(VUSOLO4K_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(VUSOLO4K_PREFIX)/rootfs.tar
-	echo This file forces a reboot after the update. > $(IMAGE_BUILD_DIR)/$(VUSOLO4K_PREFIX)/reboot.update
-	echo $(BOXTYPE)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(VUSOLO4K_PREFIX)/imageversion
+	tar -cvf $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar --exclude=zImage* --exclude=vmlinuz-initrd* . > /dev/null 2>&1; \
+	bzip2 $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar
+	echo This file forces a reboot after the update. > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/reboot.update
+	echo $(BOXTYPE)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
 	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.zip $(VUSOLO4K_PREFIX)/rootfs.tar.bz2 $(VUSOLO4K_PREFIX)/initrd_auto.bin $(VUSOLO4K_PREFIX)/kernel_auto.bin $(VUSOLO4K_PREFIX)/reboot.update $(VUSOLO4K_PREFIX)/imageversion
+	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.zip $(FLASHIMAGE_PREFIX)/rootfs.tar.bz2 $(FLASHIMAGE_PREFIX)/initrd_auto.bin $(FLASHIMAGE_PREFIX)/kernel_auto.bin $(FLASHIMAGE_PREFIX)/reboot.update $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
@@ -285,7 +285,4 @@ flash-image-vusolo4k-online:
 	tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_online.tgz rootfs.tar.bz2 initrd_auto.bin kernel_auto.bin reboot.update imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
-
-
-
 

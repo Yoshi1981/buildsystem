@@ -178,6 +178,9 @@ release-osmio4k:
 #
 # flashimage
 #
+FLASHIMAGE_PREFIX = osmio4k
+
+#
 IMAGE_NAME = emmc
 IMAGE_LINK = $(IMAGE_NAME).ext4
 
@@ -254,31 +257,32 @@ flash-image-osmio4k-multi-disk:
 
 flash-image-osmio4k-multi-rootfs:
 	# Create final USB-image
-	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
+	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
 	mkdir -p $(FLASH_DIR)/$(BOXTYPE)
-	cp $(TARGET_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/kernel.bin
+	cp $(TARGET_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/kernel.bin
 	cd $(RELEASE_DIR) && \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar . >/dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar
-	echo $(BOXTYPE)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
-	echo "rename this file to 'force' to force an update without confirmation" > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/noforce; \
+	tar -cvf $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar . >/dev/null 2>&1; \
+	bzip2 $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar
+	echo $(BOXTYPE)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
+	echo "rename this file to 'force' to force an update without confirmation" > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/noforce; \
 	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.zip $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/kernel.bin $(BOXTYPE)/imageversion
+	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.zip $(FLASHIMAGE_PREFIX)/rootfs.tar.bz2 $(FLASHIMAGE_PREFIX)/kernel.bin $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
 flash-image-$(BOXTYPE)-online:
 	# Create final USB-image
 	rm -rf $(IMAGE_BUILD_DIR) || true
-	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
-	cp $(TARGET_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/kernel.bin
+	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
+	mkdir -p $(FLASH_DIR)/$(BOXTYPE)
+	cp $(TARGET_DIR)/boot/zImage $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/kernel.bin
 	cd $(RELEASE_DIR) && \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar . >/dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar
-	echo $(BOXTYPE)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
-	echo "rename this file to 'force' to force an update without confirmation" > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/noforce; \
-	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
-	tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_online.tgz rootfs.tar.bz2 kernel.bin imageversion
+	tar -cvf $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar . >/dev/null 2>&1; \
+	bzip2 $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar
+	echo $(BOXTYPE)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
+	echo "rename this file to 'force' to force an update without confirmation" > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/noforce; \
+	cd $(IMAGE_BUILD_DIR) && \
+	tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_online.tgz $(FLASHIMAGE_PREFIX)/rootfs.tar.bz2 $(FLASHIMAGE_PREFIX)/kernel.bin $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 

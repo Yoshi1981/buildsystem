@@ -226,6 +226,8 @@ release-hd61:
 #
 # flashimage
 #
+FLASHIMAGE_PREFIX = hd61
+
 # general
 FLASH_IMAGE_NAME = disk
 FLASH_BOOT_IMAGE = bootoptions.img
@@ -252,7 +254,7 @@ $(ARCHIVE)/$(FLASH_RECOVERY_SRC):
 
 flash-image-hd61-multi-disk: $(ARCHIVE)/$(FLASH_BOOTARGS_SRC) $(ARCHIVE)/$(FLASH_PARTITONS_SRC) $(ARCHIVE)/$(FLASH_RECOVERY_SRC)
 	rm -rf $(IMAGE_BUILD_DIR) || true
-	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
+	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
 	mkdir -p $(FLASH_DIR)/$(BOXTYPE)
 	unzip -o $(ARCHIVE)/$(FLASH_BOOTARGS_SRC) -d $(IMAGE_BUILD_DIR)
 	unzip -o $(ARCHIVE)/$(FLASH_PARTITONS_SRC) -d $(IMAGE_BUILD_DIR)
@@ -262,9 +264,9 @@ flash-image-hd61-multi-disk: $(ARCHIVE)/$(FLASH_BOOTARGS_SRC) $(ARCHIVE)/$(FLASH
 	if [ -e $(RELEASE_DIR)/boot/logo.img ]; then \
 		cp -rf $(RELEASE_DIR)/boot/logo.img $(IMAGE_BUILD_DIR)/$(BOXTYPE); \
 	fi
-	echo "$(BOXTYPE)_$(shell date '+%d.%m.%Y-%H.%M')_RECOVERY" > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/recoveryversion
-	dd if=/dev/zero of=$(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE) bs=1024 count=$(FLASH_BOOTOPTIONS_PARTITION_SIZE)
-	mkfs.msdos -S 512 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE)
+	echo "$(BOXTYPE)_$(shell date '+%d.%m.%Y-%H.%M')_RECOVERY" > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/recoveryversion
+	dd if=/dev/zero of=$(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE) bs=1024 count=$(FLASH_BOOTOPTIONS_PARTITION_SIZE)
+	mkfs.msdos -S 512 $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE)
 	echo "bootcmd=setenv bootargs \$$(bootargs) \$$(bootargs_common); mmc read 0 0x1000000 0x3BD000 0x8000; bootm 0x1000000; run bootcmd_fallback" > $(IMAGE_BUILD_DIR)/STARTUP
 	echo "bootargs=root=/dev/mmcblk0p23 rootsubdir=linuxrootfs1 rootfstype=ext4 kernel=/dev/mmcblk0p19" >> $(IMAGE_BUILD_DIR)/STARTUP
 	echo "bootcmd=setenv vfd_msg andr;setenv bootargs \$$(bootargs) \$$(bootargs_common); run bootcmd_android; run bootcmd_fallback" > $(IMAGE_BUILD_DIR)/STARTUP_ANDROID
@@ -292,24 +294,24 @@ flash-image-hd61-multi-disk: $(ARCHIVE)/$(FLASH_BOOTARGS_SRC) $(ARCHIVE)/$(FLASH
 	echo "#netmask 255.255.255.0" >> $(IMAGE_BUILD_DIR)/bootmenu.conf
 	echo "#gateway 192.168.178.1" >> $(IMAGE_BUILD_DIR)/bootmenu.conf
 	echo "#dns 192.168.178.1" >> $(IMAGE_BUILD_DIR)/bootmenu.conf
-	mcopy -i $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_ANDROID ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_ANDROID_DISABLE_LINUXSE ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_LINUX_1 ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_LINUX_2 ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_LINUX_3 ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_LINUX_4 ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_RECOVERY ::
-	mcopy -i $(IMAGE_BUILD_DIR)/$(BOXTYPE)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/bootmenu.conf ::
+	mcopy -i $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP ::
+	mcopy -i $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_ANDROID ::
+	mcopy -i $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_ANDROID_DISABLE_LINUXSE ::
+	mcopy -i $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_LINUX_1 ::
+	mcopy -i $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_LINUX_2 ::
+	mcopy -i $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_LINUX_3 ::
+	mcopy -i $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_LINUX_4 ::
+	mcopy -i $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/STARTUP_RECOVERY ::
+	mcopy -i $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/$(FLASH_BOOT_IMAGE) -v $(IMAGE_BUILD_DIR)/bootmenu.conf ::
 	mv $(IMAGE_BUILD_DIR)/bootargs-8gb.bin $(IMAGE_BUILD_DIR)/bootargs.bin
-	mv $(IMAGE_BUILD_DIR)/$(BOXTYPE)/bootargs-8gb.bin $(IMAGE_BUILD_DIR)/$(BOXTYPE)/bootargs.bin
-	echo boot-recovery > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/misc-boot.img
-	cp $(TARGET_DIR)/boot/uImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/uImage
+	mv $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/bootargs-8gb.bin $(IMAGE_BUILD_DIR)/$(BOXTYPE)/bootargs.bin
+	echo boot-recovery > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/misc-boot.img
+	cp $(TARGET_DIR)/boot/uImage $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/uImage
 	rm -rf $(IMAGE_BUILD_DIR)/STARTUP*
 	rm -rf $(IMAGE_BUILD_DIR)/*.txt
-	rm -rf $(IMAGE_BUILD_DIR)/$(BOXTYPE)/*.txt
+	rm -rf $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/*.txt
 	rm -rf $(IMAGE_BUILD_DIR)/$(FLASH_IMAGE_LINK)
-	echo "To access the recovery image press immediately by power-up the frontpanel button or hold down a remote button key untill the display says boot" > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/recovery.txt
+	echo "To access the recovery image press immediately by power-up the frontpanel button or hold down a remote button key untill the display says boot" > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/recovery.txt
 	cd $(IMAGE_BUILD_DIR) && \
 	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_recovery_emmc.zip *
 	# cleanup
@@ -317,31 +319,31 @@ flash-image-hd61-multi-disk: $(ARCHIVE)/$(FLASH_BOOTARGS_SRC) $(ARCHIVE)/$(FLASH
 
 flash-image-hd61-multi-rootfs:
 	rm -rf $(IMAGE_BUILD_DIR) || true
-	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
+	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
 	mkdir -p $(FLASH_DIR)/$(BOXTYPE)
-	cp $(TARGET_DIR)/boot/uImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/uImage
+	cp $(TARGET_DIR)/boot/uImage $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/uImage
 	cd $(RELEASE_DIR); \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar --exclude=uImage* . > /dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar
-	echo "$(BOXTYPE)_multiroot_usb_$(shell date '+%d.%m.%Y-%H.%M')" > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
+	tar -cvf $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar --exclude=uImage* . > /dev/null 2>&1; \
+	bzip2 $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar
+	echo "$(BOXTYPE)_multiroot_usb_$(shell date '+%d.%m.%Y-%H.%M')" > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
 	echo "$(BOXTYPE)_multiroot_usb_$(shell date '+%d.%m.%Y-%H.%M')_emmc.zip" > $(IMAGE_BUILD_DIR)/unforce_$(BOXTYPE).txt; \
 	echo "Rename the unforce_$(BOXTYPE).txt to force_$(BOXTYPE).txt and move it to the root of your usb-stick" > $(IMAGE_BUILD_DIR)/force_$(BOXTYPE)_READ.ME; \
 	echo "When you enter the recovery menu then it will force to install the image $$(cat $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion).zip in the image-slot1" >> $(IMAGE_BUILD_DIR)/force_$(BOXTYPE)_READ.ME; \
 	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_mmc.zip unforce_$(BOXTYPE).txt force_$(BOXTYPE)_READ.ME $(BOXTYPE)/rootfs.tar.bz2 $(BOXTYPE)/uImage $(BOXTYPE)/imageversion
+	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_mmc.zip unforce_$(BOXTYPE).txt force_$(BOXTYPE)_READ.ME $(FLASHIMAGE_PREFIX)/rootfs.tar.bz2 $(FLASHIMAGE_PREFIX)/uImage $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
 flash-image-hd61-online:
 	rm -rf $(IMAGE_BUILD_DIR) || true
-	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
-	cp $(TARGET_DIR)/boot/uImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/uImage
+	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
+	cp $(TARGET_DIR)/boot/uImage $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/uImage
 	cd $(RELEASE_DIR); \
-	tar -cvf $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar --exclude=uImage* . > /dev/null 2>&1; \
-	bzip2 $(IMAGE_BUILD_DIR)/$(BOXTYPE)/rootfs.tar
-	echo $(BOXTYPE)_$(shell date '+%d.%m.%Y-%H.%M') > $(IMAGE_BUILD_DIR)/$(BOXTYPE)/imageversion
-	cd $(IMAGE_BUILD_DIR)/$(BOXTYPE) && \
-	tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_online.tgz rootfs.tar.bz2 uImage imageversion
+	tar -cvf $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar --exclude=uImage* . > /dev/null 2>&1; \
+	bzip2 $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar
+	echo $(BOXTYPE)_$(shell date '+%d.%m.%Y-%H.%M') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
+	cd $(IMAGE_BUILD_DIR) && \
+	tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_online.tgz $(FLASHIMAGE_PREFIX)/rootfs.tar.bz2 $(FLASHIMAGE_PREFIX)/uImage $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
