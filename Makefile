@@ -34,10 +34,9 @@ init:
 	@echo "   18)  9900HD"
 	@echo "   19)  cuberevo / 9000"
 	@echo "   20)  mini / 900HD"
-	@echo "   21)  mini2 / 910HD"
+	@echo "   21)  mini2 / 910HD / 3000HD / Xsarius Alpha"
 	@echo "   22)  250HD / 91HD"
 	@echo "   24)  2000HD"
-	@echo "   26)  3000HD / Xsarius Alpha"
 	@echo
 	@echo "  Fulan"
 	@echo "   27)  Spark"
@@ -93,7 +92,6 @@ init:
 		21) BOXTYPE="cuberevo_mini2";; \
 		22) BOXTYPE="cuberevo_250hd";; \
 		24) BOXTYPE="cuberevo_2000hd";; \
-		26) BOXTYPE="cuberevo_3000hd";; \
 		27) BOXTYPE="spark";; \
 		28) BOXTYPE="spark7162";; \
 		40) BOXTYPE="vusolo4k";; \
