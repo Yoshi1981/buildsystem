@@ -27,6 +27,7 @@ NEUTRINO_DEPS += $(D)/libmad
 NEUTRINO_DEPS += $(D)/libvorbisidec
 NEUTRINO_DEPS += $(D)/flac
 NEUTRINO_DEPS += $(D)/e2fsprogs
+NEUTRINO_DEPS += $(D)/libopenthreads
 
 ifeq ($(PYTHON), python)
 NEUTRINO_DEPS += $(D)/python
