@@ -1,7 +1,7 @@
 #
 # flashimage
 #
-flashimage: release-$(FLAVOUR)
+flashimage: release
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 ufs910 ufs922 ipbox55 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
 	$(MAKE) flash-image-$(BOXTYPE)
 endif
@@ -79,7 +79,7 @@ endif
 #
 # online-image
 #
-onlineimage: release-$(FLAVOUR)
+onlineimage: release
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hd51))
 	$(MAKE) flash-image-hd51-online
 endif
@@ -118,7 +118,7 @@ endif
 #
 # diskimage
 #
-diskimage: release-$(FLAVOUR)
+diskimage: release
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k hd51 hd60 hd61 h7 osmio4k osmini4k osmio4kplus))
 	$(MAKE) flash-image-$(BOXTYPE)-multi-disk
 endif

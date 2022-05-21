@@ -366,9 +366,9 @@ ifeq ($(PYTHON), python)
 endif
 	
 #
-# release-none
+# release-NONE
 #
-$(D)/release-none: release-common release-$(BOXTYPE)
+$(D)/release-NONE: release-common release-$(BOXTYPE)
 	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
 	rm -fr $(RELEASE_DIR)/etc
 	ln -sf /var/etc $(RELEASE_DIR)

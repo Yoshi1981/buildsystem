@@ -1,7 +1,7 @@
 #
 # release-neutrino
 #
-release-neutrino: release-none $(D)/neutrino $(D)/neutrino-plugins
+release-NHD2: release-NONE $(D)/neutrino $(D)/neutrino-plugins
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
 	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
 	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
@@ -75,7 +75,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	@echo "*****************************************************************"
 	@echo -e "\033[01;32m"
-	@echo " Build of Neutrino Release for $(BOXTYPE) successfully completed."
+	@echo " Build of NHD2 Release for $(BOXTYPE) successfully completed."
 	@echo -e "\033[00m"
 	@echo "*****************************************************************"
 	
