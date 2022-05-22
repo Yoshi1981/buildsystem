@@ -206,6 +206,9 @@ $(ARCHIVE)/$(HD60_BOOTARGS_SRC):
 $(ARCHIVE)/$(HD60_PARTITONS_SRC):
 	$(WGET) http://source.mynonpublic.com/gfutures/$(HD60_PARTITONS_SRC)
 
+#
+# multi-disk
+#
 flash-image-hd60-multi-disk: $(ARCHIVE)/$(HD60_BOOTARGS_SRC) $(ARCHIVE)/$(HD60_PARTITONS_SRC)
 	# Create image
 	mkdir -p $(IMAGE_BUILD_DIR)/$(BOXTYPE)
@@ -235,9 +238,25 @@ flash-image-hd60-multi-disk: $(ARCHIVE)/$(HD60_BOOTARGS_SRC) $(ARCHIVE)/$(HD60_P
 	mv $(IMAGE_BUILD_DIR)/$(BOXTYPE)/bootargs-8gb.bin $(IMAGE_BUILD_DIR)/$(BOXTYPE)/bootargs.bin
 	cp $(TARGET_DIR)/boot/uImage $(IMAGE_BUILD_DIR)/$(BOXTYPE)/uImage
 	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_recovery_emmc.zip *
+	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_recovery_emmc_multi.zip *
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
+
+#
+# disk
+#
+
+#
+# multi-rootfs
+#
+
+#
+# rootfs
+#
+
+#
+# online
+#
 
 
 

@@ -202,7 +202,7 @@ release-vuduo4k:
 FLASHIMAGE_PREFIX = vuplus/duo4k
 
 #
-#
+# multi-disk
 #
 flash-image-vuduo4k-multi-disk:
 	# Create final USB-image
@@ -227,14 +227,22 @@ flash-image-vuduo4k-multi-disk:
 	echo Dummy for update. > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar.bz2
 	echo $(BOXTYPE)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
 	cd $(IMAGE_BUILD_DIR) && \
-	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_recovery_emmc.zip $(FLASHIMAGE_PREFIX)/rootfs*.tar.bz2 $(FLASHIMAGE_PREFIX)/initrd_auto.bin $(FLASHIMAGE_PREFIX)/kernel*_auto.bin $(FLASHIMAGE_PREFIX)/*.update $(FLASHIMAGE_PREFIX)/imageversion
+	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_recovery_emmc_multi.zip $(FLASHIMAGE_PREFIX)/rootfs*.tar.bz2 $(FLASHIMAGE_PREFIX)/initrd_auto.bin $(FLASHIMAGE_PREFIX)/kernel*_auto.bin $(FLASHIMAGE_PREFIX)/*.update $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 	
 #
+# disk
 #
+	
 #
-flash-image-vuduo4k-multi-rootfs:
+# multi-rootfs
+#
+	
+#
+# rootfs
+#
+flash-image-vuduo4k-rootfs:
 	# Create final USB-image
 	rm -rf $(IMAGE_BUILD_DIR) || true
 	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
@@ -253,7 +261,7 @@ flash-image-vuduo4k-multi-rootfs:
 	rm -rf $(IMAGE_BUILD_DIR)
 
 #
-#
+# online
 #
 flash-image-vuduo4k-online:
 	# Create final USB-image

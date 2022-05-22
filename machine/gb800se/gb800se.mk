@@ -158,4 +158,3 @@ flash-image-gb800se:
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
-
