@@ -129,6 +129,8 @@ HD51_IMAGE_NAME = disk
 HD51_BOOT_IMAGE = boot.img
 HD51_IMAGE_LINK = $(HD51_IMAGE_NAME).ext4
 HD51_IMAGE_ROOTFS_SIZE = 294912
+
+#
 HD51_BOXMODE = 12
 HD51_BOXMODE_MEM = brcm_cma=520M@248M brcm_cma=200M@768M
 
@@ -279,7 +281,7 @@ flash-image-hd51-rootfs:
 	cd $(RELEASE_DIR); \
 	tar -cvf $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar --exclude=zImage* . > /dev/null 2>&1; \
 	bzip2 $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar
-	echo $(BOXTYPE)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
+	echo $(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
 	cd $(IMAGE_BUILD_DIR) && \
 	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.zip $(FLASHIMAGE_PREFIX)/rootfs.tar.bz2 $(FLASHIMAGE_PREFIX)/kernel.bin $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
@@ -296,7 +298,7 @@ flash-image-hd51-online:
 	cd $(RELEASE_DIR); \
 	tar -cvf $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar --exclude=zImage* . > /dev/null 2>&1; \
 	bzip2 $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/rootfs.tar
-	echo $(BOXTYPE)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
+	echo $(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
 	cd $(IMAGE_BUILD_DIR) && \
 	tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_online.tgz $(FLASHIMAGE_PREFIX)/rootfs.tar.bz2 $(FLASHIMAGE_PREFIX)/kernel.bin $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup

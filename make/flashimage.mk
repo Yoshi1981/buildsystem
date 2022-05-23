@@ -8,7 +8,7 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 gb800se bre2zet2c osnino osninoplus osninopro))
 	$(MAKE) flash-image-$(BOXTYPE)
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k h7 hd51 hd61 osmini4k osmio4k osmino4kplus))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k h7 hd51 hd61 osmini4k osmio4k osmio4kplus))
 	$(MAKE) flash-image-$(BOXTYPE)-rootfs flash-image-$(BOXTYPE)-disk $(MAKE) flash-image-$(BOXTYPE)-online
 endif
 ifeq ($(BOXTYPE), hd60)
