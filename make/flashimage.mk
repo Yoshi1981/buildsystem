@@ -8,29 +8,16 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 gb800se bre2zet2c osnino osninoplus osninopro))
 	$(MAKE) flash-image-$(BOXTYPE)
 endif
-#ifeq ($(BOXTYPE), hd60 hd61)
-#	$(MAKE) flash-image-$(BOXTYPE)-multi-disk
-#endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k h7 hd51 hd61 osmini4k osmio4k osmino4kplus))
-	$(MAKE) flash-image-$(BOXTYPE)-rootfs flash-image-$(BOXTYPE)-disk
+	$(MAKE) flash-image-$(BOXTYPE)-rootfs flash-image-$(BOXTYPE)-disk $(MAKE) flash-image-$(BOXTYPE)-online
+endif
+ifeq ($(BOXTYPE), hd60)
+	$(MAKE) flash-image-$(BOXTYPE)-multi-disk
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuuno4k vuuno4kse vuzero4k))
-	$(MAKE) flash-image-$(BOXTYPE)-rootfs flash-image-$(BOXTYPE)-disk
+	$(MAKE) flash-image-$(BOXTYPE)-rootfs flash-image-$(BOXTYPE)-disk $(MAKE) flash-image-$(BOXTYPE)-online
 endif
 	$(TUXBOX_CUSTOMIZE)
-
-#
-# online-image
-#
-onlineimage: release
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), bre2ze4k h7 hd51 hd61 osmio4k osmio4kplus osmini4k vusolo4k vuduo4k vuultimo4k vuuno4k vuuno4kse vuzero4k))
-	$(MAKE) flash-image-$(BOXTYPE)-online
-endif
-	$(TUXBOX_CUSTOMIZE)
-	
-#
-# multi rootfs / disk
-#
 
 #
 # flash-clean
