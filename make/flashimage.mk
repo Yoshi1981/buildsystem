@@ -14,8 +14,11 @@ endif
 ifeq ($(BOXTYPE), hd60)
 	$(MAKE) flash-image-$(BOXTYPE)-multi-disk
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuduo4k vuultimo4k vuuno4k vuuno4kse vuzero4k))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k vuultimo4k vuuno4k vuuno4kse vuzero4k))
 	$(MAKE) flash-image-$(BOXTYPE)-rootfs flash-image-$(BOXTYPE)-disk $(MAKE) flash-image-$(BOXTYPE)-online
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k))
+	$(MAKE) flash-image-$(BOXTYPE)-rootfs flash-image-$(BOXTYPE)-multi-disk $(MAKE) flash-image-$(BOXTYPE)-online
 endif
 	$(TUXBOX_CUSTOMIZE)
 

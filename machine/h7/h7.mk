@@ -308,6 +308,7 @@ flash-image-$(BOXTYPE)-disk: $(D)/host_resize2fs
 #
 # multi-rootfs
 #
+flash-image-$(BOXTYPE)-multi-rootfs:
 
 #
 # rootfs

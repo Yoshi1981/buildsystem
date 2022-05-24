@@ -311,6 +311,7 @@ flash-image-osmio4k-disk:
 #
 # multi-rootfs
 #
+flash-image-osmio4k-multi-rootfs:
 
 #
 # rootfs

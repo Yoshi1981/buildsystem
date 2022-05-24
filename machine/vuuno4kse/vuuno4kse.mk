@@ -204,6 +204,16 @@ release-vuuno4kse:
 FLASHIMAGE_PREFIX = vuplus/uno4kse
 
 #
+# multi-disk
+#
+flash-image-vuuno4kse-multi-disk:
+
+#
+# disk
+#
+flash-image-vuuno4kse-disk:
+
+#
 # multi-rootfs
 #
 flash-image-vuuno4kse-multi-rootfs:

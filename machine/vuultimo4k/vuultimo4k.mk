@@ -195,6 +195,16 @@ release-vuultimo4k:
 FLASHIMAGE_PREFIX = vuplus/ultimo4k
 
 #
+# multi-disk
+#
+flash-image-vuultimo4k-multi-disk:
+
+#
+# disk
+#
+flash-image-vuultimo4k-disk:
+
+#
 # multi-rootfs
 #
 flash-image-vuultimo4k-multi-rootfs:

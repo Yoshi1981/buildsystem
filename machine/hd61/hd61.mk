@@ -391,6 +391,7 @@ flash-image-hd61-disk: $(ARCHIVE)/$(FLASH_BOOTARGS_SRC) $(ARCHIVE)/$(FLASH_PARTI
 #
 # multi-rootfs
 #
+flash-image-hd61-multi-rootfs:
 
 #
 # rootfs
@@ -427,6 +428,4 @@ flash-image-hd61-online:
 	tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_online.tgz $(FLASHIMAGE_PREFIX)/rootfs.tar.bz2 $(FLASHIMAGE_PREFIX)/uImage $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
-
-
 

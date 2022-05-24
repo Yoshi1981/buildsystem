@@ -311,6 +311,7 @@ flash-image-osmini4k-disk:
 #
 # multi-rootfs
 #
+flash-image-osmini4k-multi-rootfs:
 
 #
 # rootfs

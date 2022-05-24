@@ -230,14 +230,16 @@ flash-image-vuduo4k-multi-disk:
 	zip -r $(FLASH_DIR)/$(BOXTYPE)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_recovery_emmc_multi.zip $(FLASHIMAGE_PREFIX)/rootfs*.tar.bz2 $(FLASHIMAGE_PREFIX)/initrd_auto.bin $(FLASHIMAGE_PREFIX)/kernel*_auto.bin $(FLASHIMAGE_PREFIX)/*.update $(FLASHIMAGE_PREFIX)/imageversion
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
-	
+
 #
 # disk
 #
-	
+flash-image-vuduo4k-disk:
+
 #
 # multi-rootfs
 #
+flash-image-vuduo4k-multi-rootfs:
 	
 #
 # rootfs

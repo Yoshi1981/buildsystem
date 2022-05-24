@@ -269,6 +269,7 @@ flash-image-hd51-disk: $(D)/host_resize2fs
 #
 # multi-rootfs
 #
+flash-image-hd51-multi-rootfs:
 
 #
 # rootfs

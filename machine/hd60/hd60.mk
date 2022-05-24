@@ -245,18 +245,20 @@ flash-image-hd60-multi-disk: $(ARCHIVE)/$(HD60_BOOTARGS_SRC) $(ARCHIVE)/$(HD60_P
 #
 # disk
 #
+flash-image-hd60-disk:
 
 #
 # multi-rootfs
 #
+flash-image-hd60-multi-rootfs:
 
 #
 # rootfs
 #
+flash-image-hd60-rootfs:
 
 #
 # online
 #
-
-
+flash-image-hd60-online:
 

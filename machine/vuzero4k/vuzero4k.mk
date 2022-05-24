@@ -204,6 +204,16 @@ release-vuzero4k:
 FLASHIMAGE_PREFIX = vuplus/zero4k
 
 #
+# multi-disk
+#
+flash-image-vuzero4k-multi-disk:
+
+#
+# disk
+#
+flash-image-vuzero4k-disk:
+
+#
 # multi-rootfs
 #
 flash-image-vuzero4k-multi-rootfs:
