@@ -16,13 +16,7 @@ init:
 	@echo ""
 	@echo "Target receivers:"
 	@echo "  Kathrein"
-	@echo "    1)  UFS-910"
 	@echo "    2)  UFS-912"
-	@echo "    3)  UFS-913"
-	@echo "    4)  UFS-922"
-	@echo ""
-	@echo "  Topfield"
-	@echo "    6)  TF77X0 HDPVR"
 	@echo ""
 	@echo "  Fortis"
 	@echo "    7)  FS9000 / FS9200 (formerly Fortis HDbox)"
@@ -30,12 +24,9 @@ init:
 	@echo "    9)  HS8200          (formerly Atevio AV7500)"
 	@echo ""
 	@echo "  AB IPBox/cuberevo/Xsarius"
-	@echo "   16)  55HD"
-	@echo "   18)  9900HD"
 	@echo "   19)  cuberevo / 9000"
 	@echo "   20)  mini / 900HD"
 	@echo "   21)  mini2 / 910HD / 3000HD / Xsarius Alpha"
-	@echo "   22)  250HD / 91HD"
 	@echo "   24)  2000HD"
 	@echo
 	@echo "  Fulan"
@@ -77,20 +68,13 @@ init:
 	@read -p "Select target (1-90)? " BOXTYPE; \
 	BOXTYPE=$${BOXTYPE}; \
 	case "$$BOXTYPE" in \
-		1) BOXTYPE="ufs910";; \
 		2) BOXTYPE="ufs912";; \
-		3) BOXTYPE="ufs913";; \
-		4) BOXTYPE="ufs922";; \
-		6) BOXTYPE="tf7700";; \
 		7) BOXTYPE="fortis_hdbox";; \
 		8) BOXTYPE="octagon1008";; \
 		9) BOXTYPE="atevio7500";; \
-		16) BOXTYPE="ipbox55";; \
-		18) BOXTYPE="ipbox9900";; \
 		19) BOXTYPE="cuberevo";; \
 		20) BOXTYPE="cuberevo_mini";; \
 		21) BOXTYPE="cuberevo_mini2";; \
-		22) BOXTYPE="cuberevo_250hd";; \
 		24) BOXTYPE="cuberevo_2000hd";; \
 		27) BOXTYPE="spark";; \
 		28) BOXTYPE="spark7162";; \

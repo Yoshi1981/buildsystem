@@ -19,7 +19,7 @@ ifeq ($(WLAN), wlandriver)
 	RELEASE_DEPS += $(D)/wireless_tools
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910))
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913))
 	RELEASE_DEPS += $(D)/ntfs_3g
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 	RELEASE_DEPS += $(D)/mtd_utils 
@@ -268,6 +268,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 	rm -f $(RELEASE_DIR)/sbin/jfs_mkfs
 	rm -f $(RELEASE_DIR)/sbin/mkfs.jfs
 	rm -f $(RELEASE_DIR)/sbin/jfs_tune
+	rm -f $(RELEASE_DIR)/sbin/ffmpeg
 	rm -f $(RELEASE_DIR)/etc/ssl/certs/ca-certificates.crt
 endif
 	rm -rf $(RELEASE_DIR)/lib/autofs
