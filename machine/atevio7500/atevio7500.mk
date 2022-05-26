@@ -206,6 +206,11 @@ release-atevio7500:
 flash-image-atevio7500:
 	cd $(FLASH_DIR)/atevio7500 && $(SUDOCMD) ./atevio7500.sh $(MAINTAINER)
 
-
+#
+# usbimage
+#
+usb-image-$(BOXTYPE):
+	cd $(RELEASE_DIR) && \
+		tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/out/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
 
 

@@ -205,5 +205,11 @@ release-cuberevo_mini2:
 flash-image-cuberevo_mini2:
 	cd $(FLASH_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) cuberevo_mini2
 
-
-
+#
+# usbimage
+#
+usb-image-cuberevo_mini2:
+#	mkdir -p $(FLASH_DIR)/$(BOXTYPE)
+	cd $(RELEASE_DIR) && \
+		tar -cvzf $(FLASH_DIR)/cuberevo/out/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
+		

@@ -205,6 +205,10 @@ release-cuberevo_2000hd:
 flash-image-cuberevo_2000hd:
 	cd $(FLASH_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) cuberevo_2000hd
 
-
-
+#
+# usbimage
+#
+usb-image-$(BOXTYPE):
+	cd $(RELEASE_DIR) && \
+		tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/out/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
 

@@ -257,4 +257,10 @@ release-tf7700:
 flash-image-tf7700:
 	cd $(FLASH_DIR)/tf7700 && $(SUDOCMD) ./tf7700.sh $(MAINTAINER)
 
+#
+# usbimage
+#
+usb-image-$(BOXTYPE):
+	cd $(RELEASE_DIR) && \
+		tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/out/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
 

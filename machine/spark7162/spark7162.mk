@@ -206,4 +206,10 @@ release-spark7162:
 flash-image-spark7162:
 	cd $(FLASH_DIR)/spark7162 && $(SUDOCMD) ./spark7162.sh $(MAINTAINER) spark7162
 
+#
+# usbimage
+#
+usb-image-$(BOXTYPE):
+	cd $(RELEASE_DIR) && \
+		tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/out/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
 

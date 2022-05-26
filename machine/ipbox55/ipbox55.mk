@@ -210,5 +210,10 @@ release-ipbox55:
 flash-image-ipbox55:
 	cd $(FLASH_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) ipbox55
 
-
+#
+# usbimage
+#
+usb-image-$(BOXTYPE):
+	cd $(RELEASE_DIR) && \
+		tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/out/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
 
