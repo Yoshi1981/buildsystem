@@ -138,7 +138,8 @@ UTIL_VER = 17.1
 UTIL_DATE = $(DRIVER_DATE)
 UTIL_REV = r0
 UTIL_SRC = platform-util-vuzero4k-$(UTIL_VER)-$(UTIL_DATE).$(UTIL_REV).tar.gz
-UTIL_URL = http://archive.vuplus.com/download/build_support/vuplus
+#UTIL_URL = http://archive.vuplus.com/download/build_support/vuplus
+UTIL_URL = http://code.vuplus.com/download/release/platform_util
 
 $(ARCHIVE)/$(UTIL_SRC):
 	$(WGET) $(UTIL_URL)/$(UTIL_SRC)
