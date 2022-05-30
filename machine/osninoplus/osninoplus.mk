@@ -30,7 +30,8 @@ KERNEL_PATCHES_MIPSEL  = \
 		0001-stv090x-optimized-TS-sync-control.patch \
 		0002-log2-give-up-on-gcc-constant-optimizations.patch \
 		0003-cp1emu-do-not-use-bools-for-arithmetic.patch \
-		move-default-dialect-to-SMB3.patch
+		move-default-dialect-to-SMB3.patch \
+		makefile-silence-warnings.patch
 
 KERNEL_PATCHES = $(KERNEL_PATCHES_MIPSEL)
 
