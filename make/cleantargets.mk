@@ -13,9 +13,12 @@ clean: depsclean
 	@-rm -rf $(D)/*.do_compile
 	@-rm -rf $(D)/*.do_prepare
 	@-rm -rf $(D)/*.config.status
+ifeq ($(BOXARCH), sh4)
+	@touch $(D)/crosstool-rpminstall
+endif
 	@echo -e "$(TERM_YELLOW)done\n$(TERM_NORMAL)"
 
-distclean: depsclean
+distclean:
 	@echo -e "$(TERM_YELLOW)---> cleaning whole build system .. $(TERM_NORMAL)"
 	@-rm -rf $(RELEASE_DIR)
 	@-rm -rf $(TARGET_DIR)

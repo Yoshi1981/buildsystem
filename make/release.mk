@@ -5,8 +5,6 @@ RELEASE_DEPS = $(KERNEL)
 RELEASE_DEPS += $(D)/driver 
 RELEASE_DEPS += $(D)/system-tools 
 RELEASE_DEPS += $(LIRC)
-RELEASE_DEPS += $(D)/ncurses
-RELEASE_DEPS += $(D)/libcurl
 
 ifeq ($(BOXARCH), arm)
 	RELEASE_DEPS += $(D)/ntfs_3g 
