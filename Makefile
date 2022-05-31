@@ -271,7 +271,7 @@ help:
 	@echo " make update			- update the build system, apps, driver and flash"
 	@echo ""
 	@echo "release or image:"
-	@echo " make release-neutrino		- build neutrino with full release dir"
+	@echo " make release			- build neutrino with full release dir"
 	@echo " make flashimage		- build flashimage"
 	@echo ""
 	@echo "to update neutrino"
