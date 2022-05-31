@@ -139,7 +139,7 @@ UTIL_DATE = $(DRIVER_DATE)
 UTIL_REV = r0
 UTIL_SRC = platform-util-vuzero4k-$(UTIL_VER)-$(UTIL_DATE).$(UTIL_REV).tar.gz
 #UTIL_URL = http://archive.vuplus.com/download/build_support/vuplus
-UTIL_URL = http://code.vuplus.com/download/release/platform_util
+UTIL_URL = http://code.vuplus.com/download/release/platform-util
 
 $(ARCHIVE)/$(UTIL_SRC):
 	$(WGET) $(UTIL_URL)/$(UTIL_SRC)
@@ -158,7 +158,8 @@ GLES_VER = 17.1
 GLES_DATE = $(DRIVER_DATE)
 GLES_REV = r0
 GLES_SRC = libgles-vuzero4k-$(GLES_VER)-$(GLES_DATE).$(GLES_REV).tar.gz
-GLES_URL = http://archive.vuplus.com/download/build_support/vuplus
+#GLES_URL = http://archive.vuplus.com/download/build_support/vuplus
+GLES_URL = http://code.vuplus.com/download/release/libgles
 
 $(ARCHIVE)/$(GLES_SRC):
 	$(WGET) $(GLES_URL)/$(GLES_SRC)
@@ -178,7 +179,8 @@ $(D)/libgles: $(D)/bootstrap $(ARCHIVE)/$(GLES_SRC)
 #
 INITRD_DATE = 20170522
 INITRD_SRC = vmlinuz-initrd_vuzero4k_$(INITRD_DATE).tar.gz
-INITRD_URL = http://archive.vuplus.com/download/kernel
+#INITRD_URL = http://archive.vuplus.com/download/kernel
+INITRD_URL = http://code.vuplus.com/download/release/kernel
 
 $(ARCHIVE)/$(INITRD_SRC):
 	$(WGET) $(INITRD_URL)/$(INITRD_SRC)

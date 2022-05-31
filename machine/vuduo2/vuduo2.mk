@@ -134,7 +134,8 @@ UTIL_VER = 15.1
 UTIL_DATE = $(DRIVER_DATE)
 UTIL_REV = r0
 UTIL_SRC = platform-util-vuduo2-$(UTIL_VER)-$(UTIL_DATE).$(UTIL_REV).tar.gz
-UTIL_URL = http://archive.vuplus.com/download/build_support/vuplus
+#UTIL_URL = http://archive.vuplus.com/download/build_support/vuplus
+UTIL_URL = http://code.vuplus.com/download/release/platform-util
 
 $(ARCHIVE)/$(UTIL_SRC):
 	$(WGET) $(UTIL_URL)/$(UTIL_SRC)
@@ -151,7 +152,8 @@ $(D)/platform_util: $(D)/bootstrap $(ARCHIVE)/$(UTIL_SRC)
 #
 INITRD_DATE = 20130220
 INITRD_SRC = vmlinuz-initrd_vuduo2_$(INITRD_DATE).tar.gz
-INITRD_URL = http://archive.vuplus.com/download/kernel
+#INITRD_URL = http://archive.vuplus.com/download/kernel
+INITRD_URL = http://code.vuplus.com/download/release/kernel
 
 $(ARCHIVE)/$(INITRD_SRC):
 	$(WGET) $(INITRD_URL)/$(INITRD_SRC)
