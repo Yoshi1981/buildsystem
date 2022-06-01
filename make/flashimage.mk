@@ -1,7 +1,7 @@
 #
 # flashimage
 #
-flashimage: release
+image: release
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 ipbox55 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd spark spark7162 atevio7500 tf7700 ufs910 ufs912 ufs913 ufs922))
 	$(MAKE) flash-image-$(BOXTYPE)
 endif
@@ -25,7 +25,7 @@ endif
 #
 # flash-clean
 #
-flash-clean:
+image-clean:
 ifeq ($(BOXARCH), sh4)
 	cd $(FLASH_DIR)/nor_flash && $(SUDOCMD) rm -rf ./tmp ./out
 	cd $(FLASH_DIR)/spark7162 && $(SUDOCMD) rm -rf ./tmp ./out
