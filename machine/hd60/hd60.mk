@@ -40,7 +40,8 @@ KERNEL_PATCHES_ARM     = \
 		0005-xbox-one-tuner-4.4.patch \
 		0006-dvb-media-tda18250-support-for-new-silicon-tuner.patch \
 		0007-dvb-mn88472-staging.patch \
-		mn88472_reset_stream_ID_reg_if_no_PLP_given.patch
+		mn88472_reset_stream_ID_reg_if_no_PLP_given.patch \
+		fix-multiple-defs-yyloc.patch
 
 KERNEL_PATCHES = $(KERNEL_PATCHES_ARM)
 
