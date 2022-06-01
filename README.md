@@ -18,7 +18,7 @@ $:~ make
 ```
 **build image:**
 ```bash
-$:~ make flashimage
+$:~ make image
 ```
 
 **for more details:**

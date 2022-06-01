@@ -23,17 +23,6 @@ KERNEL_DTB_VER         = bcm7445-bcm97445svmb.dtb
 KERNELNAME             = zImage
 CUSTOM_KERNEL_VER      = $(KERNEL_VER)-arm
 
-#KERNEL_PATCHES_ARM     = \
-#		TBS-fixes-for-4.10-kernel.patch \
-#		0001-Support-TBS-USB-drivers-for-4.6-kernel.patch \
-#		0001-TBS-fixes-for-4.6-kernel.patch \
-#		0001-STV-Add-PLS-support.patch \
-#		0001-STV-Add-SNR-Signal-report-parameters.patch \
-#		blindscan2.patch \
-#		0001-stv090x-optimized-TS-sync-control.patch \
-#		reserve_dvb_adapter_0.patch \
-#		blacklist_mmc0.patch \
-#		export_pmpoweroffprepare.patch
 KERNEL_PATCHES_ARM	= \
 		export_pmpoweroffprepare.patch \
 		TBS-fixes-for-4.10-kernel.patch \

@@ -185,7 +185,7 @@ init:
 	@echo ""
 	@make printenv
 	@echo "Your next step could be:"
-	@echo "  make flashimage"
+	@echo "  make image"
 	@echo ""
 	@echo ""
 	@echo "for more details:"
@@ -272,7 +272,7 @@ help:
 	@echo ""
 	@echo "release or image:"
 	@echo " make release			- build neutrino with full release dir"
-	@echo " make flashimage		- build flashimage"
+	@echo " make image			- build image"
 	@echo ""
 	@echo "to update neutrino"
 	@echo " make neutrino-distclean	- clean neutrino build"

@@ -36,7 +36,8 @@ KERNEL_PATCHES_ARM = \
 		export_pmpoweroffprepare.patch \
 		t230c2.patch \
 		add-more-devices-rtl8xxxu.patch \
-		dvbs2x.patch
+		dvbs2x.patch \
+		fix-multiple-defs-yyloc.patch
 
 KERNEL_PATCHES = $(KERNEL_PATCHES_ARM)
 
