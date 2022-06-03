@@ -202,13 +202,14 @@ release-octagon1008:
 # flashimage
 #
 flash-image-octagon1008:
-	cd $(FLASH_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) octagon1008
+	mkdir -p $(FLASH_DIR)
+	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) octagon1008
 	
 #
 # usbimage
 #
 usb-image-$(BOXTYPE):
 	cd $(RELEASE_DIR) && \
-		tar -cvzf $(FLASH_DIR)/$(BOXTYPE)/out/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
+		tar -cvzf $(FLASH_DIR)/$(BOXTYPE)_$(FLAVOUR)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
 		
 

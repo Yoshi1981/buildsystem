@@ -2,11 +2,9 @@ apps/
 build_logfile/
 custom/*-local*
 driver/
-flash/
 root/boot/*
 tufsbox/
 .deps/
 config*
 Makefile.local
 *~
-/hostapps/

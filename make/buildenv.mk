@@ -13,7 +13,7 @@ BASE_DIR             := $(shell pwd)
 ARCHIVE               = $(HOME)/Archive
 APPS_DIR              = $(BASE_DIR)/apps
 DRIVER_DIR            = $(BASE_DIR)/driver
-FLASH_DIR             = $(BASE_DIR)/flash
+#FLASH_DIR             = $(BASE_DIR)/flash
 HOSTAPPS_DIR          = $(BASE_DIR)/hostapps
 CUSTOM_DIR            = $(BASE_DIR)/custom
 PATCHES               = $(BASE_DIR)/Patches
@@ -35,6 +35,7 @@ BOOT_DIR              = $(TUFSBOX_DIR)/cdkroot-tftpboot
 CROSS_DIR             = $(TUFSBOX_DIR)/cross
 HOST_DIR              = $(TUFSBOX_DIR)/host
 RELEASE_DIR           = $(TUFSBOX_DIR)/release
+FLASH_DIR             = $(TUFSBOX_DIR)/image
 D                     = $(TUFSBOX_DIR)/.deps
 
 #

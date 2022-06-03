@@ -204,7 +204,8 @@ release-spark7162:
 # flashimage
 #
 flash-image-spark7162:
-	cd $(FLASH_DIR)/spark7162 && $(SUDOCMD) ./spark7162.sh $(MAINTAINER) spark7162
+	mkdir -p $(FLASH_DIR)
+	cd $(HOSTAPPS_DIR)/spark && $(SUDOCMD) ./spark.sh $(MAINTAINER) spark7162
 
 #
 # usbimage
