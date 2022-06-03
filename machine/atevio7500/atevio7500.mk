@@ -206,9 +206,6 @@ release-atevio7500:
 flash-image-atevio7500:
 	mkdir -p $(FLASH_DIR)
 	cd $(HOSTAPPS_DIR)/atevio7500 && $(SUDOCMD) ./atevio7500.sh $(MAINTAINER)
-	
-flash-image-atevio7500-clean:
-	cd $(HOSTAPPS_DIR)/atevio7500 && $(SUDOCMD) rm -rf ./tmp
 
 #
 # usbimage
