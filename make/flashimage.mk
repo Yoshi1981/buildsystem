@@ -26,15 +26,5 @@ endif
 # flash-clean
 #
 image-clean:
-#ifeq ($(BOXARCH), sh4)
-#	cd $(FLASH_DIR)/nor_flash && $(SUDOCMD) rm -rf ./tmp ./out
-#	cd $(FLASH_DIR)/spark7162 && $(SUDOCMD) rm -rf ./tmp ./out
-#	cd $(FLASH_DIR)/atevio7500 && $(SUDOCMD) rm -rf ./tmp ./out
-#	cd $(FLASH_DIR)/ufs912 && $(SUDOCMD) rm -rf ./tmp ./out
-#	cd $(FLASH_DIR)/ufs913 && $(SUDOCMD) rm -rf ./tmp ./out
-#	cd $(FLASH_DIR)/tf7700 && $(SUDOCMD) rm -rf ./tmp ./out
-#else
 	cd $(FLASH_DIR) && rm -rf *
-#endif
-
 
