@@ -268,7 +268,7 @@ help:
 	@echo " make print-targets		- show all available targets"
 	@echo ""
 	@echo "later, you might find these useful:"
-	@echo " make update			- update the build system, apps, driver and flash"
+	@echo " make update			- update the build system"
 	@echo ""
 	@echo "release or image:"
 	@echo " make release			- build neutrino with full release dir"
@@ -333,19 +333,6 @@ update:
 		echo; \
 		if [ "$(GIT_STASH_PULL)" = "stashpull" ]; then \
 			git stash && git stash show -p > ./pull-stash-driver.patch || true && git pull && git stash pop || true; \
-		else \
-			git pull; \
-		fi; \
-	fi
-	@echo;
-	@if test -d $(APPS_DIR); then \
-		cd $(APPS_DIR)/; \
-		echo '==================================================================='; \
-		echo '      updating $(GIT_NAME_APPS)-apps git repository'; \
-		echo '==================================================================='; \
-		echo; \
-		if [ "$(GIT_STASH_PULL)" = "stashpull" ]; then \
-			git stash && git stash show -p > ./pull-stash-apps.patch || true && git pull && git stash pop || true; \
 		else \
 			git pull; \
 		fi; \

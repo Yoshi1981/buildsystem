@@ -300,20 +300,13 @@ $(D)/bootstrap: $(BOOTSTRAP)
 #
 # preqs
 #
+ifeq ($(BOXARCH), sh4)
 $(DRIVER_DIR):
 	@echo '===================================================================='
 	@echo '      Cloning $(GIT_NAME_DRIVER)-driver git repository'
 	@echo '===================================================================='
 	if [ ! -e $(DRIVER_DIR)/.git ]; then \
 		git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver.git driver; \
-	fi
-
-$(APPS_DIR):
-	@echo '===================================================================='
-	@echo '      Cloning $(GIT_NAME_APPS)-apps git repository'
-	@echo '===================================================================='
-	if [ ! -e $(APPS_DIR)/.git ]; then \
-		git clone $(GITHUB)/$(GIT_NAME_APPS)/apps.git apps; \
 	fi
 
 $(HOSTAPPS_DIR):
@@ -324,9 +317,9 @@ $(HOSTAPPS_DIR):
 		git clone $(GITHUB)/$(GIT_NAME_HOSTAPPS)/hostapps.git hostapps; \
 	fi
 	@echo ''
+endif
 
 PREQS  = $(DRIVER_DIR)
-PREQS += $(APPS_DIR)
 PREQS += $(HOSTAPPS_DIR)
 
 preqs: $(PREQS)
