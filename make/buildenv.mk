@@ -55,8 +55,6 @@ else
 GITHUB               ?= https://github.com
 endif
 GIT_NAME             ?= mohousch
-GIT_NAME_DRIVER      ?= mohousch
-GIT_NAME_HOSTAPPS    ?= mohousch
 
 # backwards compatibility
 DEPDIR                = $(D)

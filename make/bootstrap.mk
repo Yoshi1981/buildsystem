@@ -11,7 +11,7 @@ find-%:
 		type -p $$TOOL >/dev/null || \
 		{ echo "required tool $$TOOL missing."; false; }
 
-toolcheck: $(TOOLCHECK) preqs
+toolcheck: $(TOOLCHECK)
 	@echo "All required tools seem to be installed."
 	@echo
 ifeq ($(BOXARCH), sh4)
@@ -296,33 +296,6 @@ endif
 
 $(D)/bootstrap: $(BOOTSTRAP)
 	@touch $@
-
-#
-# preqs
-#
-ifeq ($(BOXARCH), sh4)
-$(DRIVER_DIR):
-	@echo '===================================================================='
-	@echo '      Cloning $(GIT_NAME_DRIVER)-driver git repository'
-	@echo '===================================================================='
-	if [ ! -e $(DRIVER_DIR)/.git ]; then \
-		git clone $(GITHUB)/$(GIT_NAME_DRIVER)/driver.git driver; \
-	fi
-
-$(HOSTAPPS_DIR):
-	@echo '===================================================================='
-	@echo '      Cloning $(GIT_NAME_HOSTAPPS)-hostapps git repository'
-	@echo '===================================================================='
-	if [ ! -e $(HOSTAPPS_DIR)/.git ]; then \
-		git clone $(GITHUB)/$(GIT_NAME_HOSTAPPS)/hostapps.git hostapps; \
-	fi
-	@echo ''
-endif
-
-PREQS  = $(DRIVER_DIR)
-PREQS += $(HOSTAPPS_DIR)
-
-preqs: $(PREQS)
 
 #
 # directories

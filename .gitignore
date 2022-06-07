@@ -1,9 +1,7 @@
 build_logfile/
 custom/*-local*
-driver/
 root/boot/*
 tufsbox/
-hostapps/
 .deps/
 config*
 Makefile.local
