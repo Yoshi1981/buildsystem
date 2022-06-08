@@ -118,6 +118,11 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    stfbcontrol a 255
    
+   # rcS.local
+    if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+    fi
+   
    killall -9 showiframe
    echo "neutrino" > /dev/dbox/fp0
    echo "starting neutrino ->"

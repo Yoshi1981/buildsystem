@@ -83,10 +83,10 @@ if [ ! -e /var/etc/.firstboot ]; then
    insmod $MODDIR/lnb_pio.ko
    insmod $MODDIR/dvb-pll.ko
    insmod $MODDIR/cx24116.ko
-#   insmod $MODDIR/tda10023.ko
-#   insmod $MODDIR/zl10353.ko
+   insmod $MODDIR/tda10023.ko
+   insmod $MODDIR/zl10353.ko
    insmod $MODDIR/stv090x.ko
-#   insmod $MODDIR/stv0288.ko
+   insmod $MODDIR/stv0288.ko
    insmod $MODDIR/starci.ko
    insmod $MODDIR/smartcard.ko
    insmod $MODDIR/pti.ko
@@ -138,6 +138,11 @@ if [ ! -e /var/etc/.firstboot ]; then
 
     /bin/evremote2 10 140 &
 
-    /bin/fp_control -l 0 1  
+    /bin/fp_control -l 0 1 
+    
+    # rcS.local
+    if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+    fi 
 fi
 
