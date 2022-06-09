@@ -309,7 +309,6 @@ include make/cleantargets.mk
 include make/bootstrap.mk
 include make/system-tools.mk
 include make/neutrino.mk
-include make/release-neutrino.mk
 
 update:
 	@if test -d $(BASE_DIR); then \
