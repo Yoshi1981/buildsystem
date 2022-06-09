@@ -308,7 +308,7 @@ include make/flashimage.mk
 include make/cleantargets.mk
 include make/bootstrap.mk
 include make/system-tools.mk
-include make/neutrino.mk
+include make/nhd2.mk
 
 update:
 	@if test -d $(BASE_DIR); then \
