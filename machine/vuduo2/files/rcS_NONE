@@ -240,3 +240,9 @@ if [ -e /var/tuxbox/config/.bootlogo ]; then
     killall -9 showiframe
 fi
 
+# rcS.local
+if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+fi
+
+

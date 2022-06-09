@@ -98,6 +98,11 @@ if [ ! -e /var/etc/.firstboot ]; then
    
    echo "neutrino" >/dev/vfd
    echo "starting neutrino ->"
+   
+   # rcS.local
+   if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+   fi
 
    until false
    do

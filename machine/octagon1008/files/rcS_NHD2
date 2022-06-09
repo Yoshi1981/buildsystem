@@ -99,6 +99,11 @@ if [ ! -e /var/etc/.firstboot ]; then
 
 #   stfbcontrol a 255
 
+   # rcS.local
+   if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+   fi
+
    echo "LOADING neutrino" > /dev/vfd
    echo "LOADING neutrino"
 

@@ -128,6 +128,11 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    # Set Display Time
    (sleep 25;fp_control -s `date +"%H:%M:%S %d-%m-%Y"`) &
+   
+   # rcS.local
+   if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+   fi
 
    #tuner workaround
    export FE_OFFSET=1

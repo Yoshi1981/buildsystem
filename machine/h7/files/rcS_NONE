@@ -82,4 +82,9 @@ date -s "2017-01-01 00:00"
 
 killall -9 showiframe
 
+# rcS.local
+if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+fi
+
 

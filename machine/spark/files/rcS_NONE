@@ -121,5 +121,10 @@ if [ ! -e /var/etc/.firstboot ]; then
    echo "[rcS] starting mdev"
    echo /sbin/mdev >/proc/sys/kernel/hotplug
    mdev -s
+   
+   # rcS.local
+   if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+   fi
 fi
 

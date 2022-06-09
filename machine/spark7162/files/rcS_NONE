@@ -131,5 +131,10 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    #tuner workaround
    export FE_OFFSET=1
+   
+   # rcS.local
+   if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+   fi
 fi
 

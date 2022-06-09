@@ -124,5 +124,10 @@ if [ ! -e /var/etc/.firstboot ]; then
          /etc/init.d/networking start
       fi
    fi
+   
+   # rcS.local
+   if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+   fi
 fi
 

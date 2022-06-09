@@ -96,27 +96,10 @@ if [ ! -e /var/etc/.firstboot ]; then
    echo /sbin/mdev >/proc/sys/kernel/hotplug
    mdev -s
 
-   until false
-   do
-      echo "neutrino" >/dev/vfd
-      echo "starting neutrino ->"
-      /usr/local/bin/neutrino
-      rtv=$?
-      echo "neutrino ended <- RTV: " $rtv
-      case "$rtv" in
-		0)
-		   echo "RESTART";;
-		1) echo "1"
-		   echo "SHUTDOWN"
-		   init 0;;
-		2) echo "2"
-		   echo "REBOOT"
-		   init 6;;
-		*) echo "*"
-		   echo "ERROR"
-		   init 6;;
-      esac
-   done
+   # rcS.local
+   if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+   fi
 fi
 
 

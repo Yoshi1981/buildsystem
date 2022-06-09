@@ -125,6 +125,11 @@ if [ ! -e /var/etc/.firstboot ]; then
       fi
    fi
    
+   # rcS.local
+   if [ -e /var/etc/rcS.local ]; then 
+	/var/etc/rcS.local
+   fi
+   
    echo "[rcS] starting neutrino GUI ->"
 
    until false
