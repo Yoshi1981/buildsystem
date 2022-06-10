@@ -128,7 +128,7 @@ $(D)/neutrinohd2.do_prepare: $(NHD2_DEPS)
 	[ -d "$(ARCHIVE)/neutrinohd2.git" ] && \
 	(cd $(ARCHIVE)/neutrinohd2.git; git pull;); \
 	[ -d "$(ARCHIVE)/neutrinohd2.git" ] || \
-	git clone https://github.com/mohousch/neutrinohd2.git $(ARCHIVE)/neutrinohd2.git; \
+	git clone https://github.com/mohousch/neutrino2.git $(ARCHIVE)/neutrinohd2.git; \
 	cp -ra $(ARCHIVE)/neutrinohd2.git $(SOURCE_DIR)/neutrinohd2; \
 	set -e; cd $(SOURCE_DIR)/neutrinohd2/nhd2-exp; \
 		$(call apply_patches,$(NHD2_PATCHES))
@@ -284,18 +284,6 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	rm -rf $(RELEASE_DIR)/ram
 	rm -rf $(RELEASE_DIR)/root
 endif	
-
-#
-# linux-strip all
-#
-ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
-	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
-endif
-	@echo "*****************************************************************"
-	@echo -e "\033[01;32m"
-	@echo " Build of NHD2 Release for $(BOXTYPE) successfully completed."
-	@echo -e "\033[00m"
-	@echo "*****************************************************************"
 	
 #
 #

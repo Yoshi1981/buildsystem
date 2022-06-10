@@ -379,16 +379,17 @@ $(D)/release-NONE: release-common release-$(BOXTYPE)
 	$(TUXBOX_CUSTOMIZE)
 
 #
-# linux-strip all
-#
-ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
-	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
-endif
-
-#
 # release
 #
 release: release-$(FLAVOUR)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
+	@echo "*****************************************************************"
+	@echo -e "\033[01;32m"
+	@echo " Build of $(FLAVOUR) Release for $(BOXTYPE) successfully completed."
+	@echo -e "\033[00m"
+	@echo "*****************************************************************"
 
 #
 # release-clean

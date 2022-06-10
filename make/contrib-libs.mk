@@ -1793,16 +1793,44 @@ LIBUSB_PATCH = libusb-$(LIBUSB_VER).patch
 ifeq ($(BOXARCH), sh4)
 LIBUSB_PATCH += libusb-1.0.22-sh4-clock_gettime.patch
 endif
+LIBUSB_PATCH += libusb-$(LIBUSB_VER)-automake-version.patch
 
 $(ARCHIVE)/$(LIBUSB_SOURCE):
 	$(WGET) https://sourceforge.net/projects/libusb/files/libusb-$(LIBUSB_VER_MAJOR)/libusb-$(LIBUSB_VER)/$(LIBUSB_SOURCE)
 
+#$(D)/libusb: $(D)/bootstrap $(ARCHIVE)/$(LIBUSB_SOURCE)
+#	$(START_BUILD)
+#	$(REMOVE)/libusb-$(LIBUSB_VER)
+#	$(UNTAR)/$(LIBUSB_SOURCE)
+#	$(CHDIR)/libusb-$(LIBUSB_VER); \
+#		$(call apply_patches, $(LIBUSB_PATCH)); \
+#		$(CONFIGURE) \
+#			--prefix=/usr \
+#			--enable-static \
+#			--disable-log \
+#			--disable-debug-log \
+#			--disable-udev \
+#			--disable-examples-build \
+#		; \
+#		$(MAKE) ; \
+#		$(MAKE) install DESTDIR=$(TARGET_DIR)
+#	$(REWRITE_LIBTOOL)/libusb-1.0.la
+#	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libusb-1.0.pc
+#	$(REMOVE)/libusb-$(LIBUSB_VER)
+#	$(TOUCH)
 $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/$(LIBUSB_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libusb-$(LIBUSB_VER)
 	$(UNTAR)/$(LIBUSB_SOURCE)
 	$(CHDIR)/libusb-$(LIBUSB_VER); \
+		rm aclocal.m4; \
+		rm compile; \
+		rm config.*; \
+		rm configure; \
+		rm depcomp; \
+		rm install-sh; \
 		$(call apply_patches, $(LIBUSB_PATCH)); \
+		chmod +x autogen.sh; \
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--enable-static \
