@@ -49,7 +49,6 @@ release-common: $(RELEASE_DEPS)
 	cp -aR $(SKEL_ROOT)/usr/lib/locale/* $(RELEASE_DIR)/usr/lib/locale
 	install -d $(RELEASE_DIR)/usr/local/{bin,sbin}
 	install -d $(RELEASE_DIR)/usr/share/{tuxbox,udhcpc,zoneinfo,lua,fonts,iso-codes}
-	install -d $(RELEASE_DIR)/usr/share/tuxbox/neutrino
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
 	install -d $(RELEASE_DIR)/var/{bin,etc,httpd,lib,net,tuxbox}
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
