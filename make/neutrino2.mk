@@ -2,11 +2,11 @@
 # Makefile to build NHD2
 #
 $(TARGET_DIR)/.version:
-	echo "imagename=neutrinoHD2" > $@
+	echo "imagename=neutrino2" > $@
 	echo "homepage=https://github.com/mohousch" >> $@
 	echo "creator=$(MAINTAINER)" >> $@
 	echo "docs=https://github.com/mohousch" >> $@
-	echo "forum=https://github.com/mohousch/neutrinohd2" >> $@
+	echo "forum=https://github.com/mohousch/neutrino2" >> $@
 	echo "version=0200`date +%Y%m%d%H%M`" >> $@
 	echo "git=`git log | grep "^commit" | wc -l`" >> $@
 
@@ -122,20 +122,20 @@ endif
 
 NHD2_PATCHES =
 
-$(D)/neutrinohd2.do_prepare: $(NHD2_DEPS)
+$(D)/neutrino2.do_prepare: $(NHD2_DEPS)
 	$(START_BUILD)
-	rm -rf $(SOURCE_DIR)/neutrinohd2
-	[ -d "$(ARCHIVE)/neutrinohd2.git" ] && \
-	(cd $(ARCHIVE)/neutrinohd2.git; git pull;); \
-	[ -d "$(ARCHIVE)/neutrinohd2.git" ] || \
-	git clone https://github.com/mohousch/neutrino2.git $(ARCHIVE)/neutrinohd2.git; \
-	cp -ra $(ARCHIVE)/neutrinohd2.git $(SOURCE_DIR)/neutrinohd2; \
-	set -e; cd $(SOURCE_DIR)/neutrinohd2/nhd2-exp; \
+	rm -rf $(SOURCE_DIR)/neutrino2
+	[ -d "$(ARCHIVE)/neutrino2.git" ] && \
+	(cd $(ARCHIVE)/neutrino2.git; git pull;); \
+	[ -d "$(ARCHIVE)/neutrino2.git" ] || \
+	git clone https://github.com/mohousch/neutrino2.git $(ARCHIVE)/neutrino2.git; \
+	cp -ra $(ARCHIVE)/neutrino2.git $(SOURCE_DIR)/neutrino2; \
+	set -e; cd $(SOURCE_DIR)/neutrino2/nhd2-exp; \
 		$(call apply_patches,$(NHD2_PATCHES))
 	@touch $@
 
-$(D)/neutrinohd2.config.status: $(D)/neutrinohd2.do_prepare
-	cd $(SOURCE_DIR)/neutrinohd2/nhd2-exp; \
+$(D)/neutrino2.config.status: $(D)/neutrino2.do_prepare
+	cd $(SOURCE_DIR)/neutrino2/nhd2-exp; \
 		./autogen.sh; \
 		$(BUILDENV) \
 		./configure \
@@ -150,39 +150,39 @@ $(D)/neutrinohd2.config.status: $(D)/neutrinohd2.do_prepare
 			CPPFLAGS="$(NHD2_CPPFLAGS)" LDFLAGS="$(TARGET_LDFLAGS)"
 	@touch $@
 
-$(D)/neutrinohd2.do_compile: $(D)/neutrinohd2.config.status
-	cd $(SOURCE_DIR)/neutrinohd2/nhd2-exp; \
+$(D)/neutrino2.do_compile: $(D)/neutrino2.config.status
+	cd $(SOURCE_DIR)/neutrino2/nhd2-exp; \
 		$(MAKE) all
 	@touch $@
 
-$(D)/neutrinohd2: $(D)/neutrinohd2.do_compile
-	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/nhd2-exp install DESTDIR=$(TARGET_DIR)
+$(D)/neutrino2: $(D)/neutrino2.do_compile
+	$(MAKE) -C $(SOURCE_DIR)/neutrino2/nhd2-exp install DESTDIR=$(TARGET_DIR)
 	make $(TARGET_DIR)/.version
 	touch $(D)/$(notdir $@)
 	$(TUXBOX_CUSTOMIZE)
 
-neutrinohd2-clean:
-	rm -f $(D)/neutrinohd2
-	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/nhd2-exp clean
+neutrino2-clean:
+	rm -f $(D)/neutrino2
+	$(MAKE) -C $(SOURCE_DIR)/neutrino2/nhd2-exp clean
 
-neutrinohd2-distclean:
-	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/nhd2-exp distclean
-	rm -rf $(SOURCE_DIR)/neutrinohd2/nhd2-exp/config.status
-	rm -f $(D)/neutrinohd2*
+neutrino2-distclean:
+	$(MAKE) -C $(SOURCE_DIR)/neutrino2/nhd2-exp distclean
+	rm -rf $(SOURCE_DIR)/neutrino2/nhd2-exp/config.status
+	rm -f $(D)/neutrino2*
 	
 #
-# neutrinohd2 plugins
+# neutrino2 plugins
 #
 NHD2_PLUGINS_PATCHES =
 
-$(D)/neutrinohd2-plugins.do_prepare: $(D)/neutrinohd2.do_prepare
+$(D)/neutrino2-plugins.do_prepare: $(D)/neutrino2.do_prepare
 	$(START_BUILD)
-	set -e; cd $(SOURCE_DIR)/neutrinohd2/plugins; \
+	set -e; cd $(SOURCE_DIR)/neutrino2/plugins; \
 		$(call apply_patches, $(NHD2_PLUGINS_PATCHES))
 	@touch $@
 
-$(D)/neutrinohd2-plugins.config.status: neutrinohd2
-	cd $(SOURCE_DIR)/neutrinohd2/plugins; \
+$(D)/neutrino2-plugins.config.status: neutrino2
+	cd $(SOURCE_DIR)/neutrino2/plugins; \
 		./autogen.sh; \
 		$(BUILDENV) \
 		./configure $(SILENT_OPT) \
@@ -197,29 +197,29 @@ $(D)/neutrinohd2-plugins.config.status: neutrinohd2
 			LDFLAGS="$(TARGET_LDFLAGS)"
 	@touch $@
 
-$(D)/neutrinohd2-plugins.do_compile: $(D)/neutrinohd2-plugins.config.status
-	cd $(SOURCE_DIR)/neutrinohd2/plugins; \
-	$(MAKE) top_srcdir=$(SOURCE_DIR)/neutrinohd2/nhd2-exp
+$(D)/neutrino2-plugins.do_compile: $(D)/neutrino2-plugins.config.status
+	cd $(SOURCE_DIR)/neutrino2/plugins; \
+	$(MAKE) top_srcdir=$(SOURCE_DIR)/neutrino2/nhd2-exp
 	@touch $@
 
-$(D)/neutrinohd2-plugins: $(D)/neutrinohd2-plugins.do_compile
-	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/plugins install DESTDIR=$(TARGET_DIR)
+$(D)/neutrino2-plugins: $(D)/neutrino2-plugins.do_compile
+	$(MAKE) -C $(SOURCE_DIR)/neutrino2/plugins install DESTDIR=$(TARGET_DIR)
 	touch $(D)/$(notdir $@)
 	$(TUXBOX_CUSTOMIZE)
 
-neutrinohd2-plugins-clean:
-	rm -f $(D)/neutrinohd2-plugins
-	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/plugins clean
+neutrino2-plugins-clean:
+	rm -f $(D)/neutrino2-plugins
+	$(MAKE) -C $(SOURCE_DIR)/neutrino2/plugins clean
 
-neutrinohd2-plugins-distclean:
-	$(MAKE) -C $(SOURCE_DIR)/neutrinohd2/plugins distclean
-	rm -f $(SOURCE_DIR)/neutrinohd2/plugins/config.status
-	rm -f $(D)/neutrinohd2-plugins*
+neutrino2-plugins-distclean:
+	$(MAKE) -C $(SOURCE_DIR)/neutrino2/plugins distclean
+	rm -f $(SOURCE_DIR)/neutrino2/plugins/config.status
+	rm -f $(D)/neutrino2-plugins*
 	
 #
 # release-NHD2
 #
-release-NHD2: release-NONE $(D)/neutrinohd2 $(D)/neutrinohd2-plugins
+release-NHD2: release-NONE $(D)/neutrino2 $(D)/neutrino2-plugins
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
 	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
 	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
