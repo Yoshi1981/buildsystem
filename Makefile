@@ -18,10 +18,11 @@ init:
 	@echo "  Kathrein"
 	@echo "    1)  UFS-912"
 	@echo ""
-	@echo "  Fortis"
+	@echo "  Fortis / Divers"
 	@echo "    10)  FS9000 / FS9200 (formerly Fortis HDbox)"
 	@echo "    11)  HS9510          (formerly Octagon SF1008P)"
 	@echo "    12)  HS8200          (formerly Atevio AV7500)"
+	@echo "    13)  Hl101"
 	@echo ""
 	@echo "  AB IPBox/cuberevo/Xsarius"
 	@echo "   20)  cuberevo / 9000"
@@ -71,6 +72,7 @@ init:
 		10) BOXTYPE="fortis_hdbox";; \
 		11) BOXTYPE="octagon1008";; \
 		12) BOXTYPE="atevio7500";; \
+		13) BOXTYPE="hl101";; \
 		20) BOXTYPE="cuberevo";; \
 		21) BOXTYPE="cuberevo_mini";; \
 		22) BOXTYPE="cuberevo_mini2";; \

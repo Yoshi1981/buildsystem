@@ -1,9 +1,12 @@
 #
-# flashimage
+# image
 #
 image: release
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 ipbox55 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd spark spark7162 atevio7500 tf7700 ufs910 ufs912 ufs913 ufs922))
 	$(MAKE) flash-image-$(BOXTYPE)
+endif
+ifeq ($(BOXTYPE), hl101)
+	$(MAKE) usb-image-hl101
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 gb800se bre2zet2c osnino osninoplus osninopro))
 	$(MAKE) flash-image-$(BOXTYPE)
@@ -23,7 +26,7 @@ endif
 	$(TUXBOX_CUSTOMIZE)
 
 #
-# flash-clean
+# image-clean
 #
 image-clean:
 	cd $(FLASH_DIR) && rm -rf *
