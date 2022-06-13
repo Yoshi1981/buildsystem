@@ -45,12 +45,13 @@ release-common: $(RELEASE_DEPS)
 	install -d $(RELEASE_DIR)/mnt/{hdd,nfs,usb}
 	install -d $(RELEASE_DIR)/mnt/mnt{0..7}
 	install -d $(RELEASE_DIR)/usr/{bin,lib,sbin,share}
+	install -d $(RELEASE_DIR)/usr/bin/cam
 	install -d $(RELEASE_DIR)/usr/lib/locale
 	cp -aR $(SKEL_ROOT)/usr/lib/locale/* $(RELEASE_DIR)/usr/lib/locale
 	install -d $(RELEASE_DIR)/usr/local/{bin,sbin}
 	install -d $(RELEASE_DIR)/usr/share/{tuxbox,udhcpc,zoneinfo,lua,fonts,iso-codes}
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
-	install -d $(RELEASE_DIR)/var/{bin,etc,httpd,lib,net,tuxbox}
+	install -d $(RELEASE_DIR)/var/{bin,etc,httpd,lib,net,tuxbox,keys}
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
 	install -d $(RELEASE_DIR)/var/tuxbox/{config,plugins}
 	install -d $(RELEASE_DIR)/var/tuxbox/config/{webtv,zapit}
@@ -97,6 +98,8 @@ ifeq ($(BOXARCH), sh4)
 #
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stm_v4l2.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stm_v4l2.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmfb.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmfb.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmvbi.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmvbi.ko $(RELEASE_DIR)/lib/modules/ || true
+	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmvout.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/stgfb/stmfb/stmvout.ko $(RELEASE_DIR)/lib/modules/ || true
 	cd $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra && \
 	for mod in \
 		sound/pseudocard/pseudocard.ko \
