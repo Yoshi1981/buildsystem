@@ -31,6 +31,8 @@ $:~ make help
 $:~ make print-boards
 ```
 
+* backed image can be found into ~/buildsystem/tufsbox/$(machine)/image.
+
 * tested with:
  debian 8 Jessie, 9 Stretch and 11 Bullseye
  linuxmint 20.1 Ulyssa, 20.2 Uma, 20.3 Una and LMDE 5 Elsie
