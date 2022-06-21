@@ -31,7 +31,6 @@
 #include <sys/ioctl.h>
 #include <linux/dvb/video.h>
 #include <linux/dvb/audio.h>
-#include <linux/dvb/stm_ioctls.h>
 #include <memory.h>
 #include <asm/types.h>
 #include <pthread.h>
@@ -62,17 +61,19 @@
 /* MISC Functions                */
 /* ***************************** */
 
-void PutBits(BitPacker_t *ld, unsigned int code, unsigned int length)
+void PutBits(BitPacker_t * ld, unsigned int code, unsigned int length)
 {
 	unsigned int bit_buf;
-	unsigned int bit_left;
+	int bit_left;
 
 	bit_buf = ld->BitBuffer;
 	bit_left = ld->Remaining;
+
 #ifdef DEBUG_PUTBITS
 	if (ld->debug)
 		dprintf("code = %d, length = %d, bit_buf = 0x%x, bit_left = %d\n", code, length, bit_buf, bit_left);
 #endif /* DEBUG_PUTBITS */
+
 	if (length < bit_left)
 	{
 		/* fits into current buffer */
@@ -94,18 +95,21 @@ void PutBits(BitPacker_t *ld, unsigned int code, unsigned int length)
 		bit_left   = 32 - length;
 		bit_buf = code;
 	}
+
 #ifdef DEBUG_PUTBITS
 	if (ld->debug)
 		dprintf("bit_left = %d, bit_buf = 0x%x\n", bit_left, bit_buf);
 #endif /* DEBUG_PUTBITS */
+
 	/* writeback */
 	ld->BitBuffer = bit_buf;
 	ld->Remaining = bit_left;
 }
 
-void FlushBits(BitPacker_t *ld)
+void FlushBits(BitPacker_t * ld)
 {
 	ld->BitBuffer <<= ld->Remaining;
+	
 	while (ld->Remaining < 32)
 	{
 #ifdef DEBUG_PUTBITS
@@ -116,6 +120,10 @@ void FlushBits(BitPacker_t *ld)
 		ld->BitBuffer <<= 8;
 		ld->Remaining += 8;
 	}
+	
 	ld->Remaining = 32;
 	ld->BitBuffer = 0;
 }
+
+
+

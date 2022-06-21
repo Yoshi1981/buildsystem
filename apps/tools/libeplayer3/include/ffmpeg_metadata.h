@@ -11,9 +11,9 @@
 
 /* metatdata map list:
  */
-char *metadata_map[] =
+char * metadata_map[] =
 {
-	/* our tags      ffmpeg tag / id3v2 */
+	/* our tags      ffmpeg tag / id3v2 */  
 	"Title",       "TIT2",
 	"Title",       "TT2",
 	"Artist",      "TPE1",
@@ -30,9 +30,9 @@ char *metadata_map[] =
 	"Copyright",   "TCOP",
 	"Composer",    "TCOM",
 	"Genre",       "TCON",
-	"Genre",       "TCO",
-	"EncodedBy",   "TENC",
-	"EncodedBy",   "TEN",
+	"Genre",       "TCO",   
+	"EncodedBy",   "TENC",   
+	"EncodedBy",   "TEN", 
 	"Language",    "TLAN",
 	"Performer",   "TPE3",
 	"Performer",   "TP3",

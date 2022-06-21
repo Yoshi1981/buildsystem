@@ -311,6 +311,8 @@ include make/cleantargets.mk
 include make/bootstrap.mk
 include make/system-tools.mk
 include make/neutrino2.mk
+include make/enigma2.mk
+include make/titan.mk
 
 update:
 	@if test -d $(BASE_DIR); then \

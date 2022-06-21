@@ -223,16 +223,9 @@ $(D)/tools-ipbox_eeprom: $(D)/bootstrap
 #
 # libeplayer3
 #
-LIBEPLAYER3 := libeplayer3
-ifeq ($(BOXARCH), sh4)
-LIBEPLAYER3 := libeplayer3
-else
-LIBEPLAYER3 := exteplayer3
-endif
-
 $(D)/tools-libeplayer3: $(D)/bootstrap $(D)/ffmpeg
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/$(LIBEPLAYER3); \
+	set -e; cd $(APPS_DIR)/tools/libeplayer3; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -243,9 +236,13 @@ $(D)/tools-libeplayer3: $(D)/bootstrap $(D)/ffmpeg
 #
 # exteplayer3
 #
+EXTEPLAYER3 := exteplayer3
+ifeq ($(BOXARCH), sh4)
+EXTEPLAYER3 := exteplayer3-sh4
+endif
 $(D)/tools-exteplayer3: $(D)/bootstrap $(D)/ffmpeg
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/exteplayer3; \
+	set -e; cd $(APPS_DIR)/tools/$(EXTEPLAYER3); \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \

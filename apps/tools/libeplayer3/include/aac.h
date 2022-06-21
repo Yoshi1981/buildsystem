@@ -22,7 +22,7 @@
 
 #define AAC_HEADER_LENGTH       7
 
-static inline int aac_get_sample_rate_index(uint32_t sample_rate)
+static inline int aac_get_sample_rate_index (uint32_t sample_rate)
 {
 	if (96000 <= sample_rate)
 		return 0;
@@ -51,7 +51,7 @@ static inline int aac_get_sample_rate_index(uint32_t sample_rate)
 	else if (7350 <= sample_rate)
 		return 12;
 	else
-		return 13;
+	      return 13;
 }
 
 #endif
