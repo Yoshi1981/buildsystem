@@ -5,10 +5,7 @@ $(D)/kernel-headers: $(D)/kernel.do_prepare
 	cd $(KERNEL_DIR) && \
 		$(INSTALL) -d $(TARGET_DIR)/usr/include && \
 		cp -a include/linux $(TARGET_DIR)/usr/include 
-#&& \
-#		cp -a include/asm-sh $(TARGET_DIR)/usr/include/asm && \
-#		cp -a include/asm-generic $(TARGET_DIR)/usr/include && \
-#		cp -a include/mtd $(TARGET_DIR)/usr/include
+#		&& cp -a include/asm-generic $(TARGET_DIR)/usr/include/asm
 	touch $@
 
 

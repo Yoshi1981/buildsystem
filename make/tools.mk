@@ -223,9 +223,29 @@ $(D)/tools-ipbox_eeprom: $(D)/bootstrap
 #
 # libeplayer3
 #
+LIBEPLAYER3 := libeplayer3
+ifeq ($(BOXARCH), sh4)
+LIBEPLAYER3 := libeplayer3
+else
+LIBEPLAYER3 := exteplayer3
+endif
+
 $(D)/tools-libeplayer3: $(D)/bootstrap $(D)/ffmpeg
 	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/libeplayer3; \
+	set -e; cd $(APPS_DIR)/tools/$(LIBEPLAYER3); \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+	
+#
+# exteplayer3
+#
+$(D)/tools-exteplayer3: $(D)/bootstrap $(D)/ffmpeg
+	$(START_BUILD)
+	set -e; cd $(APPS_DIR)/tools/exteplayer3; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
