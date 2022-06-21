@@ -134,13 +134,15 @@ init:
 	echo ""
 # Flavour
 	@echo -e "\nFlavour:"
-	@echo -e "   \033[01;32m1) NHD2\033[00m"
-	@echo "   2) NONE"
-	@read -p "Select Flavour (1-2)?" FLAVOUR; \
+	@echo "   1) NONE"
+	@echo -e "   \033[01;32m2) NHD2\033[00m"
+	@echo "   3) NEUTRINO-DDT"
+	@read -p "Select Flavour (1-3)?" FLAVOUR; \
 	FLAVOUR=$${FLAVOUR}; \
 	case "$$FLAVOUR" in \
-		1) echo "FLAVOUR=NHD2" >> config;; \
-		2) echo "FLAVOUR=NONE" >> config;; \
+		1) echo "FLAVOUR=NONE" >> config;; \
+		2) echo "FLAVOUR=NHD2" >> config;; \
+		3) echo "FLAVOUR=NEUTRINO-DDT" >> config;; \
 		*) echo "FLAVOUR=NHD2" >> config;; \
 	esac; \
 	echo ""
@@ -313,6 +315,7 @@ include make/system-tools.mk
 include make/neutrino2.mk
 include make/enigma2.mk
 include make/titan.mk
+include make/neutrino.mk
 
 update:
 	@if test -d $(BASE_DIR); then \
