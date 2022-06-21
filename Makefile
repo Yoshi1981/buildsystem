@@ -137,12 +137,16 @@ init:
 	@echo "   1) NONE"
 	@echo -e "   \033[01;32m2) NHD2\033[00m"
 	@echo "   3) NEUTRINO-DDT"
-	@read -p "Select Flavour (1-3)?" FLAVOUR; \
+	@echo "   4) ENIGMA2"
+	@echo "   5) TITAN"
+	@read -p "Select Flavour (1-5)?" FLAVOUR; \
 	FLAVOUR=$${FLAVOUR}; \
 	case "$$FLAVOUR" in \
 		1) echo "FLAVOUR=NONE" >> config;; \
 		2) echo "FLAVOUR=NHD2" >> config;; \
 		3) echo "FLAVOUR=NEUTRINO-DDT" >> config;; \
+		4) echo "FLAVOUR=ENIGMA2" >> config;; \
+		5) echo "FLAVOUR=TITAN" >> config;; \
 		*) echo "FLAVOUR=NHD2" >> config;; \
 	esac; \
 	echo ""
