@@ -5,3 +5,4 @@ tufsbox/
 config*
 Makefile.local
 *~
+apps/tools/libeplayer3/aclocal.m4
