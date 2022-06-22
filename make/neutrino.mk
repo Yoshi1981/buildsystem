@@ -92,6 +92,13 @@ ifeq ($(BOXARCH), arm)
 N_CONFIG_OPTS += --enable-reschange
 endif
 
+#ifeq ($(EXTERNAL_LCD), both)
+N_CONFIG_OPTS += --enable-graphlcd
+NEUTRINO_DEPS += $(D)/graphlcd
+N_CONFIG_OPTS += --enable-lcd4linux
+NEUTRINO_DEPS += $(D)/lcd4linux
+#endif
+
 MACHINE := $(BOXTYPE)
 ifeq ($(BOXARCH), arm)
 MACHINE = hd51
