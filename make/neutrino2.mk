@@ -1,14 +1,7 @@
 #
-# Makefile to build NHD2
+# Makefile to build N2
 #
-$(TARGET_DIR)/.version:
-	echo "imagename=neutrino2" > $@
-	echo "homepage=https://github.com/mohousch" >> $@
-	echo "creator=$(MAINTAINER)" >> $@
-	echo "docs=https://github.com/mohousch" >> $@
-	echo "forum=https://github.com/mohousch/neutrino2" >> $@
-	echo "version=0200`date +%Y%m%d%H%M`" >> $@
-	echo "git=`git log | grep "^commit" | wc -l`" >> $@
+
 
 #
 # DEPS
@@ -157,7 +150,6 @@ $(D)/neutrino2.do_compile: $(D)/neutrino2.config.status
 
 $(D)/neutrino2: $(D)/neutrino2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino2/nhd2-exp install DESTDIR=$(TARGET_DIR)
-	make $(TARGET_DIR)/.version
 	touch $(D)/$(notdir $@)
 	$(TUXBOX_CUSTOMIZE)
 
@@ -221,7 +213,6 @@ neutrino2-plugins-distclean:
 #
 release-NHD2: release-NONE $(D)/neutrino2 $(D)/neutrino2-plugins
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
-	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
 	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/* $(RELEASE_DIR)/usr/share/tuxbox
 	
@@ -288,5 +279,5 @@ endif
 #
 #
 #
-PHONY += $(TARGET_DIR)/.version
+#PHONY += $(TARGET_DIR)/.version
 

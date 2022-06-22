@@ -102,17 +102,17 @@ if [ -e /var/etc/rcS.local ]; then
 	/var/etc/rcS.local
 fi
 
-echo "[rcS] starting neutrino2 ->"
+echo "[rcS] starting titan ->"
 
 until false
 do
-	if [ -e /var/bin/neutrino ];then
-		/var/bin/neutrino
+	if [ -e /var/bin/titan ];then
+		/var/bin/titan
 	else
-		/usr/local/bin/neutrino
+		/usr/local/bin/titan
 	fi
 	rtv=$?
-	echo "neutrino2 ended <- RTV: " $rtv
+	echo "titan ended <- RTV: " $rtv
 	case "$rtv" in
 		0) echo "$rtv"
 			echo "RESTART"

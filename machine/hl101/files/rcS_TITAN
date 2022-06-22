@@ -140,13 +140,13 @@ else
    fi
 fi
 
-echo "[rcS] Starting neutrino GUI ->"
+echo "[rcS] Starting titan ->"
 
 until false
 do
-   /usr/local/bin/neutrino
+   /usr/local/bin/titan
    rtv=$?
-   echo "GUI ended <- RTV: " $rtv
+   echo "titan ended <- RTV: " $rtv
    case "$rtv" in
       0) echo "$rtv"
               echo "RESTART"

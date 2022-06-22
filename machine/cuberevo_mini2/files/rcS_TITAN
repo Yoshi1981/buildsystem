@@ -145,18 +145,18 @@ if [ ! -e /var/etc/.firstboot ]; then
     fi
     
     killall -9 showiframe
-    /bin/fp_control -t "NEUTRINO2"
-    echo "starting neutrino2 ->"
+    /bin/fp_control -t "TITAN"
+    echo "starting titan ->"
 
    until false
    do
-  	if [ -e /var/bin/neutrino ];then
-		/var/bin/neutrino
+  	if [ -e /var/bin/titan ];then
+		/var/bin/titan
   	else
-  		/usr/local/bin/neutrino
+  		/usr/local/bin/titan
 	fi
      	rtv=$?
-      	echo "neutrino2 ended <- RTV: " $rtv
+      	echo "titan ended <- RTV: " $rtv
       	case "$rtv" in
 		0)
 		   echo "RESTART";;

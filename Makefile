@@ -144,9 +144,9 @@ init:
 	case "$$FLAVOUR" in \
 		1) echo "FLAVOUR=NONE" >> config;; \
 		2) echo "FLAVOUR=NHD2" >> config;; \
-		3) echo "FLAVOUR=NEUTRINO-DDT" >> config;; \
-		4) echo "FLAVOUR=ENIGMA2" >> config;; \
-		5) echo "FLAVOUR=TITAN" >> config;; \
+		3) echo "FLAVOUR=NEUTRINO-DDT (experimental)" >> config;; \
+		4) echo "FLAVOUR=ENIGMA2 (experimental)" >> config;; \
+		5) echo "FLAVOUR=TITAN (experimental)" >> config;; \
 		*) echo "FLAVOUR=NHD2" >> config;; \
 	esac; \
 	echo ""

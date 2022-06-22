@@ -197,7 +197,7 @@ release-hl101:
 	cp $(SKEL_ROOT)/lib/firmware/as102_data2_st.hex $(RELEASE_DIR)/lib/firmware/
 	cp -dp $(BASE_DIR)/machine/$(BOXTYPE)/files/lircd.conf $(RELEASE_DIR)/etc/lircd.conf
 	install -m 0755 $(BASE_DIR)/machine/$(BOXTYPE)/files/halt $(RELEASE_DIR)/etc/init.d/
-	install -m 0755 $(BASE_DIR)/machine/$(BOXTYPE)/files/rcS $(RELEASE_DIR)/etc/init.d/rcS
+	install -m 0755 $(BASE_DIR)/machine/$(BOXTYPE)/files/rcS_$(FLAVOUR) $(RELEASE_DIR)/etc/init.d/rcS
 
 #
 # flashimage

@@ -1,12 +1,14 @@
 #
 # Makefile to build NEUTRINO
 #
-$(TARGET_DIR)/var/etc/.version:
-	echo "imagename=Neutrino MP" > $@
+$(TARGET_DIR)/.version:
+	echo "distro=$(FLAVOUR)" > $@
+	echo "imagename=`sed -n 's/\#define PACKAGE_NAME "//p' $(N_OBJDIR)/config.h | sed 's/"//'`" >> $@
+	echo "imageversion=`sed -n 's/\#define PACKAGE_VERSION "//p' $(N_OBJDIR)/config.h | sed 's/"//'`" >> $@
 	echo "homepage=https://github.com/Duckbox-Developers" >> $@
 	echo "creator=$(MAINTAINER)" >> $@
 	echo "docs=https://github.com/Duckbox-Developers" >> $@
-	echo "forum=https://github.com/Duckbox-Developers/neutrino-mp-cst-next" >> $@
+	echo "forum=https://github.com/Duckbox-Developers/neutrino-ddt" >> $@
 	echo "version=0200`date +%Y%m%d%H%M`" >> $@
 	echo "git=`git log | grep "^commit" | wc -l`" >> $@
 
@@ -90,8 +92,16 @@ ifeq ($(BOXARCH), arm)
 N_CONFIG_OPTS += --enable-reschange
 endif
 
+MACHINE := $(BOXTYPE)
+ifeq ($(BOXARCH), arm)
+MACHINE = hd51
+endif
+ifeq ($(BOXARCH), mips)
+MACHINE = vuduo
+endif
+
 N_CONFIG_OPTS += \
-	--with-boxtype=$(BOXTYPE) \
+	--with-boxtype=$(MACHINE) \
 	--with-libdir=/usr/lib \
 	--with-datadir=/usr/share/tuxbox \
 	--with-fontdir=/usr/share/fonts \
@@ -127,14 +137,12 @@ NEUTRINO_MP_LIBSTB_CST_NEXT_PATCHES =
 $(D)/libstb-hal-ddt.do_prepare:
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/libstb-hal-ddt
-	rm -rf $(SOURCE_DIR)/libstb-hal-ddt.org
 	rm -rf $(LH_OBJDIR)
 	[ -d "$(ARCHIVE)/libstb-hal-ddt.git" ] && \
 	(cd $(ARCHIVE)/libstb-hal-ddt.git; git pull; cd "$(BUILD_TMP)";); \
 	[ -d "$(ARCHIVE)/libstb-hal-ddt.git" ] || \
 	git clone https://github.com/Duckbox-Developers/libstb-hal-ddt.git $(ARCHIVE)/libstb-hal-ddt.git; \
 	cp -ra $(ARCHIVE)/libstb-hal-ddt.git $(SOURCE_DIR)/libstb-hal-ddt;\
-#	cp -ra $(SOURCE_DIR)/libstb-hal-ddt $(SOURCE_DIR)/libstb-hal-cst-next.org
 	set -e; cd $(SOURCE_DIR)/libstb-hal-ddt; \
 		$(call apply_patches,$(NEUTRINO_MP_LIBSTB_CST_NEXT_PATCHES))
 	@touch $@
@@ -150,7 +158,7 @@ $(D)/libstb-hal-ddt.config.status: | $(NEUTRINO_DEPS)
 			--build=$(BUILD) \
 			--prefix= \
 			--with-target=cdk \
-			--with-boxtype=$(BOXTYPE) \
+			--with-boxtype=$(MACHINE) \
 			--enable-silent-rules \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
@@ -184,14 +192,12 @@ NEUTRINO_MP_CST_NEXT_PATCHES =
 $(D)/neutrino-ddt.do_prepare: | $(NEUTRINO_DEPS) $(D)/libstb-hal-ddt
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/neutrino-ddt
-#	rm -rf $(SOURCE_DIR)/neutrino-mp-cst-next.org
 	rm -rf $(N_OBJDIR)
 	[ -d "$(ARCHIVE)/neutrino-ddt.git" ] && \
 	(cd $(ARCHIVE)/neutrino-ddt.git; git pull; cd "$(BUILD_TMP)";); \
 	[ -d "$(ARCHIVE)/neutrino-ddt.git" ] || \
 	git clone https://github.com/Duckbox-Developers/neutrino-ddt.git $(ARCHIVE)/neutrino-ddt.git; \
 	cp -ra $(ARCHIVE)/neutrino-ddt.git $(SOURCE_DIR)/neutrino-ddt; \
-#	cp -ra $(SOURCE_DIR)/neutrino-mp-cst-next $(SOURCE_DIR)/neutrino-mp-cst-next.org
 	set -e; cd $(SOURCE_DIR)/neutrino-ddt; \
 		$(call apply_patches,$(NEUTRINO_MP_CST_NEXT_PATCHES))
 	@touch $@
@@ -233,8 +239,8 @@ $(D)/neutrino-ddt.do_compile: $(D)/neutrino-ddt.config.status $(SOURCE_DIR)/neut
 
 $(D)/neutrino-ddt: $(D)/neutrino-ddt.do_prepare $(D)/neutrino-ddt.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(TARGET_DIR); \
-	rm -f $(TARGET_DIR)/var/etc/.version
-	make $(TARGET_DIR)/var/etc/.version
+	rm -f $(TARGET_DIR)/.version
+	make $(TARGET_DIR)/.version
 	$(TOUCH)
 
 neutrino-ddt-clean: neutrino-cdkroot-clean
@@ -255,10 +261,156 @@ neutrino-cdkroot-clean:
 	[ -e $(TARGET_DIR)/usr/share/fonts ] && cd $(TARGET_DIR)/usr/share/fonts && find -name '*' -delete || true
 	[ -e $(TARGET_DIR)/var/tuxbox ] && cd $(TARGET_DIR)/var/tuxbox && find -name '*' -delete || true
 	
+	
+######
+#
+# neutrino-plugins
+#
+NEUTRINO_PLUGINS  = $(D)/neutrino-ddt-plugins
+NEUTRINO_PLUGINS += $(D)/neutrino-ddt-plugins-scripts-lua
+NEUTRINO_PLUGINS += $(D)/neutrino-ddt-plugins-mediathek
+NEUTRINO_PLUGINS += $(D)/neutrino-ddt-plugins-xupnpd
+NMPP_PATCHES  = $(NEUTRINO_PLUGINS_PATCHES)
+
+NP_OBJDIR = $(BUILD_TMP)/neutrino-ddt-plugins
+
+ifeq ($(BOXARCH), sh4)
+EXTRA_CPPFLAGS_MP_PLUGINS = -DMARTII
+endif
+
+$(D)/neutrino-ddt-plugins.do_prepare:
+	$(START_BUILD)
+	rm -rf $(SOURCE_DIR)/neutrino-plugins
+	set -e; if [ -d $(ARCHIVE)/neutrino-ddt-plugins.git ]; \
+		then cd $(ARCHIVE)/neutrino-ddt-plugins.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/neutrino-ddt-plugins.git neutrino-ddt-plugins.git; \
+		fi
+	cp -ra $(ARCHIVE)/neutrino-ddt-plugins.git $(SOURCE_DIR)/neutrino-ddt-plugins
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+	sed -i -e 's#shellexec fx2#shellexec#g' $(SOURCE_DIR)/neutrino-ddt-plugins/Makefile.am
+endif
+	set -e; cd $(SOURCE_DIR)/neutrino-ddt-plugins; \
+		$(call apply_patches, $(NMPP_PATCHES))
+	@touch $@
+
+$(D)/neutrino-ddt-plugins.config.status: $(D)/bootstrap
+	rm -rf $(NP_OBJDIR); \
+	test -d $(NP_OBJDIR) || mkdir -p $(NP_OBJDIR); \
+	cd $(NP_OBJDIR); \
+		$(SOURCE_DIR)/neutrino-ddt-plugins/autogen.sh $(SILENT_OPT) && automake --add-missing $(SILENT_OPT); \
+		$(BUILDENV) \
+		$(SOURCE_DIR)/neutrino-ddt-plugins/configure $(SILENT_OPT) \
+			--host=$(TARGET) \
+			--build=$(BUILD) \
+			--prefix= \
+			--enable-silent-rules \
+			--with-target=cdk \
+			--include=/usr/include \
+			--enable-maintainer-mode \
+			--with-boxtype=$(MACHINE) \
+			--with-plugindir=/var/tuxbox/plugins \
+			--with-libdir=/usr/lib \
+			--with-datadir=/usr/share/tuxbox \
+			--with-fontdir=/usr/share/fonts \
+			PKG_CONFIG=$(PKG_CONFIG) \
+			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
+			CPPFLAGS="$(N_CPPFLAGS) $(EXTRA_CPPFLAGS_MP_PLUGINS) -DNEW_LIBCURL" \
+			LDFLAGS="$(TARGET_LDFLAGS) -L$(NP_OBJDIR)/fx2/lib/.libs"
+	@touch $@
+
+$(D)/neutrino-ddt-plugins.do_compile: $(D)/neutrino-ddt-plugins.config.status
+	$(MAKE) -C $(NP_OBJDIR) DESTDIR=$(TARGET_DIR)
+	@touch $@
+
+$(D)/neutrino-ddt-plugins: $(D)/neutrino-ddt-plugins.do_prepare $(D)/neutrino-ddt-plugins.do_compile
+	$(MAKE) -C $(NP_OBJDIR) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
+
+neutrino-ddt-plugins-clean:
+	rm -f $(D)/neutrino-ddt-plugins
+	rm -f $(D)/neutrino-ddt-plugin
+	rm -f $(D)/neutrino-ddt-plugin.config.status
+	cd $(NP_OBJDIR); \
+		$(MAKE) -C $(NP_OBJDIR) clean
+
+neutrino-ddt-plugins-distclean:
+	rm -rf $(NP_OBJDIR)
+	rm -f $(D)/neutrino-plugin*
+
+#
+# xupnpd
+#
+XUPNPD_BRANCH = 25d6d44c045
+XUPNPD_PATCH = xupnpd.patch
+
+$(D)/neutrino-ddt-plugins-xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutrino-ddt-plugins-scripts-lua
+	$(START_BUILD)
+	$(REMOVE)/xupnpd
+	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
+		then cd $(ARCHIVE)/xupnpd.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/clark15b/xupnpd.git xupnpd.git; \
+		fi
+	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
+	($(CHDIR)/xupnpd; git checkout -q $(XUPNPD_BRANCH);)
+	$(CHDIR)/xupnpd; \
+		$(call apply_patches, $(XUPNPD_PATCH))
+	$(CHDIR)/xupnpd/src; \
+		$(BUILDENV) \
+		$(MAKE) embedded TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG) LUAFLAGS="$(TARGET_LDFLAGS) -I$(TARGET_INCLUDE_DIR)"; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGET_DIR)/etc/init.d/
+	mkdir -p $(TARGET_DIR)/usr/share/xupnpd/config
+	rm $(TARGET_DIR)/usr/share/xupnpd/plugins/staff/xupnpd_18plus.lua
+	install -m 644 $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git/xupnpd/xupnpd_cczwei.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	: install -m 644 $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git/xupnpd/xupnpd_youtube.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	$(REMOVE)/xupnpd
+	$(TOUCH)
+
+#
+# neutrino-ddt-plugins-scripts-lua
+#
+$(D)/neutrino-ddt-plugins-scripts-lua: $(D)/bootstrap
+	$(START_BUILD)
+	$(REMOVE)/neutrino-ddt-plugin-scripts-lua
+	set -e; if [ -d $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git ]; \
+		then cd $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/plugin-scripts-lua.git neutrino-ddt-plugin-scripts-lua.git; \
+		fi
+	cp -ra $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git/plugins $(BUILD_TMP)/neutrino-ddt-plugin-scripts-lua
+	$(CHDIR)/neutrino-ddt-plugin-scripts-lua; \
+		install -d $(TARGET_DIR)/var/tuxbox/plugins
+#		cp -R $(BUILD_TMP)/neutrino-plugin-scripts-lua/favorites2bin/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/neutrino-ddt-plugin-scripts-lua/ard_mediathek/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/neutrino-ddt-plugin-scripts-lua/mtv/* $(TARGET_DIR)/var/tuxbox/plugins/
+		cp -R $(BUILD_TMP)/neutrino-ddt-plugin-scripts-lua/netzkino/* $(TARGET_DIR)/var/tuxbox/plugins/
+	$(REMOVE)/neutrino-ddt-plugin-scripts-lua
+	$(TOUCH)
+#
+# neutrino-mediathek
+#
+$(D)/neutrino-ddt-plugins-mediathek:
+	$(START_BUILD)
+	$(REMOVE)/neutrino-ddt-plugins-mediathek
+	set -e; if [ -d $(ARCHIVE)/neutrino-ddt-plugins-mediathek.git ]; \
+		then cd $(ARCHIVE)/neutrino-ddt-plugins-mediathek.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/mediathek.git neutrino-ddt-plugins-mediathek.git; \
+		fi
+	cp -ra $(ARCHIVE)/neutrino-ddt-plugins-mediathek.git $(BUILD_TMP)/neutrino-ddt-plugins-mediathek
+	install -d $(TARGET_DIR)/var/tuxbox/plugins
+	$(CHDIR)/neutrino-ddt-plugins-mediathek; \
+		cp -a plugins/* $(TARGET_DIR)/var/tuxbox/plugins/; \
+#		cp -a share $(TARGET_DIR)/usr/
+		rm -f $(TARGET_DIR)/var/tuxbox/plugins/neutrino-mediathek/livestream.lua
+	$(REMOVE)/neutrino-ddt-plugins-mediathek
+	$(TOUCH)
+	
 #
 # release-NEUTRINO-DDT
 #
-release-NEUTRINO-DDT: release-NONE $(D)/neutrino-ddt
+release-NEUTRINO-DDT: release-NONE $(D)/neutrino-ddt $(D)/neutrino-ddt-plugins \
+	$(D)/neutrino-ddt-plugins-scripts-lua $(D)/neutrino-ddt-plugins-mediathek $(D)/neutrino-ddt-plugins-xupnpd
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
 	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
 	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox

@@ -145,8 +145,8 @@ if [ ! -e /var/etc/.firstboot ]; then
     fi
     
     killall -9 showiframe
-    /bin/fp_control -t "LOADING neutrino"
-    echo "starting neutrino GUI ->"
+    /bin/fp_control -t "NEUTRINO"
+    echo "starting neutrino ->"
 
    until false
    do

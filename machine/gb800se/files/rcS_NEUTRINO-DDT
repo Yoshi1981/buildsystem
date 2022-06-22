@@ -102,7 +102,7 @@ if [ -e /var/etc/rcS.local ]; then
 	/var/etc/rcS.local
 fi
 
-echo "[rcS] starting neutrino2 ->"
+echo "[rcS] starting neutrino GUI ->"
 
 until false
 do
@@ -112,7 +112,7 @@ do
 		/usr/local/bin/neutrino
 	fi
 	rtv=$?
-	echo "neutrino2 ended <- RTV: " $rtv
+	echo "GUI ended <- RTV: " $rtv
 	case "$rtv" in
 		0) echo "$rtv"
 			echo "RESTART"
