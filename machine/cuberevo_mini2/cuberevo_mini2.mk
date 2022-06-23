@@ -3,7 +3,7 @@ OPTIMIZATIONS ?= size
 WLAN ?= 
 LUA ?=lua
 PYTHON ?=
-FLAVOUR ?= NHD2
+FLAVOUR ?= NEUTRINO2
 MEDIAFW ?= buildinplayer
 CICAM ?= ci-cam
 SCART ?= scart
@@ -204,7 +204,7 @@ release-cuberevo_mini2:
 #
 flash-image-cuberevo_mini2:
 	mkdir -p $(FLASH_DIR)
-	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) cuberevo_mini2
+	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) cuberevo_mini2 $(FLAVOUR)
 
 #
 # usbimage

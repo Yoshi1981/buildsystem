@@ -204,7 +204,7 @@ release-cuberevo_2000hd:
 #
 flash-image-cuberevo_2000hd:
 	mkdir -p $(FLASH_DIR)
-	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) cuberevo_2000hd
+	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) cuberevo_2000hd $(FLAVOUR)
 
 #
 # usbimage

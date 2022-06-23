@@ -422,19 +422,6 @@ $(D)/tools-wait4button: $(D)/bootstrap
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
-
-#
-# own-tools
-#
-$(D)/tools-own-tools: $(D)/bootstrap $(D)/libcurl
-	$(START_BUILD)
-	set -e; cd $(APPS_DIR)/tools/own-tools; \
-		$(CONFIGURE_TOOLS) \
-			--prefix= \
-		; \
-		$(MAKE); \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(TOUCH)
 	
 #
 # hotplug_e2_helper
@@ -528,7 +515,6 @@ $(D)/tuxtxt32bpp: $(D)/bootstrap $(D)/tuxtxtlib
 	$(REWRITE_LIBTOOL)/libtuxtxt32bpp.la
 	$(REMOVE)/tuxtxt
 	$(TOUCH)
-
 
 #
 # TOOLS

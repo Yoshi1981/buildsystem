@@ -6,6 +6,8 @@ OUTDIR=$3
 TMPROOTDIR=$4
 TMPKERNELDIR=$5
 TMPVARDIR=$6
+FLAVOUR=$7
+DATETIME=_`date +%d.%m.%Y-%H.%M`
 
 echo "CURDIR       = $CURDIR"
 echo "TUFSBOXDIR   = $TUFSBOXDIR"
@@ -25,7 +27,8 @@ elif [ -f $TMPVARDIR/etc/hostname ]; then
 	BOXTYPE=`cat $TMPVARDIR/etc/hostname`
 fi
 
-. $CURDIR/../common/gitversion.sh $CURDIR $BOXTYPE
+#. $CURDIR/../common/gitversion.sh $CURDIR $BOXTYPE
+gitversion="_$FLAVOUR$DATETIME"
 
 OUTFILE=$OUTDIR/miniFLASH.img
 OUTFILE_Z=$OUTDIR/$BOXTYPE$gitversion

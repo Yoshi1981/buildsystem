@@ -202,7 +202,7 @@ release-fortis_hdbox:
 #
 flash-image-fortis_hdbox:
 	mkdir -p $(FLASH_DIR)
-	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) fortis_hdbox
+	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) fortis_hdbox $(FLAVOUR)
 
 #
 # usbimage

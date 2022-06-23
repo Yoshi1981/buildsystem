@@ -203,7 +203,7 @@ release-octagon1008:
 #
 flash-image-octagon1008:
 	mkdir -p $(FLASH_DIR)
-	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) octagon1008
+	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) octagon1008 $(FLAVOUR)
 	
 #
 # usbimage

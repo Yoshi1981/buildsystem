@@ -29,19 +29,19 @@ ENIGMA2_DEPS += $(D)/minidlna
 ENIGMA2_DEPS += $(D)/sdparm
 ENIGMA2_DEPS += $(D)/parted 
 endif
-ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), small size))
+#ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), small size))
 # required for DVDBurn plugin (adds ? Mbyte to image)
 #ENIGMA2_DEPS += $(D)/dvd+rw-tools $(D)/dvdauthor $(D)/mjpegtools $(D)/cdrkit $(D)/replex $(D)/python_imaging
-endif
-ifeq ($(IMAGE), enigma2-wlandriver)
+#endif
+ifeq ($(WLAN), wlandriver)
 ENIGMA2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
 
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hs7110 hs7119 hs7420 hs7429 hs7810a hs7819 opt9600 opt9600mini opt9600prima vitamin_hd5000))
-ifeq ($(DESTINATION), USB)
-E_CONFIG_OPTS += --enable-run_from_usb
-endif
-endif
+#ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hs7110 hs7119 hs7420 hs7429 hs7810a hs7819 opt9600 opt9600mini opt9600prima vitamin_hd5000))
+#ifeq ($(DESTINATION), USB)
+#E_CONFIG_OPTS += --enable-run_from_usb
+#endif
+#endif
 
 # determine libsigc++ version
 #ifeq ($(E2_DIFF), $(filter $(E2_DIFF), 1))
@@ -91,20 +91,19 @@ ENIGMA2_DEPS += $(D)/lcd4linux
 endif
 
 #E_CONFIG_OPTS += --enable-$(BOXTYPE)
-
-E_CONFIG_OPTS +=$(LOCAL_ENIGMA2_BUILD_OPTIONS)
+#E_CONFIG_OPTS +=$(LOCAL_ENIGMA2_BUILD_OPTIONS)
 
 E_CPPFLAGS    = -I$(DRIVER_DIR)/include
 E_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
 E_CPPFLAGS   += -I$(KERNEL_DIR)/include
-E_CPPFLAGS   += -I$(TOOLS_DIR)
-ifeq ($(E2_DIFF), $(filter $(E2_DIFF), 1))
-E_CPPFLAGS   += -I$(TOOLS_DIR)/libeplayer3/include
-endif
-E_CPPFLAGS   += $(LOCAL_ENIGMA2_CPPFLAGS)
-E_CPPFLAGS   += $(PLATFORM_CPPFLAGS)
+E_CPPFLAGS   += -I$(APPS_DIR)/tools
+#ifeq ($(E2_DIFF), $(filter $(E2_DIFF), 1))
+#E_CPPFLAGS   += -I$(APPS_DIR)/toolslibeplayer3/include
+#endif
+#E_CPPFLAGS   += $(LOCAL_ENIGMA2_CPPFLAGS)
+#E_CPPFLAGS   += $(PLATFORM_CPPFLAGS)
 
-#ENIGMA2_PATCHES = enigma2.patch
+ENIGMA2_PATCHES =
 
 #
 # enigma2
@@ -115,13 +114,13 @@ $(D)/enigma2.do_prepare: | $(ENIGMA2_DEPS)
 	[ -d "$(ARCHIVE)/enigma2.git" ] && \
 	(cd $(ARCHIVE)/enigma2.git; git pull;); \
 	[ -d "$(ARCHIVE)/enigma2.git" ] || \
-	git clone -b 6.4 https://github.com/openatv/enigma2.git $(ARCHIVE)/enigma2.git; \
+	git clone https://github.com/openatv/enigma2.git $(ARCHIVE)/enigma2.git; \
 	cp -ra $(ARCHIVE)/enigma2.git $(SOURCE_DIR)/enigma2; \
 	set -e; cd $(SOURCE_DIR)/enigma2; \
 		$(call apply_patches,$(ENIGMA2_PATCHES))
 	@touch $@
 
-$(SOURCE_DIR)/enigma2/config.status:
+$(SOURCE_DIR)/enigma2/config.status: $(D)/enigma2.do_prepare
 	$(SILENT)cd $(SOURCE_DIR)/enigma2; \
 		./autogen.sh $(SILENT_OPT); \
 		sed -e 's|#!/usr/bin/python|#!$(HOST_DIR)/bin/python|' -i po/xml2po.py; \
@@ -156,23 +155,23 @@ REPO_0=$(REPO_PLIHD)
 FW=$(MEDIAFW)
 $(D)/enigma2: $(D)/enigma2.do_prepare $(D)/enigma2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/enigma2 install DESTDIR=$(TARGET_DIR)
-	@echo -n "Stripping..."
-	$(SILENT)if [ -e $(TARGET_DIR)/usr/bin/enigma2 ]; then \
-		$(TARGET)-strip $(TARGET_DIR)/usr/bin/enigma2; \
-	fi
-	$(SILENT)if [ -e $(TARGET_DIR)/usr/local/bin/enigma2 ]; then \
-		$(TARGET)-strip $(TARGET_DIR)/usr/local/bin/enigma2; \
-	fi
-	$(SILENT)echo " done."
-	$(SILENT)echo
-	$(SILENT)echo "Adding PLi-HD skin"
-	$(SILENT)if [ ! -d $(ARCHIVE)/PLi-HD_skin.git ]; then \
-		(echo -n "Cloning PLi-HD skin git..."; git clone -q -b $(HEAD) $(REPO_0) $(ARCHIVE)/PLi-HD_skin.git; echo " done."); \
-	fi
+#	@echo -n "Stripping..."
+#	$(SILENT)if [ -e $(TARGET_DIR)/usr/bin/enigma2 ]; then \
+#		$(TARGET)-strip $(TARGET_DIR)/usr/bin/enigma2; \
+#	fi
+#	$(SILENT)if [ -e $(TARGET_DIR)/usr/local/bin/enigma2 ]; then \
+#		$(TARGET)-strip $(TARGET_DIR)/usr/local/bin/enigma2; \
+#	fi
+#	$(SILENT)echo " done."
+#	$(SILENT)echo
+#	$(SILENT)echo "Adding PLi-HD skin"
+#	$(SILENT)if [ ! -d $(ARCHIVE)/PLi-HD_skin.git ]; then \
+#		(echo -n "Cloning PLi-HD skin git..."; git clone -q -b $(HEAD) $(REPO_0) $(ARCHIVE)/PLi-HD_skin.git; echo " done."); \
+#	fi
 #	$(SILENT)(cd $(ARCHIVE)/PLi-HD_skin.git; echo -n "Checkout commit $(REVISION_HD)..."; git checkout -q $(REVISION_HD); echo " done.")
-	$(SILENT)cp -ra $(ARCHIVE)/PLi-HD_skin.git/usr/share/enigma2/* $(TARGET_DIR)/usr/local/share/enigma2
-	@echo -e "$(TERM_RED)Applying Patch:$(TERM_NORMAL) $(PLI_SKIN_PATCH)"; $(PATCH)/$(PLI_SKIN_PATCH)
-	@echo -e "Patching $(TERM_GREEN_BOLD)PLi-HD skin$(TERM_NORMAL) completed."
+#	$(SILENT)cp -ra $(ARCHIVE)/PLi-HD_skin.git/usr/share/enigma2/* $(TARGET_DIR)/usr/local/share/enigma2
+#	@echo -e "$(TERM_RED)Applying Patch:$(TERM_NORMAL) $(PLI_SKIN_PATCH)"; $(PATCH)/$(PLI_SKIN_PATCH)
+#	@echo -e "Patching $(TERM_GREEN_BOLD)PLi-HD skin$(TERM_NORMAL) completed."
 #ifneq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162 cuberevo cuberevo_250hd cuberevo_mini_fta cuberevo_mini cuberevo_mini2 cuberevo_2000hd cuberevo3000hd cuberevo_9500hd fs9000 hs7110 hs7420 hs7810a hs7119 hs7429 hs7819 hs8200 hs9510 tf7700 ufs912 ufs913))
 #	$(SILENT)rm -rf $(TARGET_DIR)/usr/local/share/enigma2/PLi-FullHD
 #	$(SILENT)rm -rf $(TARGET_DIR)/usr/local/share/enigma2/PLi-FullNightHD
@@ -190,7 +189,6 @@ enigma2-distclean:
 	rm -f $(D)/enigma2.do_compile
 	rm -f $(D)/enigma2.do_prepare
 	rm -rf $(SOURCE_DIR)/enigma2
-	rm -rf $(SOURCE_DIR)/enigma2.org
 	
 #
 # release-ENIGMA2

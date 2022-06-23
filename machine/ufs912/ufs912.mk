@@ -3,7 +3,7 @@ OPTIMIZATIONS ?= size
 WLAN ?= 
 LUA ?=lua
 PYTHON ?=
-FLAVOUR ?= NHD2
+FLAVOUR ?= NEUTRINO2
 MEDIAFW ?= buildinplayer
 CICAM ?= ci-cam
 SCART ?= scart
@@ -201,7 +201,7 @@ release-ufs912:
 #
 flash-image-ufs912:
 	mkdir -p $(FLASH_DIR)
-	cd $(HOSTAPPS_DIR)/ufs912 && $(SUDOCMD) ./ufs912.sh $(MAINTAINER)
+	cd $(HOSTAPPS_DIR)/ufs912 && $(SUDOCMD) ./ufs912.sh $(MAINTAINER) $(FLAVOUR)
 
 #
 # usbimage

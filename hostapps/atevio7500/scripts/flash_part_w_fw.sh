@@ -7,6 +7,7 @@ TMPROOTDIR=$4
 TMPKERNELDIR=$5
 TMPFWDIR=$6
 TMPEXTDIR=$7
+FLAVOUR=8
 
 echo "CURDIR       = $CURDIR"
 echo "TUFSBOXDIR   = $TUFSBOXDIR"
@@ -23,7 +24,8 @@ FUP=$TUFSBOXDIR/host/bin/fup
 
 BOXTYPE=`cat $TMPEXTDIR/etc/hostname`
 
-. $CURDIR/../common/gitversion.sh $CURDIR $BOXTYPE
+#. $CURDIR/../common/gitversion.sh $CURDIR $BOXTYPE
+gitversion="_$FLAVOUR$DATETIME"
 
 OUTFILE=$OUTDIR/update_w_fw.ird
 OUTFILE_Z=$OUTDIR/$BOXTYPE$gitversion

@@ -6,7 +6,9 @@ OUTDIR=$3
 TMPROOTDIR=$4
 TMPKERNELDIR=$5
 TMPFWDIR=$6
-CREATEMULTI=$7
+FLAVOUR=$7
+
+CREATEMULTI=$8
 
 echo "CURDIR       = $CURDIR"
 echo "TUFSBOXDIR   = $TUFSBOXDIR"
@@ -25,7 +27,8 @@ elif [ -f $TMPROOTDIR/var/etc/hostname ]; then
 	BOXTYPE=`cat $TMPROOTDIR/var/etc/hostname`
 fi
 
-. $CURDIR/../common/gitversion.sh $CURDIR $BOXTYPE
+#. $CURDIR/../common/gitversion.sh $CURDIR $BOXTYPE
+gitversion="_$FLAVOUR$DATETIME"
 
 OUTFILE=$OUTDIR/update_w_fw.img
 OUTFILE_Z=$OUTDIR/$BOXTYPE$gitversion

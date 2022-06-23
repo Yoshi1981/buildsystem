@@ -204,7 +204,7 @@ release-cuberevo:
 #
 flash-image-cuberevo:
 	mkdir -p $(FLASH_DIR)
-	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) cuberevo
+	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) cuberevo $(FLAVOUR)
 
 #
 # usbimage
