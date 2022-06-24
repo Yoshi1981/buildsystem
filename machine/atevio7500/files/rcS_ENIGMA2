@@ -137,7 +137,7 @@ if [ ! -e /var/etc/.firstboot ]; then
 	  /var/etc/rcS.local
    fi
 
-   fp_control -t "LOADING ENIGMA2"
+   fp_control -t "ENIGMA2"
    echo "starting enigma2 ->"
       
    until false

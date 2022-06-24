@@ -137,14 +137,14 @@ if [ ! -e /var/etc/.firstboot ]; then
 	  /var/etc/rcS.local
    fi
 
-   fp_control -t "LOADING neutrino"
-   echo "starting neutrino ->"
+   fp_control -t "NEUTRINO2"
+   echo "starting neutrino2 ->"
       
    until false
    do
       /usr/local/bin/neutrino
       rtv=$?
-      echo "neutrino ended <- RTV: " $rtv
+      echo "neutrino2 ended <- RTV: " $rtv
       case "$rtv" in
 		0)
 		   echo "RESTART";;
