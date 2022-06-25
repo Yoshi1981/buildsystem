@@ -141,10 +141,10 @@ LH_OBJDIR = $(OBJDIR)/libstb-hal
 #
 NEUTRINO = neutrino-ddt
 N_BRANCH = master
-N_URL = https://github.com/Duckbox-Developers/$(NEUTRINO).git
+N_URL = https://github.com/Duckbox-Developers/neutrino-ddt.git
 LIBSTB-HAL = libstb-hal-ddt
 LH_BRANCH = master
-HAL_URL = https://github.com/Duckbox-Developers/$(LIBSTB-HAL).git
+HAL_URL = https://github.com/Duckbox-Developers/libstb-hal-ddt.git
 
 #
 # tuxbox
@@ -408,10 +408,10 @@ $(D)/neutrino-plugins-xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutrino
 	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGET_DIR)/etc/init.d/
 	mkdir -p $(TARGET_DIR)/usr/share/xupnpd/config
 	rm $(TARGET_DIR)/usr/share/xupnpd/plugins/staff/xupnpd_18plus.lua
-	install -m 644 $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
-	install -m 644 $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git/xupnpd/xupnpd_cczwei.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
-	: install -m 644 $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
-	install -m 644 $(ARCHIVE)/neutrino-ddt-plugin-scripts-lua.git/xupnpd/xupnpd_youtube.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_cczwei.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	: install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
+	install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_youtube.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
 	$(REMOVE)/xupnpd
 	$(TOUCH)
 
