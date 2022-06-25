@@ -385,34 +385,14 @@ neutrino-plugins-distclean:
 	rm -f $(D)/neutrino-plugin*
 
 #
-# xupnpd
+# neutrino-plugins-xupnpd
 #
-XUPNPD_BRANCH = 25d6d44c045
-XUPNPD_PATCH = xupnpd.patch
-
-$(D)/neutrino-plugins-xupnpd: $(D)/bootstrap $(D)/lua $(D)/openssl $(D)/neutrino-plugins-scripts-lua
-	$(START_BUILD)
-	$(REMOVE)/xupnpd
-	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
-		then cd $(ARCHIVE)/xupnpd.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/clark15b/xupnpd.git xupnpd.git; \
-		fi
-	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
-	($(CHDIR)/xupnpd; git checkout -q $(XUPNPD_BRANCH);)
-	$(CHDIR)/xupnpd; \
-		$(call apply_patches, $(XUPNPD_PATCH))
-	$(CHDIR)/xupnpd/src; \
-		$(BUILDENV) \
-		$(MAKE) embedded TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG) LUAFLAGS="$(TARGET_LDFLAGS) -I$(TARGET_INCLUDE_DIR)"; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGET_DIR)/etc/init.d/
-	mkdir -p $(TARGET_DIR)/usr/share/xupnpd/config
+$(D)/neutrino-plugins-xupnpd: $(D)/xupnpd $(D)/lua $(D)/neutrino-plugins-scripts-lua
 	rm $(TARGET_DIR)/usr/share/xupnpd/plugins/staff/xupnpd_18plus.lua
 	install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
 	install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_cczwei.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
 	: install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
 	install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_youtube.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
-	$(REMOVE)/xupnpd
 	$(TOUCH)
 
 #
