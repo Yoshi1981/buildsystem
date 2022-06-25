@@ -1871,4 +1871,29 @@ $(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(D)/dvb-apps $(ARCHI
 	$(REMOVE)/minisatip
 	$(TOUCH)
 
+#
+# xupnpd
+#
+XUPNPD_BRANCH = 25d6d44c045
+XUPNPD_PATCH = xupnpd.patch
+
+$(D)/xupnpd: $(D)/bootstrap $(D)/openssl
+	$(START_BUILD)
+	$(REMOVE)/xupnpd
+	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
+		then cd $(ARCHIVE)/xupnpd.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/clark15b/xupnpd.git xupnpd.git; \
+		fi
+	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
+	($(CHDIR)/xupnpd; git checkout -q $(XUPNPD_BRANCH);)
+	$(CHDIR)/xupnpd; \
+		$(call apply_patches, $(XUPNPD_PATCH))
+	$(CHDIR)/xupnpd/src; \
+		$(BUILDENV) \
+		$(MAKE) embedded TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG) LUAFLAGS="$(TARGET_LDFLAGS) -I$(TARGET_INCLUDE_DIR)"; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(TARGET_DIR)/etc/init.d/
+	mkdir -p $(TARGET_DIR)/usr/share/xupnpd/config
+	$(REMOVE)/xupnpd
+	$(TOUCH)
 
