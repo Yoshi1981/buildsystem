@@ -290,26 +290,17 @@ $(D)/neutrino: $(D)/neutrino.do_prepare $(D)/neutrino.do_compile
 	make $(TARGET_DIR)/.version
 	$(TOUCH)
 
-neutrino-clean: neutrino-cdkroot-clean
+neutrino-clean:
 	rm -f $(D)/neutrino
 	rm -f $(D)/neutrino.config.status
 	rm -f $(SOURCE_DIR)/$(NEUTRINO)/src/gui/version.h
 	cd $(N_OBJDIR); \
 		$(MAKE) -C $(N_OBJDIR) distclean
 
-neutrino-distclean: neutrino-cdkroot-clean libstb-hal-distclean
+neutrino-distclean: libstb-hal-distclean
 	rm -rf $(N_OBJDIR)
 	rm -f $(D)/neutrino*
 
-neutrino-cdkroot-clean:
-	[ -e $(TARGET_DIR)/usr/local/bin ] && cd $(TARGET_DIR)/usr/local/bin && find -name '*' -delete || true
-	[ -e $(TARGET_DIR)/usr/local/share/iso-codes ] && cd $(TARGET_DIR)/usr/local/share/iso-codes && find -name '*' -delete || true
-	[ -e $(TARGET_DIR)/usr/share/tuxbox/neutrino ] && cd $(TARGET_DIR)/usr/share/tuxbox/neutrino && find -name '*' -delete || true
-	[ -e $(TARGET_DIR)/usr/share/fonts ] && cd $(TARGET_DIR)/usr/share/fonts && find -name '*' -delete || true
-	[ -e $(TARGET_DIR)/var/tuxbox ] && cd $(TARGET_DIR)/var/tuxbox && find -name '*' -delete || true
-	
-	
-######
 #
 # neutrino-plugins
 #

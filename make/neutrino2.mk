@@ -151,8 +151,7 @@ $(D)/neutrino2.do_compile: $(D)/neutrino2.config.status
 
 $(D)/neutrino2: $(D)/neutrino2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino2/neutrino2 install DESTDIR=$(TARGET_DIR)
-	touch $(D)/$(notdir $@)
-	$(TUXBOX_CUSTOMIZE)
+	$(TOUCH)
 
 neutrino2-clean:
 	rm -f $(D)/neutrino2
