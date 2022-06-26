@@ -21,6 +21,7 @@ N2_DEPS += $(D)/libvorbisidec
 N2_DEPS += $(D)/flac
 N2_DEPS += $(D)/e2fsprogs
 N2_DEPS += $(D)/libopenthreads
+N2_DEPS += $(D)/libass
 
 ifeq ($(PYTHON), python)
 N2_DEPS += $(D)/python

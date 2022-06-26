@@ -1,7 +1,7 @@
 #
 # ffmpeg
 #
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+#ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 FFMPEG_VER = 3.3
 FFMPEG_SNAP = -$(FFMPEG_VER)
 
@@ -35,7 +35,7 @@ FFMPRG_EXTRA_CFLAGS  = -I$(TARGET_DIR)/usr/include/libxml2
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib $(D)/libass $(D)/libxml2 $(D)/libroxml $(D)/librtmp $(ARCHIVE)/$(FFMPEG_SOURCE)
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D)/libxml2 $(D)/libroxml $(D)/librtmp $(ARCHIVE)/$(FFMPEG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg$(FFMPEG_SNAP)
 	$(UNTAR)/$(FFMPEG_SOURCE)
@@ -352,11 +352,11 @@ $(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/alsa_lib 
 	$(REMOVE)/ffmpeg$(FFMPEG_SNAP)
 	$(TOUCH)
 
-endif
+#endif
 
 ################################################################################
 
-ifeq ($(BOXARCH), sh4)
+ifeq ($(BOXARCH), aarch64)
 FFMPEG_VER = 2.8.16
 FFMPEG_PATCH  = ffmpeg-$(FFMPEG_VER)-buffer-size.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hds-libroxml.patch
@@ -366,7 +366,6 @@ FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-tls.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-sh4.patch
 #FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-remove_avpriv_request_sample.patch
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
-FFMPEG_DEPS =
 FFMPEG_CONF_OPTS = 
 FFMPRG_EXTRA_CFLAGS =
 
@@ -377,7 +376,7 @@ endif
 $(ARCHIVE)/$(FFMPEG_SOURCE):
 	$(WGET) http://www.ffmpeg.org/releases/$(FFMPEG_SOURCE)
 
-$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(FFMPEG_DEPS) $(ARCHIVE)/$(FFMPEG_SOURCE)
+$(D)/ffmpeg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/libass $(D)/libroxml $(ARCHIVE)/$(FFMPEG_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
 	$(UNTAR)/$(FFMPEG_SOURCE)

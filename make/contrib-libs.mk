@@ -2710,4 +2710,30 @@ $(D)/libdvbcsa: $(D)/bootstrap $(ARCHIVE)/$(LIBDVBCSA_SOURCE)
 	$(REMOVE)/libdvbcsa
 	$(TOUCH)
 	
+#
+# librtmpdump
+#
+LIBRTMPDUMP_VER = ad70c64
+LIBRTMPDUMP_SOURCE = librtmpdump-$(LIBRTMPDUMP_VER).tar.bz2
+LIBRTMPDUMP_URL = https://github.com/oe-alliance/rtmpdump.git
+LIBRTMPDUMP_PATCH = rtmpdump-2.4.patch
+
+$(ARCHIVE)/$(LIBRTMPDUMP_SOURCE):
+	$(SCRIPTS_DIR)/get-git-archive.sh $(LIBRTMPDUMP_URL) $(LIBRTMPDUMP_VER) $(notdir $@) $(ARCHIVE)
+
+$(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMPDUMP_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/librtmpdump-$(LIBRTMPDUMP_VER)
+	$(UNTAR)/$(LIBRTMPDUMP_SOURCE)
+	set -e; cd $(BUILD_TMP)/librtmpdump-$(LIBRTMPDUMP_VER); \
+		$(call apply_patches,$(LIBRTMPDUMP_PATCH)); \
+		$(BUILDENV) \
+		$(MAKE) CROSS_COMPILE=$(TARGET)- ; \
+		$(MAKE) install prefix=/usr DESTDIR=$(TARGET_DIR) MANDIR=$(TARGET_DIR)/.remove
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/librtmp.pc
+	rm -f $(addprefix $(TARGET_DIR)/usr/sbin/,rtmpgw rtmpsrv rtmpsuck)
+	$(REMOVE)/librtmpdump-$(LIBRTMPDUMP_VER)
+	$(TOUCH)
+	
+	
 
