@@ -5,3 +5,4 @@ tufsbox/
 config*
 Makefile.local
 *~
+/apps/tools/exteplayer3/eplayer3

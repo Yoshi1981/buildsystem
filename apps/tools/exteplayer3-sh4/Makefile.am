@@ -54,3 +54,4 @@ bin_PROGRAMS = eplayer3
 eplayer3_SOURCES = main/exteplayer.c
 eplayer3_LDADD = -leplayer3 -lpthread
 eplayer3_DEPENDENCIES = libeplayer3.la
+
