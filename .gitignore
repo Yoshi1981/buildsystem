@@ -6,3 +6,4 @@ config*
 Makefile.local
 *~
 /apps/tools/exteplayer3/eplayer3
+/apps/tools/exteplayer3-sh4/eplayer3
