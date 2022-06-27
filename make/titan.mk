@@ -201,7 +201,7 @@ $(D)/titan-libipkg: $(D)/titan.do_prepare
 #
 # titan-libdreamdvd
 #
-$(D)/titan-libdreamdvd: $(D)/titan.do_prepare
+$(D)/titan-libdreamdvd: $(D)/titan.do_prepare $(D)/libdvdnav
 	$(START_BUILD)
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd $(SOURCE_DIR)/titan/libdreamdvd && \
@@ -214,13 +214,12 @@ $(D)/titan-libdreamdvd: $(D)/titan.do_prepare
 		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
-			--prefix=/usr \
+			--prefix=/ \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdreamdvd.pc
 	$(REWRITE_LIBTOOL)/libdreamdvd.la
-	$(REMOVE)/libdreamdvd
 	$(TOUCH)
 
 titan-libdreamdvd-clean:
