@@ -9,7 +9,7 @@ TITAN_DEPS += $(D)/module_init_tools
 TITAN_DEPS += $(LIRC)
 TITAN_DEPS += $(D)/libpng
 TITAN_DEPS += $(D)/freetype
-TITAN_DEPS += $(D)/titan-libdreamdvd
+TITAN_DEPS += $(D)/libdreamdvd
 TITAN_DEPS += $(D)/libjpeg
 TITAN_DEPS += $(D)/zlib
 TITAN_DEPS += $(D)/openssl
@@ -71,7 +71,8 @@ T_CPPFLAGS   += -L$(SOURCE_DIR)/titan/libipkg
 ifeq ($(MEDIAFW), buildinplayer)
 T_CPPFLAGS   += -DEPLAYER3
 T_CPPFLAGS   += -DEXTEPLAYER3
-T_CPPFLAGS   += -I$(APPS_DIR)/tools/extplayer3/include
+#T_CPPFLAGS   += -I$(APPS_DIR)/tools/extplayer3/include
+#T_CPPFLAGS   += -I$(APPS_DIR)/tools/exteplayer3/include/external
 T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
 T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
 endif
@@ -83,6 +84,14 @@ T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/glib-2.0
 T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/libxml2
 T_CPPFLAGS   += -I$(TARGET_DIR)/usr/lib/gstreamer-1.0/include
 T_CPPFLAGS   += -I$(TARGET_DIR)/usr/lib/gstreamer-1.0/include
+T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
+T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
+T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
+T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
+#T_CPPFLAGS   += -I$(APPS_DIR)/tools/extplayer3/include
+#T_CPPFLAGS   += -I$(APPS_DIR)/tools/exteplayer3/include/external
+T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
+T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
 endif
 
 #
@@ -98,30 +107,14 @@ ifeq ($(BOXARCH), mips)
 MACHINE = vuduo
 endif
 
+TITAN_PATCH = titan.patch
+
 $(D)/titan.do_prepare: $(TITAN_DEPS)
-	REPO=$(REPO_TITAN); \
-	HEAD="master"; \
 	rm -rf $(SOURCE_DIR)/titan; \
-	clear; \
-	echo "Starting Titan build"; \
-	echo "===================="; \
-	echo; \
-	echo "Repository : "$$REPO; \
-	[ ! -d "$(ARCHIVE)/titan.svn" ] && \
-	(mkdir $(ARCHIVE)/titan.svn; \
-	cd $(ARCHIVE)/titan.svn; \
-	echo -n "Updating archived Titan svn..."; svn checkout --username=public --password=public $(REPO_TITAN) -q; echo -e -n " done."; cd "$(BUILD_TMP)";); \
-	echo -n "Copying local svn content to build environment..."; cp -ra $(ARCHIVE)/titan.svn/titan $(SOURCE_DIR)/titan; echo " done."; \
+	svn checkout --username=public --password=public http://sbnc.dyndns.tv/svn/titan/ $(ARCHIVE)/titan.svn; \
+	cp -ra $(ARCHIVE)/titan.svn $(SOURCE_DIR)/titan; \
 	set -e; cd $(SOURCE_DIR)/titan; \
-	pwd; \
-	echo >> Makefile.am; \
-	echo "Applying Titan patch..."; \
-	$(call apply_patches, $(TITAN_PATCH)); \
-	cd $(SOURCE_DIR)/titan; \
-#	cp ./libeplayer3/Makefile.am.sh4 ./libeplayer3/Makefile.am; \
-#	cp ./titan/Makefile.am.sh4 ./titan/Makefile.am; \
-#	cp ./plugins/network/networkbrowser/netlib/Makefile.sh4 ./plugins/network/networkbrowser/netlib/Makefile; \
-	echo; \
+		$(call apply_patches, $(TITAN_PATCH)); \
 	touch $@
 
 $(SOURCE_DIR)/titan/config.status:
@@ -215,7 +208,6 @@ $(D)/titan_libipkg: $(D)/titan.do_prepare
 		--prefix=/usr \
 		--sysconfdir=/etc \
 		PKG_CONFIG=$(PKG_CONFIG) \
-		CPPFLAGS="$(T_CPPFLAGS)" \
 		; \
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
@@ -268,7 +260,25 @@ titan-libdreamdvd-clean:
 titan-libdreamdvd-distclean:
 	rm -f $(D)/titan-libdreamdvd*
 	rm -rf $(SOURCE_DIR)/titan/libdreamdvd
+	
+TITAN_LIBEPLAYER3_PATCH =
+$(D)/titan-libeplayer3.do_prepare: $(D)/titan.do_prepare
+	$(START_BUILD)
+	$(SILENT)cd $(SOURCE_DIR)/titan/libeplayer3; \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
 
+$(D)/titan-libeplayer3.do_compile: $(D)/titan-libeplayer3.do_prepare
+	$(SILENT)cd $(SOURCE_DIR)/titan/libeplayer3; \
+		$(MAKE) all
+	$(TOUCH)
+
+$(D)/titan-libeplayer3: $(D)/titan-libeplayer3.do_prepare $(D)/titan-libeplayer3.do_compile
+		$(START_BUILD)
 
 titan-clean:
 	rm -f $(D)/titan
