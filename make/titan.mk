@@ -9,7 +9,7 @@ TITAN_DEPS += $(D)/module_init_tools
 TITAN_DEPS += $(LIRC)
 TITAN_DEPS += $(D)/libpng
 TITAN_DEPS += $(D)/freetype
-TITAN_DEPS += $(D)/libdreamdvd
+#TITAN_DEPS += $(D)/libdreamdvd
 TITAN_DEPS += $(D)/libjpeg
 TITAN_DEPS += $(D)/zlib
 TITAN_DEPS += $(D)/openssl
@@ -20,7 +20,7 @@ ifeq ($(MEDIAFW), buildinplayer)
 T_CONFIG_OPTS += --enable-eplayer3
 TITAN_DEPS += $(D)/libcurl
 TITAN_DEPS += $(D)/ffmpeg
-TITAN_DEPS += $(D)/tools-exteplayer3
+#TITAN_DEPS += $(D)/tools-exteplayer3
 endif
 ifeq ($(MEDIAFW), gstreamer)
 T_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer
@@ -97,8 +97,6 @@ endif
 #
 # titan
 #
-REPO_TITAN=http://sbnc.dyndns.tv/svn/titan/
-
 MACHINE := $(BOXTYPE)
 ifeq ($(BOXARCH), arm)
 MACHINE = vusolo
@@ -110,12 +108,16 @@ endif
 TITAN_PATCH = titan.patch
 
 $(D)/titan.do_prepare: $(TITAN_DEPS)
-	rm -rf $(SOURCE_DIR)/titan; \
+	$(START_BUILD)
+	rm -rf $(SOURCE_DIR)/titan
+	[ -d "$(ARCHIVE)/titan.svn" ] && \
+	(cd $(ARCHIVE)/titan.svn; svn up;); \
+	[ -d "$(ARCHIVE)/titan.svn" ] || \
 	svn checkout --username=public --password=public http://sbnc.dyndns.tv/svn/titan/ $(ARCHIVE)/titan.svn; \
 	cp -ra $(ARCHIVE)/titan.svn $(SOURCE_DIR)/titan; \
 	set -e; cd $(SOURCE_DIR)/titan; \
-		$(call apply_patches, $(TITAN_PATCH)); \
-	touch $@
+		$(call apply_patches, $(TITAN_PATCH))
+	@touch $@
 
 $(SOURCE_DIR)/titan/config.status:
 	$(SILENT)cd $(SOURCE_DIR)/titan; \
@@ -137,25 +139,19 @@ $(SOURCE_DIR)/titan/config.status:
 			PKG_CONFIG=$(PKG_CONFIG) \
 			CPPFLAGS="$(T_CPPFLAGS)"
 
-$(D)/titan.do_compile: $(SOURCE_DIR)/titan/config.status $(D)/titan_libipkg
+$(D)/titan.do_compile: $(SOURCE_DIR)/titan/config.status $(D)/titan-libipkg $(D)/titan-libdreamdvd $(D)/titan-libeplayer3
 	$(SILENT)cd $(SOURCE_DIR)/titan; \
 		$(MAKE) all
 	@touch $@
 
 $(D)/titan: $(D)/titan.do_prepare $(D)/titan.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/titan install DESTDIR=$(TARGET_DIR)
-	@echo -n "Stripping..."
-	$(SILENT)if [ -e $(TARGET_DIR)/usr/bin/titan ]; then \
-		$(TARGET)-strip $(TARGET_DIR)/usr/bin/titan; \
-	fi
-	$(SILENT)if [ -e $(TARGET_DIR)/usr/local/bin/titan ]; then \
-		$(TARGET)-strip $(TARGET_DIR)/usr/local/bin/titan; \
-	fi
-	$(SILENT)echo " done."
-	$(SILENT)echo
 	$(TOUCH)
 
-$(SOURCE_DIR)/titan/plugins/config.status: $(D)/titan
+#
+# titan-plugins
+#
+$(SOURCE_DIR)/titan/plugins/config.status: titan $(D)/python
 	$(SILENT)cd $(SOURCE_DIR)/titan/plugins; \
 		echo "Configuring titan-plugins..."; \
 		ln -s $(SOURCE_DIR)/titan $(SOURCE_DIR)/plugins/titan; \
@@ -174,13 +170,12 @@ $(SOURCE_DIR)/titan/plugins/config.status: $(D)/titan
 			PKG_CONFIG=$(PKG_CONFIG) \
 			CPPFLAGS="$(T_CPPFLAGS)"
 
-$(D)/titan-plugins.do_compile: $(D)/titan $(SOURCE_DIR)/titan/plugins/config.status
+$(D)/titan-plugins.do_compile: $(D)/titan
 	$(SILENT)cd $(SOURCE_DIR)/titan/plugins; \
 		$(MAKE) all
-#		./makesh4.sh stm24 1 nondev $(BOXTYPE) atemio sh4 $(SOURCE_DIR)/titan
 	@touch $@
 
-$(D)/titan-plugins: $(D)/titan $(SOURCE_DIR)/titan/plugins/config.status $(D)/titan-plugins.do_compile
+$(D)/titan-plugins: titan $(SOURCE_DIR)/titan/plugins/config.status $(D)/titan-plugins.do_compile
 	$(START_BUILD)
 	$(SILENT)cd $(SOURCE_DIR)/titan/plugins
 	$(MAKE) -C $(SOURCE_DIR)/titan install DESTDIR=$(TARGET_DIR)
@@ -188,8 +183,11 @@ $(D)/titan-plugins: $(D)/titan $(SOURCE_DIR)/titan/plugins/config.status $(D)/ti
 	$(SILENT)echo
 	$(TOUCH)
 
+#
+# titan-libipkg
+#
 TITAN_LIBIPKG_PATCH =
-$(D)/titan_libipkg: $(D)/titan.do_prepare
+$(D)/titan-libipkg: $(D)/titan.do_prepare
 	$(START_BUILD)
 	$(SILENT)cd $(SOURCE_DIR)/titan/libipkg; \
 	aclocal $(ACLOCAL_FLAGS); \
@@ -218,16 +216,8 @@ $(D)/titan_libipkg: $(D)/titan.do_prepare
 #
 # titan-libdreamdvd
 #
-$(D)/titan-libdreamdvd.do_prepare: | bootstrap libdvdnav
-	[ -d "$(SOURCE_DIR)/titan" ] && \
-	(cd $(SOURCE_DIR)/titan; svn up; cd "$(BUILD_TMP)";); \
-	[ -d "$(SOURCE_DIR)/titan" ] || \
-	svn checkout --username public --password public http://sbnc.dyndns.tv/svn/titan $(SOURCE_DIR)/titan; \
-	[ -d "$(SOURCE_DIR)/titan/titan/libdreamdvd" ] || \
-	ln -s $(SOURCE_DIR)/titan/libdreamdvd $(SOURCE_DIR)/titan/titan; \
-	touch $@
-
-$(SOURCE_DIR)/titan/libdreamdvd/config.status:
+$(D)/titan-libdreamdvd: $(D)/titan.do_prepare
+	$(START_BUILD)
 	export PATH=$(hostprefix)/bin:$(PATH) && \
 	cd $(SOURCE_DIR)/titan/libdreamdvd && \
 		./autogen.sh; \
@@ -239,18 +229,14 @@ $(SOURCE_DIR)/titan/libdreamdvd/config.status:
 		./configure \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
-			--prefix=/usr && \
-		$(MAKE) all
-	touch $@
-
-$(D)/titan-libdreamdvd.do_compile: $(SOURCE_DIR)/titan/libdreamdvd/config.status
-	cd $(SOURCE_DIR)/titan/libdreamdvd && \
-		$(MAKE)
-	touch $@
-
-$(D)/titan-libdreamdvd: titan-libdreamdvd.do_prepare titan-libdreamdvd.do_compile
-	$(MAKE) -C $(SOURCE_DIR)/titan/libdreamdvd install DESTDIR=$(TARGET_DIR)
-	touch $@
+			--prefix=/usr \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdreamdvd.pc
+	$(REWRITE_LIBTOOL)/libdreamdvd.la
+	$(REMOVE)/libdreamdvd
+	$(TOUCH)
 
 titan-libdreamdvd-clean:
 	rm -f $(D)/titan-libdreamdvd
@@ -260,26 +246,24 @@ titan-libdreamdvd-clean:
 titan-libdreamdvd-distclean:
 	rm -f $(D)/titan-libdreamdvd*
 	rm -rf $(SOURCE_DIR)/titan/libdreamdvd
-	
+
+#
+# titan-libeplayer3
+#	
 TITAN_LIBEPLAYER3_PATCH =
-$(D)/titan-libeplayer3.do_prepare: $(D)/titan.do_prepare
+$(D)/titan-libeplayer3: $(D)/titan.do_prepare
 	$(START_BUILD)
 	$(SILENT)cd $(SOURCE_DIR)/titan/libeplayer3; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
-		$(MAKE); \
+		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
-$(D)/titan-libeplayer3.do_compile: $(D)/titan-libeplayer3.do_prepare
-	$(SILENT)cd $(SOURCE_DIR)/titan/libeplayer3; \
-		$(MAKE) all
-	$(TOUCH)
-
-$(D)/titan-libeplayer3: $(D)/titan-libeplayer3.do_prepare $(D)/titan-libeplayer3.do_compile
-		$(START_BUILD)
-
+#
+#
+#
 titan-clean:
 	rm -f $(D)/titan
 	rm -f $(D)/titan.do_compile
@@ -293,6 +277,9 @@ titan-distclean:
 	rm -rf $(SOURCE_DIR)/titan
 	rm -rf $(SOURCE_DIR)/titan.org
 
+#
+#
+#
 titan-plugins-clean: titan-clean
 	$(SILENT)rm -f $(D)/titan-plugins
 	$(SILENT)cd $(NP_OBJDIR); \
@@ -308,9 +295,8 @@ titan-plugins-distclean: $(D)/titan-distclean
 #
 release-TITAN: release-NONE $(D)/titan
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
-	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
-	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
-	cp -aR $(TARGET_DIR)/usr/share/tuxbox/* $(RELEASE_DIR)/usr/share/tuxbox
+#	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
+#	cp -aR $(TARGET_DIR)/usr/share/tuxbox/* $(RELEASE_DIR)/usr/share/tuxbox
 	
 #
 # lib usr/lib
@@ -375,7 +361,7 @@ endif
 #
 #
 #
-PHONY += $(TARGET_DIR)/.version
+#PHONY += $(TARGET_DIR)/.version
 
 
 
