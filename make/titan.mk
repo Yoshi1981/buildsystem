@@ -9,19 +9,19 @@ TITAN_DEPS += $(D)/module_init_tools
 TITAN_DEPS += $(LIRC)
 TITAN_DEPS += $(D)/libpng
 TITAN_DEPS += $(D)/freetype
-#TITAN_DEPS += $(D)/libdreamdvd
 TITAN_DEPS += $(D)/libjpeg
 TITAN_DEPS += $(D)/zlib
 TITAN_DEPS += $(D)/openssl
 TITAN_DEPS += $(D)/timezone
 TITAN_DEPS += $(D)/tools-libmme_host
 TITAN_DEPS += $(D)/tools-libmme_image
+
 ifeq ($(MEDIAFW), buildinplayer)
 T_CONFIG_OPTS += --enable-eplayer3
 TITAN_DEPS += $(D)/libcurl
 TITAN_DEPS += $(D)/ffmpeg
-#TITAN_DEPS += $(D)/tools-exteplayer3
 endif
+
 ifeq ($(MEDIAFW), gstreamer)
 T_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer
 TITAN_DEPS += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_dvbmediasink
@@ -49,9 +49,6 @@ T_CONFIG_OPTS += --with-lcd4linux
 TITAN_DEPS += $(D)/lcd4linux
 endif
 
-#T_CONFIG_OPTS +=$(LOCAL_TITAN_BUILD_OPTIONS)
-
-#T_CPPFLAGS   += -DSH4
 T_CPPFLAGS   += -DDVDPLAYER
 T_CPPFLAGS   += -Wno-unused-but-set-variable
 T_CPPFLAGS   += -I$(DRIVER_DIR)/include
@@ -71,8 +68,6 @@ T_CPPFLAGS   += -L$(SOURCE_DIR)/titan/libipkg
 ifeq ($(MEDIAFW), buildinplayer)
 T_CPPFLAGS   += -DEPLAYER3
 T_CPPFLAGS   += -DEXTEPLAYER3
-#T_CPPFLAGS   += -I$(APPS_DIR)/tools/extplayer3/include
-#T_CPPFLAGS   += -I$(APPS_DIR)/tools/exteplayer3/include/external
 T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
 T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
 endif
@@ -88,8 +83,6 @@ T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
 T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
 T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
 T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
-#T_CPPFLAGS   += -I$(APPS_DIR)/tools/extplayer3/include
-#T_CPPFLAGS   += -I$(APPS_DIR)/tools/exteplayer3/include/external
 T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
 T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
 endif
@@ -97,14 +90,6 @@ endif
 #
 # titan
 #
-MACHINE := $(BOXTYPE)
-ifeq ($(BOXARCH), arm)
-MACHINE = vusolo
-endif
-ifeq ($(BOXARCH), mips)
-MACHINE = vuduo
-endif
-
 TITAN_PATCH = titan.patch
 
 $(D)/titan.do_prepare: $(TITAN_DEPS)
@@ -295,8 +280,7 @@ titan-plugins-distclean: $(D)/titan-distclean
 #
 release-TITAN: release-NONE $(D)/titan
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
-#	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
-#	cp -aR $(TARGET_DIR)/usr/share/tuxbox/* $(RELEASE_DIR)/usr/share/tuxbox
+	cp -aR $(SOURCE_DIR)/titan/skins/default $(RELEASE_DIR)/usr/local/share/skins
 	
 #
 # lib usr/lib
