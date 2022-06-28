@@ -189,6 +189,28 @@ init:
 		3|*) ;; \
 	esac; \
 	echo ""
+# GraphLCD
+	@echo -e "\nGraphLCD:"
+	@echo "   1) yes"
+	@echo -e "   \033[01;32m2) no\033[00m"
+	@read -p "Select  GraphLCD (1-2)?" GRAPHLCD; \
+	GRAPHLCD=$${GRAPHLCD}; \
+	case "$$GRAPHLCD" in \
+		1) echo "GRAPHLCD=graphlcd" >> config;; \
+		2|*) echo "GRAPHLCD=" >> config;; \
+	esac; \
+	echo ""
+# LCD4Linux
+	@echo -e "\nLCD4linux:"
+	@echo "   1) yes"
+	@echo -e "   \033[01;32m2) no\033[00m"
+	@read -p "Select  LCD4Linux (1-2)?" LCD4LINUX; \
+	LCD4LINUX=$${LCD4LINUX}; \
+	case "$$LCD4LINUX" in \
+		1) echo "LCD4LINUX=lcd4linux" >> config;; \
+		2|*) echo "LCD4LINUX=" >> config;; \
+	esac; \
+	echo ""	
 #	
 	@echo ""
 	@make printenv

@@ -52,9 +52,12 @@ E_CONFIG_OPTS += --with-lcd4linux
 ENIGMA2_DEPS += $(D)/lcd4linux
 endif
 
-ifeq ($(EXTERNAL_LCD), both)
+ifeq ($(GRAPHLCD), graphlcd)
 E_CONFIG_OPTS += --with-graphlcd
-ENIGMA2_DEPS += $(D)/graphlcd
+ENIGMA2_DEPS_ += $(D)/graphlcd
+endif
+
+ifeq ($(LCD4LINUX), lcd4linux)
 E_CONFIG_OPTS += --with-lcd4linux
 ENIGMA2_DEPS += $(D)/lcd4linux
 endif

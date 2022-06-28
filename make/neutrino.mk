@@ -71,6 +71,7 @@ ifeq ($(BOXARCH), sh4)
 N_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
 N_CPPFLAGS    += -I$(KERNEL_DIR)/include
 endif
+
 N_CPPFLAGS    += -ffunction-sections -fdata-sections
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
@@ -92,12 +93,15 @@ ifeq ($(BOXARCH), arm)
 N_CONFIG_OPTS += --enable-reschange
 endif
 
-#ifeq ($(EXTERNAL_LCD), both)
-N_CONFIG_OPTS += --enable-graphlcd
-NEUTRINO_DEPS += $(D)/graphlcd
-N_CONFIG_OPTS += --enable-lcd4linux
+ifeq ($(GRAPHLCD), graphlcd)
+N_CONFIG_OPTS += --with-graphlcd
+NEUTRINO_DEPS_ += $(D)/graphlcd
+endif
+
+ifeq ($(LCD4LINUX), lcd4linux)
+N_CONFIG_OPTS += --with-lcd4linux
 NEUTRINO_DEPS += $(D)/lcd4linux
-#endif
+endif
 
 MACHINE := $(BOXTYPE)
 ifeq ($(BOXARCH), arm)

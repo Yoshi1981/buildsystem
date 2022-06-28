@@ -65,53 +65,63 @@ N2_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
 N2_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
 N2_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
 N2_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
-N2_OPTS += --enable-gstreamer --with-gstversion=1.0
+N2_CONFIG_OPTS += --enable-gstreamer --with-gstversion=1.0
 endif
 
 # python
 PYTHON ?=
 
 ifeq ($(PYTHON), python)
-N2_OPTS += --enable-python PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
+N2_CONFIG_OPTS += --enable-python PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
 endif
 
 # lua
 LUA ?= lua
 
 ifeq ($(LUA), lua)
-N2_OPTS += --enable-lua
+N2_CONFIG_OPTS += --enable-lua
 endif
 
 # CICAM
 CICAM ?= ci-cam
 
 ifeq ($(CICAM), ci-cam)
-N2_OPTS += --enable-ci
+N2_CONFIG_OPTS += --enable-ci
 endif
 
 # SCART
 SCART ?= scart
 
 ifeq ($(SCART), scart)
-N2_OPTS += --enable-scart
+N2_CONFIG_OPTS += --enable-scart
 endif
 
 # LCD 
 LCD ?= vfd
 
 ifeq ($(LCD), lcd)
-N2_OPTS += --enable-lcd
+N2_CONFIG_OPTS += --enable-lcd
 endif
 
 ifeq ($(LCD), 4-digits)
-N2_OPTS += --enable-4digits
+N2_CONFIG_OPTS += --enable-4digits
 endif
 
 # FKEYS
 FKEY ?=
 
 ifeq ($(FKEYS), fkeys)
-N2_OPTS += --enable-functionkeys
+N2_CONFIG_OPTS += --enable-functionkeys
+endif
+
+ifeq ($(GRAPHLCD), graphlcd)
+N2_CONFIG_OPTS += --with-graphlcd
+N2_DEPS_ += $(D)/graphlcd
+endif
+
+ifeq ($(LCD4LINUX), lcd4linux)
+N2_CONFIG_OPTS += --with-lcd4linux
+N2_DEPS += $(D)/lcd4linux
 endif
 
 N2_PATCHES =
@@ -138,7 +148,7 @@ $(D)/neutrino2.config.status: $(D)/neutrino2.do_prepare
 			--enable-silent-rules \
 			--enable-maintainer-mode \
 			--with-boxtype=$(BOXTYPE) \
-			$(N2_OPTS) \
+			$(N2_CONFIG_OPTS) \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CPPFLAGS="$(N2_CPPFLAGS)" LDFLAGS="$(TARGET_LDFLAGS)"
@@ -182,7 +192,7 @@ $(D)/neutrino2-plugins.config.status: neutrino2
 			--build=$(BUILD) \
 			--enable-silent-rules \
 			--with-boxtype=$(BOXTYPE) \
-			$(N2_OPTS) \
+			$(N2_CONFIG_OPTS) \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			CPPFLAGS="$(CPPFLAGS) -I$(driverdir) -I$(KERNEL_DIR)/include -I$(TARGET_DIR)/include" \

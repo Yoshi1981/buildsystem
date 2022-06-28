@@ -32,19 +32,12 @@ ifeq ($(WLAN), wlandriver)
 TITAN_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
 
-ifeq ($(EXTERNAL_LCD), graphlcd)
+ifeq ($(GRAPHLCD), graphlcd)
 T_CONFIG_OPTS += --with-graphlcd
 TITAN_DEPS_ += $(D)/graphlcd
 endif
 
-ifeq ($(EXTERNAL_LCD), lcd4linux)
-T_CONFIG_OPTS += --with-lcd4linux
-TITAN_DEPS += $(D)/lcd4linux
-endif
-
-ifeq ($(EXTERNAL_LCD), both)
-T_CONFIG_OPTS += --with-graphlcd
-TITAN_DEPS += $(D)/graphlcd
+ifeq ($(LCD4LINUX), lcd4linux)
 T_CONFIG_OPTS += --with-lcd4linux
 TITAN_DEPS += $(D)/lcd4linux
 endif
