@@ -14,6 +14,7 @@ FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-edit-list-parsing.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix-hls.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-fix_mpegts.patch
 FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-hls_replace_key_uri.patch
+FFMPEG_PATCH += ffmpeg-$(FFMPEG_VER)-sh4.patch
 
 FFMPEG_SOURCE = ffmpeg-$(FFMPEG_VER).tar.xz
 
