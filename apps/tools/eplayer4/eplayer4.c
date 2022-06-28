@@ -254,7 +254,6 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	//printOutputCapabilities();
-
 	exit(0);
 }
+
