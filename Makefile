@@ -122,14 +122,13 @@ init:
 	@echo;
 # WLAN driver
 	@echo -e "\nDo you want to build WLAN drivers and tools"
-	@echo -e "   \033[01;32m1) no\033[00m"
-	@echo "   2) yes (includes WLAN drivers and tools)"
+	@echo "   1) yes (includes WLAN drivers and tools)"
+	@echo -e "   \033[01;32m2) no\033[00m"
 	@read -p "Select to build (1-2)?" WLAN; \
 	WLAN=$${WLAN}; \
 	case "$$WLAN" in \
-		1) echo "WLAN=" >> config;; \
-		2) echo "WLAN=wlandriver" >> config;; \
-		*) ;; \
+		1) echo "WLAN=wlandriver" >> config;; \
+		2|*) ;; \
 	esac; \
 	echo ""
 # Flavour
@@ -172,8 +171,7 @@ init:
 	LUA=$${LUA}; \
 	case "$$LUA" in \
 		1) echo "LUA=lua" >> config;; \
-		2) echo "LUA=" >> config;; \
-		3|*) ;; \
+		2|3|*) ;; \
 	esac; \
 	echo ""
 # python
@@ -185,8 +183,7 @@ init:
 	PYTHON=$${PYTHON}; \
 	case "$$PYTHON" in \
 		1) echo "PYTHON=python" >> config;; \
-		2) echo "PYTHON=" >> config;; \
-		3|*) ;; \
+		2|3|*) ;; \
 	esac; \
 	echo ""
 # GraphLCD
@@ -197,7 +194,7 @@ init:
 	GRAPHLCD=$${GRAPHLCD}; \
 	case "$$GRAPHLCD" in \
 		1) echo "GRAPHLCD=graphlcd" >> config;; \
-		2|*) echo "GRAPHLCD=" >> config;; \
+		2|*) ;; \
 	esac; \
 	echo ""
 # LCD4Linux
@@ -208,7 +205,7 @@ init:
 	LCD4LINUX=$${LCD4LINUX}; \
 	case "$$LCD4LINUX" in \
 		1) echo "LCD4LINUX=lcd4linux" >> config;; \
-		2|*) echo "LCD4LINUX=" >> config;; \
+		2|*) ;; \
 	esac; \
 	echo ""	
 #	
