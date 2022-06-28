@@ -93,7 +93,6 @@ endif
 TITAN_PATCH = titan.patch
 
 $(D)/titan.do_prepare: $(TITAN_DEPS)
-	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/titan
 	[ -d "$(ARCHIVE)/titan.svn" ] && \
 	(cd $(ARCHIVE)/titan.svn; svn up;); \
@@ -129,6 +128,7 @@ $(D)/titan.do_compile: $(SOURCE_DIR)/titan/config.status $(D)/titan-libipkg $(D)
 	@touch $@
 
 $(D)/titan: $(D)/titan.do_prepare $(D)/titan.do_compile
+	$(START_BUILD)
 	$(MAKE) -C $(SOURCE_DIR)/titan install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
@@ -219,7 +219,6 @@ $(D)/titan-libdreamdvd: $(D)/titan.do_prepare $(D)/libdvdnav
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libdreamdvd.pc
-	$(REWRITE_LIBTOOL)/libdreamdvd.la
 	$(TOUCH)
 
 #
