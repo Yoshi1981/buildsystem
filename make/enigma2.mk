@@ -29,48 +29,17 @@ ENIGMA2_DEPS += $(D)/minidlna
 ENIGMA2_DEPS += $(D)/sdparm
 ENIGMA2_DEPS += $(D)/parted 
 endif
-#ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), small size))
-# required for DVDBurn plugin (adds ? Mbyte to image)
-#ENIGMA2_DEPS += $(D)/dvd+rw-tools $(D)/dvdauthor $(D)/mjpegtools $(D)/cdrkit $(D)/replex $(D)/python_imaging
-#endif
+
 ifeq ($(WLAN), wlandriver)
 ENIGMA2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
 
-#ifeq ($(BOXTYPE), $(filter $(BOXTYPE), hs7110 hs7119 hs7420 hs7429 hs7810a hs7819 opt9600 opt9600mini opt9600prima vitamin_hd5000))
-#ifeq ($(DESTINATION), USB)
-#E_CONFIG_OPTS += --enable-run_from_usb
-#endif
-#endif
-
-# determine libsigc++ version
-#ifeq ($(E2_DIFF), $(filter $(E2_DIFF), 1))
-#ENIGMA2_DEPS  += $(D)/libsigc_e2
-#else
 ENIGMA2_DEPS  += $(D)/libsigc
-#endif
-
-# determine requirements for media framework
-# Note: for diffs 0, 2, 3, 4 & 5 there are no extra dependencies;
-# these are part of enigma2-plugins
-#ifeq ($(E2_DIFF), $(filter $(E2_DIFF), 1)) # diff 1 (local)
-#ifeq ($(MEDIAFW), buildinplayer)
-#ENIGMA2_DEPS  += $(D)/tools-libeplayer3
-#E_CONFIG_OPTS += --enable-libeplayer3
-#endif
 
 #ifeq ($(MEDIAFW), gstreamer)
 ENIGMA2_DEPS  += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_dvbmediasink
 ENIGMA2_DEPS  += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
 E_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer
-#endif
-
-#ifeq ($(MEDIAFW), gst-eplayer3)
-#ENIGMA2_DEPS  += $(D)/tools-libeplayer3
-#ENIGMA2_DEPS  += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_dvbmediasink
-#ENIGMA2_DEPS  += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
-#E_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer --enable-libeplayer3
-#endif
 #endif
 
 ifeq ($(EXTERNAL_LCD), graphlcd)
@@ -90,18 +59,10 @@ E_CONFIG_OPTS += --with-lcd4linux
 ENIGMA2_DEPS += $(D)/lcd4linux
 endif
 
-#E_CONFIG_OPTS += --enable-$(BOXTYPE)
-#E_CONFIG_OPTS +=$(LOCAL_ENIGMA2_BUILD_OPTIONS)
-
 E_CPPFLAGS    = -I$(DRIVER_DIR)/include
 E_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
 E_CPPFLAGS   += -I$(KERNEL_DIR)/include
 E_CPPFLAGS   += -I$(APPS_DIR)/tools
-#ifeq ($(E2_DIFF), $(filter $(E2_DIFF), 1))
-#E_CPPFLAGS   += -I$(APPS_DIR)/toolslibeplayer3/include
-#endif
-#E_CPPFLAGS   += $(LOCAL_ENIGMA2_CPPFLAGS)
-#E_CPPFLAGS   += $(PLATFORM_CPPFLAGS)
 
 E_CONFIG_OPTS += PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
 
@@ -116,7 +77,7 @@ $(D)/enigma2.do_prepare: | $(ENIGMA2_DEPS)
 	[ -d "$(ARCHIVE)/enigma2.git" ] && \
 	(cd $(ARCHIVE)/enigma2.git; git pull;); \
 	[ -d "$(ARCHIVE)/enigma2.git" ] || \
-	git clone https://github.com/openatv/enigma2.git $(ARCHIVE)/enigma2.git; \
+	git clone -b 6.4 https://github.com/openatv/enigma2.git $(ARCHIVE)/enigma2.git; \
 	cp -ra $(ARCHIVE)/enigma2.git $(SOURCE_DIR)/enigma2; \
 	set -e; cd $(SOURCE_DIR)/enigma2; \
 		$(call apply_patches,$(ENIGMA2_PATCHES))

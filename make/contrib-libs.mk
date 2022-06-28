@@ -924,6 +924,34 @@ $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/$(LIBFRIBIDI_SOURCE)
 	cd $(TARGET_DIR) && rm usr/bin/fribidi
 	$(REMOVE)/fribidi-$(LIBFRIBIDI_VER)
 	$(TOUCH)
+	
+#
+# libsigc++_e2
+#
+LIBSIGC_E2_VER_MAJOR = 1
+LIBSIGC_E2_VER_MINOR = 2
+LIBSIGC_E2_VER_MICRO = 7
+LIBSIGC_E2_VER = $(LIBSIGC_E2_VER_MAJOR).$(LIBSIGC_E2_VER_MINOR).$(LIBSIGC_E2_VER_MICRO)
+LIBSIGC_E2_SOURCE = libsigc++-$(LIBSIGC_E2_VER).tar.gz
+
+$(ARCHIVE)/$(LIBSIGC_E2_SOURCE):
+	$(WGET) https://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGC_E2_VER_MAJOR).$(LIBSIGC_E2_VER_MINOR)/$(LIBSIGC_E2_SOURCE)
+
+$(D)/libsigc_e2: $(D)/bootstrap $(ARCHIVE)/$(LIBSIGC_E2_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/libsigc++-$(LIBSIGC_E2_VER)
+	$(UNTAR)/$(LIBSIGC_E2_SOURCE)
+	set -e; cd $(BUILD_TMP)/libsigc++-$(LIBSIGC_E2_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--disable-checks \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/sigc++-1.2.pc
+	$(REWRITE_LIBTOOL)/libsigc-1.2.la
+	$(REMOVE)/libsigc++-$(LIBSIGC_E2_VER)
+	$(TOUCH)
 
 #
 # libsigc
@@ -1798,26 +1826,6 @@ LIBUSB_PATCH += libusb-$(LIBUSB_VER)-automake-version.patch
 $(ARCHIVE)/$(LIBUSB_SOURCE):
 	$(WGET) https://sourceforge.net/projects/libusb/files/libusb-$(LIBUSB_VER_MAJOR)/libusb-$(LIBUSB_VER)/$(LIBUSB_SOURCE)
 
-#$(D)/libusb: $(D)/bootstrap $(ARCHIVE)/$(LIBUSB_SOURCE)
-#	$(START_BUILD)
-#	$(REMOVE)/libusb-$(LIBUSB_VER)
-#	$(UNTAR)/$(LIBUSB_SOURCE)
-#	$(CHDIR)/libusb-$(LIBUSB_VER); \
-#		$(call apply_patches, $(LIBUSB_PATCH)); \
-#		$(CONFIGURE) \
-#			--prefix=/usr \
-#			--enable-static \
-#			--disable-log \
-#			--disable-debug-log \
-#			--disable-udev \
-#			--disable-examples-build \
-#		; \
-#		$(MAKE) ; \
-#		$(MAKE) install DESTDIR=$(TARGET_DIR)
-#	$(REWRITE_LIBTOOL)/libusb-1.0.la
-#	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libusb-1.0.pc
-#	$(REMOVE)/libusb-$(LIBUSB_VER)
-#	$(TOUCH)
 $(D)/libusb: $(D)/bootstrap $(ARCHIVE)/$(LIBUSB_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/libusb-$(LIBUSB_VER)
@@ -2735,5 +2743,27 @@ $(D)/librtmpdump: $(D)/bootstrap $(D)/zlib $(D)/openssl $(ARCHIVE)/$(LIBRTMPDUMP
 	$(REMOVE)/librtmpdump-$(LIBRTMPDUMP_VER)
 	$(TOUCH)
 	
-	
+#
+# libxmlccwrap
+#
+LIBXMLCCWRAP_VER = 0.0.12
+LIBXMLCCWRAP_SOURCE = libxmlccwrap-$(LIBXMLCCWRAP_VER).tar.gz
+
+$(ARCHIVE)/$(LIBXMLCCWRAP_SOURCE):
+	$(WGET) http://www.ant.uni-bremen.de/whomes/rinas/libxmlccwrap/download/$(LIBXMLCCWRAP_SOURCE)
+
+$(D)/libxmlccwrap: $(D)/bootstrap $(D)/libxml2 $(D)/libxslt $(ARCHIVE)/$(LIBXMLCCWRAP_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/libxmlccwrap-$(LIBXMLCCWRAP_VER)
+	$(UNTAR)/$(LIBXMLCCWRAP_SOURCE)
+	$(CHDIR)/libxmlccwrap-$(LIBXMLCCWRAP_VER); \
+		$(CONFIGURE) \
+			--target=$(TARGET) \
+			--prefix=/usr \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_LIBTOOL)/libxmlccwrap.la
+	$(REMOVE)/libxmlccwrap-$(LIBXMLCCWRAP_VER)
+	$(TOUCH)	
 

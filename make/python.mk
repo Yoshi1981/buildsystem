@@ -153,30 +153,6 @@ $(D)/python_setuptools: $(D)/bootstrap $(D)/python $(ARCHIVE)/$(PYTHON_SETUPTOOL
 	$(TOUCH)
 
 #
-# libxmlccwrap
-#
-LIBXMLCCWRAP_VER = 0.0.12
-LIBXMLCCWRAP_SOURCE = libxmlccwrap-$(LIBXMLCCWRAP_VER).tar.gz
-
-$(ARCHIVE)/$(LIBXMLCCWRAP_SOURCE):
-	$(WGET) http://www.ant.uni-bremen.de/whomes/rinas/libxmlccwrap/download/$(LIBXMLCCWRAP_SOURCE)
-
-$(D)/libxmlccwrap: $(D)/bootstrap $(D)/libxml2 $(D)/libxslt $(ARCHIVE)/$(LIBXMLCCWRAP_SOURCE)
-	$(START_BUILD)
-	$(REMOVE)/libxmlccwrap-$(LIBXMLCCWRAP_VER)
-	$(UNTAR)/$(LIBXMLCCWRAP_SOURCE)
-	$(CHDIR)/libxmlccwrap-$(LIBXMLCCWRAP_VER); \
-		$(CONFIGURE) \
-			--target=$(TARGET) \
-			--prefix=/usr \
-		; \
-		$(MAKE) all; \
-		$(MAKE) install DESTDIR=$(TARGET_DIR)
-	$(REWRITE_LIBTOOL)/libxmlccwrap.la
-	$(REMOVE)/libxmlccwrap-$(LIBXMLCCWRAP_VER)
-	$(TOUCH)
-
-#
 # python_lxml
 #
 PYTHON_LXML_MAJOR = 2.2

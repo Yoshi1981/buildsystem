@@ -136,10 +136,10 @@ $(D)/titan: $(D)/titan.do_prepare $(D)/titan.do_compile
 #
 # titan-plugins
 #
-$(SOURCE_DIR)/titan/plugins/config.status: titan $(D)/python
-	$(SILENT)cd $(SOURCE_DIR)/titan/plugins; \
-		echo "Configuring titan-plugins..."; \
-		ln -s $(SOURCE_DIR)/titan $(SOURCE_DIR)/plugins/titan; \
+$(SOURCE_DIR)/titan/plugins/config.status: $(D)/titan.do_prepare $(D)/python
+#$(D)/titan-plugins: $(D)/titan.do_prepare $(D)/python
+	$(START_BUILD)
+	cd $(SOURCE_DIR)/titan/plugins; \
 		./autogen.sh $(SILENT_OPT); \
 		$(BUILDENV) \
 		./configure $(SILENT_CONFIGURE) \
@@ -154,18 +154,21 @@ $(SOURCE_DIR)/titan/plugins/config.status: titan $(D)/python
 			--enable-multicom324 \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			CPPFLAGS="$(T_CPPFLAGS)"
+#		$(MAKE) all
+#		$(MAKE) -C $(SOURCE_DIR)/titan/plugins all install DESTDIR=$(TARGET_DIR)
+#		$(TOUCH)		
 
-$(D)/titan-plugins.do_compile: $(D)/titan
+$(D)/titan-plugins.do_compile: $(SOURCE_DIR)/titan/plugins/config.status
 	$(SILENT)cd $(SOURCE_DIR)/titan/plugins; \
 		$(MAKE) all
 	@touch $@
 
-$(D)/titan-plugins: titan $(SOURCE_DIR)/titan/plugins/config.status $(D)/titan-plugins.do_compile
-	$(START_BUILD)
+$(D)/titan-plugins: $(D)/titan-plugins.do_compile
+#	$(START_BUILD)
 	$(SILENT)cd $(SOURCE_DIR)/titan/plugins
-	$(MAKE) -C $(SOURCE_DIR)/titan install DESTDIR=$(TARGET_DIR)
-	$(SILENT)echo " done."
-	$(SILENT)echo
+#	$(MAKE) -C $(SOURCE_DIR)/titan/plugins all install DESTDIR=$(TARGET_DIR)
+#	$(SILENT)echo " done."
+#	$(SILENT)echo
 	$(TOUCH)
 
 #
@@ -264,22 +267,18 @@ titan-distclean:
 #
 #
 #
-titan-plugins-clean: titan-clean
+titan-plugins-clean:
 	$(SILENT)rm -f $(D)/titan-plugins
-	$(SILENT)cd $(NP_OBJDIR); \
-		$(MAKE) -C $(NP_OBJDIR) clean
 
-titan-plugins-distclean: $(D)/titan-distclean
+titan-plugins-distclean:
 	$(SILENT)rm -f $(D)/titan-plugins
-	$(SILENT)cd $(NP_OBJDIR); \
-		$(MAKE) -C $(NP_OBJDIR) clean
 		
 #
 # release-TITAN
 #
 release-TITAN: release-NONE $(D)/titan
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
-	cp -aR $(SOURCE_DIR)/titan/skins/default $(RELEASE_DIR)/usr/local/share/skins
+	cp -aR $(SOURCE_DIR)/titan/skins/0acht5zehn $(RELEASE_DIR)/usr/local/share/skins
 	
 #
 # lib usr/lib
