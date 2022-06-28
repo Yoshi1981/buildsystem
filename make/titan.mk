@@ -105,8 +105,7 @@ $(D)/titan.do_prepare: $(TITAN_DEPS)
 	@touch $@
 
 $(SOURCE_DIR)/titan/config.status:
-	$(SILENT)cd $(SOURCE_DIR)/titan; \
-		echo "Configuring titan..."; \
+	cd $(SOURCE_DIR)/titan; \
 		./autogen.sh $(SILENT_OPT); \
 		$(BUILDENV) \
 		./configure $(SILENT_CONFIGURE) \
@@ -125,7 +124,7 @@ $(SOURCE_DIR)/titan/config.status:
 			CPPFLAGS="$(T_CPPFLAGS)"
 
 $(D)/titan.do_compile: $(SOURCE_DIR)/titan/config.status $(D)/titan-libipkg $(D)/titan-libdreamdvd $(D)/titan-libeplayer3
-	$(SILENT)cd $(SOURCE_DIR)/titan; \
+	cd $(SOURCE_DIR)/titan; \
 		$(MAKE) all
 	@touch $@
 
@@ -159,16 +158,14 @@ $(SOURCE_DIR)/titan/plugins/config.status: $(D)/titan.do_prepare $(D)/python
 #		$(TOUCH)		
 
 $(D)/titan-plugins.do_compile: $(SOURCE_DIR)/titan/plugins/config.status
-	$(SILENT)cd $(SOURCE_DIR)/titan/plugins; \
+	cd $(SOURCE_DIR)/titan/plugins; \
 		$(MAKE) all
 	@touch $@
 
 $(D)/titan-plugins: $(D)/titan-plugins.do_compile
 #	$(START_BUILD)
-	$(SILENT)cd $(SOURCE_DIR)/titan/plugins
+	cd $(SOURCE_DIR)/titan/plugins
 #	$(MAKE) -C $(SOURCE_DIR)/titan/plugins all install DESTDIR=$(TARGET_DIR)
-#	$(SILENT)echo " done."
-#	$(SILENT)echo
 	$(TOUCH)
 
 #
@@ -177,7 +174,7 @@ $(D)/titan-plugins: $(D)/titan-plugins.do_compile
 TITAN_LIBIPKG_PATCH =
 $(D)/titan-libipkg: $(D)/titan.do_prepare
 	$(START_BUILD)
-	$(SILENT)cd $(SOURCE_DIR)/titan/libipkg; \
+	cd $(SOURCE_DIR)/titan/libipkg; \
 	aclocal $(ACLOCAL_FLAGS); \
 	libtoolize --automake -f -c; \
 	autoconf; \
@@ -225,22 +222,13 @@ $(D)/titan-libdreamdvd: $(D)/titan.do_prepare $(D)/libdvdnav
 	$(REWRITE_LIBTOOL)/libdreamdvd.la
 	$(TOUCH)
 
-titan-libdreamdvd-clean:
-	rm -f $(D)/titan-libdreamdvd
-	cd $(SOURCE_DIR)/titan/libdreamdvd && \
-		$(MAKE) clean
-
-titan-libdreamdvd-distclean:
-	rm -f $(D)/titan-libdreamdvd*
-	rm -rf $(SOURCE_DIR)/titan/libdreamdvd
-
 #
 # titan-libeplayer3
 #	
 TITAN_LIBEPLAYER3_PATCH =
 $(D)/titan-libeplayer3: $(D)/titan.do_prepare
 	$(START_BUILD)
-	$(SILENT)cd $(SOURCE_DIR)/titan/libeplayer3; \
+	cd $(SOURCE_DIR)/titan/libeplayer3; \
 		$(CONFIGURE_TOOLS) \
 			--prefix= \
 		; \
@@ -262,16 +250,17 @@ titan-distclean:
 	rm -f $(D)/titan.do_compile
 	rm -f $(D)/titan.do_prepare
 	rm -rf $(SOURCE_DIR)/titan
-	rm -rf $(SOURCE_DIR)/titan.org
 
 #
 #
 #
 titan-plugins-clean:
-	$(SILENT)rm -f $(D)/titan-plugins
+	rm -f $(D)/titan-plugins
+	cd $(SOURCE_DIR)/titan/plugins; \
+		$(MAKE) distclean
 
 titan-plugins-distclean:
-	$(SILENT)rm -f $(D)/titan-plugins
+	rm -f $(D)/titan-plugins
 		
 #
 # release-TITAN

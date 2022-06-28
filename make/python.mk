@@ -700,8 +700,6 @@ $(D)/python_livestreamersrv: $(D)/bootstrap $(D)/python $(D)/python_setuptools $
 	$(REMOVE)/livestreamersrv
 	$(TOUCH)
 
-# -----------------------------------------------------------------------------
-
 #
 # python-small
 #
@@ -805,8 +803,9 @@ $(D)/python_zope_interface_small: $(D)/bootstrap $(D)/python_small $(D)/python_s
 	$(REMOVE)/zope.interface-$(PYTHON_ZOPE_INTERFACE_VER)
 	$(TOUCH)
 
-# -----------------------------------------------------------------------------
-
+#
+#
+#
 PYTHON_DEPS  = $(D)/host_python
 PYTHON_DEPS += $(D)/python
 PYTHON_DEPS += $(D)/python_elementtree

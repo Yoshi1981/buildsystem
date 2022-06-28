@@ -3,7 +3,8 @@
 #
 RELEASE_DEPS = $(KERNEL) 
 RELEASE_DEPS += $(D)/driver 
-RELEASE_DEPS += $(D)/system-tools 
+RELEASE_DEPS += $(D)/system-tools
+RELEASE_DEPS += $(D)/tools
 RELEASE_DEPS += $(LIRC)
 
 ifeq ($(BOXARCH), arm)
@@ -274,7 +275,7 @@ endif
 		cp $(TARGET_DIR)/usr/share/alsa/cards/aliases.conf $(RELEASE_DIR)/usr/share/alsa/cards/; \
 		cp $(TARGET_DIR)/usr/share/alsa/pcm/default.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
 		cp $(TARGET_DIR)/usr/share/alsa/pcm/dmix.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
-		cp $(TARGET_DIR)/usr/bin/amixer $(RELEASE_DIR)/usr/bin/; \
+#		cp $(TARGET_DIR)/usr/bin/amixer $(RELEASE_DIR)/usr/bin/; \
 	fi
 #
 # nfs-utils
