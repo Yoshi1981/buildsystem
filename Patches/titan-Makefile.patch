@@ -1,0 +1,23 @@
+--- titan/titan/Makefile.am	2022-06-27 15:18:11.391077685 +0200
++++ titan/titan/Makefile.am.patched	2022-06-29 17:15:00.368222348 +0200
+@@ -1,18 +1,8 @@
+-ALL_CFLAGS= -DSH4 -DEXTEPLAYER3 -DEPLAYER3 -DSH4 -DDVDPLAYER -Os -export-dynamic -Wall -Wno-unused-but-set-variable
+-
+-INCLUDES = \
+-	-I../../../tufsbox/cdkroot/usr/include \
+-	-I../../../tufsbox/cdkroot/usr/include/freetype2 \
+-	-I../../../tufsbox/cdkroot/usr/include/openssl \
+-	-I../../driver/bpamem \
+-	-I../../../apps/tools/libeplayer3/include \
+-	-I../../../apps/tools/libmme_image \
+-	-Ilibdreamdvd \
+-	-Ititan
++ALL_CFLAGS= -Os -export-dynamic -Wall -Wno-unused-but-set-variable
+ 
+ bin_PROGRAMS = titan
+ 
+-titan_SOURCES =	titan.c
++titan_SOURCES = titan.c
+ 
+ titan_LDADD = -lm -lpthread -ldl -lpng -lfreetype -leplayer3 -ldreamdvd -ljpeg -lz -lmmeimage -lmme_host -lssl -lcrypto
+ titan_CFLAGS = $(ALL_CFLAGS)

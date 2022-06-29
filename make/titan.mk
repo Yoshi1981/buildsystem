@@ -79,6 +79,10 @@ T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
 T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
 endif
 
+ifeq ($(BOXARCH), sh4)
+T_CPPFLAGS   += -DSH4
+endif
+
 #
 #
 #
@@ -93,7 +97,7 @@ endif
 #
 # titan
 #
-TITAN_PATCH = titan.patch
+TITAN_PATCH = titan.patch titan-Makefile.patch
 
 $(D)/titan.do_prepare: $(TITAN_DEPS)
 	$(START_BUILD)
@@ -267,7 +271,7 @@ titan-plugins-distclean:
 #
 release-TITAN: release-NONE $(D)/titan
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
-	cp -aR $(SOURCE_DIR)/titan/skins/0acht5zehn $(RELEASE_DIR)/usr/local/share/skins
+	cp -aR $(SOURCE_DIR)/titan/skins/0acht5zehn $(RELEASE_DIR)/usr/local/share/skin
 	
 #
 # lib usr/lib
