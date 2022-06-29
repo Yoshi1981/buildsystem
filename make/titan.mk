@@ -86,6 +86,7 @@ endif
 TITAN_PATCH = titan.patch
 
 $(D)/titan.do_prepare: $(TITAN_DEPS)
+	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/titan
 	[ -d "$(ARCHIVE)/titan.svn" ] && \
 	(cd $(ARCHIVE)/titan.svn; svn up;); \
@@ -96,7 +97,7 @@ $(D)/titan.do_prepare: $(TITAN_DEPS)
 		$(call apply_patches, $(TITAN_PATCH))
 	@touch $@
 
-$(SOURCE_DIR)/titan/config.status:
+$(D)/titan.config.status: $(D)/titan.do_prepare
 	cd $(SOURCE_DIR)/titan; \
 		./autogen.sh $(SILENT_OPT); \
 		$(BUILDENV) \
@@ -114,14 +115,14 @@ $(SOURCE_DIR)/titan/config.status:
 			--enable-multicom324 \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			CPPFLAGS="$(T_CPPFLAGS)"
+	@touch $@
 
-$(D)/titan.do_compile: $(SOURCE_DIR)/titan/config.status $(D)/titan-libipkg $(D)/titan-libdreamdvd $(D)/titan-libeplayer3
+$(D)/titan.do_compile: $(D)/titan.config.status $(D)/titan-libipkg $(D)/titan-libdreamdvd $(D)/titan-libeplayer3
 	cd $(SOURCE_DIR)/titan; \
 		$(MAKE) all
 	@touch $@
 
-$(D)/titan: $(D)/titan.do_prepare $(D)/titan.do_compile
-	$(START_BUILD)
+$(D)/titan: $(D)/titan.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/titan install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
 
@@ -234,14 +235,12 @@ $(D)/titan-libeplayer3: $(D)/titan.do_prepare
 titan-clean:
 	rm -f $(D)/titan
 	rm -f $(D)/titan.do_compile
-	cd $(SOURCE_DIR)/titan; \
-		$(MAKE) distclean
+	$(MAKE) -C $(SOURCE_DIR)/titan clean
 
 titan-distclean:
-	rm -f $(D)/titan
-	rm -f $(D)/titan.do_compile
-	rm -f $(D)/titan.do_prepare
-	rm -rf $(SOURCE_DIR)/titan
+	$(MAKE) -C $(SOURCE_DIR)/titan distclean
+	rm -rf $(SOURCE_DIR)/titan config.status
+	rm -f $(D)/titan*
 
 #
 #

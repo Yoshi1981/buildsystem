@@ -6,29 +6,29 @@
 #
 # DEPS
 #
-N2_DEPS  = $(D)/bootstrap
-N2_DEPS += $(D)/ncurses 
-N2_DEPS += $(D)/libcurl
-N2_DEPS += $(D)/libpng 
-N2_DEPS += $(D)/libjpeg 
-N2_DEPS += $(D)/giflib 
-N2_DEPS += $(D)/freetype
-N2_DEPS += $(D)/ffmpeg
-N2_DEPS += $(D)/libfribidi
-N2_DEPS += $(D)/libid3tag
-N2_DEPS += $(D)/libmad
-N2_DEPS += $(D)/libvorbisidec
-N2_DEPS += $(D)/flac
-N2_DEPS += $(D)/e2fsprogs
-N2_DEPS += $(D)/libopenthreads
-N2_DEPS += $(D)/libass
+NEUTRINO2_DEPS  = $(D)/bootstrap
+NEUTRINO2_DEPS += $(D)/ncurses 
+NEUTRINO2_DEPS += $(D)/libcurl
+NEUTRINO2_DEPS += $(D)/libpng 
+NEUTRINO2_DEPS += $(D)/libjpeg 
+NEUTRINO2_DEPS += $(D)/giflib 
+NEUTRINO2_DEPS += $(D)/freetype
+NEUTRINO2_DEPS += $(D)/ffmpeg
+NEUTRINO2_DEPS += $(D)/libfribidi
+NEUTRINO2_DEPS += $(D)/libid3tag
+NEUTRINO2_DEPS += $(D)/libmad
+NEUTRINO2_DEPS += $(D)/libvorbisidec
+NEUTRINO2_DEPS += $(D)/flac
+NEUTRINO2_DEPS += $(D)/e2fsprogs
+NEUTRINO2_DEPS += $(D)/libopenthreads
+NEUTRINO2_DEPS += $(D)/libass
 
 ifeq ($(PYTHON), python)
-N2_DEPS += $(D)/python
+NEUTRINO2_DEPS += $(D)/python
 endif
 
 ifeq ($(LUA), lua)
-N2_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
+NEUTRINO2_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
 endif
 
 #
@@ -60,7 +60,7 @@ endif
 MEDIAFW ?= gstreamer
 
 ifeq ($(MEDIAFW), gstreamer)
-N2_DEPS  += $(D)/gst_plugins_dvbmediasink
+NEUTRINO2_DEPS  += $(D)/gst_plugins_dvbmediasink
 N2_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
 N2_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
 N2_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
@@ -116,17 +116,17 @@ endif
 
 ifeq ($(GRAPHLCD), graphlcd)
 N2_CONFIG_OPTS += --with-graphlcd
-N2_DEPS_ += $(D)/graphlcd
+NEUTRINO2_DEPS_ += $(D)/graphlcd
 endif
 
 ifeq ($(LCD4LINUX), lcd4linux)
 N2_CONFIG_OPTS += --with-lcd4linux
-N2_DEPS += $(D)/lcd4linux
+NEUTRINO2_DEPS += $(D)/lcd4linux
 endif
 
 N2_PATCHES =
 
-$(D)/neutrino2.do_prepare: $(N2_DEPS)
+$(D)/neutrino2.do_prepare: $(NEUTRINO2_DEPS)
 	$(START_BUILD)
 	rm -rf $(SOURCE_DIR)/neutrino2
 	[ -d "$(ARCHIVE)/neutrino2.git" ] && \
@@ -165,6 +165,7 @@ $(D)/neutrino2: $(D)/neutrino2.do_compile
 
 neutrino2-clean:
 	rm -f $(D)/neutrino2
+	rm -f $(D)/neutrino2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino2/neutrino2 clean
 
 neutrino2-distclean:

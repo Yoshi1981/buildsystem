@@ -29,18 +29,16 @@ NEUTRINO_DEPS += $(D)/libusb
 NEUTRINO_DEPS += $(D)/pugixml 
 NEUTRINO_DEPS += $(D)/libopenthreads
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
-#NEUTRINO_DEPS += $(LOCAL_NEUTRINO_DEPS)
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910))
 NEUTRINO_DEPS += $(D)/ntfs_3g
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
 NEUTRINO_DEPS += $(D)/mtd_utils $(D)/parted
 endif
-#NEUTRINO_DEPS +=  $(D)/minidlna
+NEUTRINO_DEPS +=  $(D)/minidlna
 endif
 
 ifeq ($(BOXARCH), arm)
-NEUTRINO_DEPS += $(D)/gst_plugins_dvbmediasink
 NEUTRINO_DEPS += $(D)/ntfs_3g
 NEUTRINO_DEPS += $(D)/mc
 endif
@@ -49,15 +47,13 @@ ifeq ($(WLAN), neutrino-wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
 
-NEUTRINO_DEPS2 = $(D)/libid3tag $(D)/libmad $(D)/flac
+NEUTRINO_DEPS += $(D)/libid3tag $(D)/libmad $(D)/flac
 
 N_CFLAGS       = -Wall -W -Wshadow -pipe -Os
 N_CFLAGS      += -D__KERNEL_STRICT_NAMES
 N_CFLAGS      += -D__STDC_FORMAT_MACROS
 N_CFLAGS      += -D__STDC_CONSTANT_MACROS
 N_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata-sections
-#N_CFLAGS      += -DCPU_FREQ
-#N_CFLAGS      += $(LOCAL_NEUTRINO_CFLAGS)
 
 N_CPPFLAGS     = -I$(TARGET_DIR)/usr/include
 ifeq ($(BOXARCH), arm)
@@ -78,8 +74,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
 N_CPPFLAGS += -I$(DRIVER_DIR)/frontcontroller/aotom_spark
 endif
 
-N_CONFIG_OPTS  = $(LOCAL_NEUTRINO_BUILD_OPTIONS)
-N_CONFIG_OPTS += --enable-freesatepg
+N_CONFIG_OPTS = --enable-freesatepg
 N_CONFIG_OPTS += --enable-lua
 N_CONFIG_OPTS += --enable-giflib
 N_CONFIG_OPTS += --with-tremor
