@@ -23,7 +23,6 @@ TITAN_DEPS += $(D)/ffmpeg
 endif
 
 ifeq ($(MEDIAFW), gstreamer)
-T_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer
 TITAN_DEPS += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_dvbmediasink
 TITAN_DEPS += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
 endif
@@ -81,6 +80,17 @@ T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
 endif
 
 #
+#
+#
+MACHINE := $(BOXTYPE)
+ifeq ($(BOXARCH), arm)
+MACHINE = hd51
+endif
+ifeq ($(BOXARCH), mips)
+MACHINE = vuduo
+endif
+
+#
 # titan
 #
 TITAN_PATCH = titan.patch
@@ -110,8 +120,7 @@ $(D)/titan.config.status: $(D)/titan.do_prepare
 			--bindir=/usr/local/bin \
 			--prefix=/usr \
 			--sysconfdir=/etc \
-			--with-boxtype=$(BOXTYPE) \
-			--with-boxmodel=$(BOXTYPE) \
+			--with-boxtype=$(MACHINE) \
 			--enable-multicom324 \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			CPPFLAGS="$(T_CPPFLAGS)"
