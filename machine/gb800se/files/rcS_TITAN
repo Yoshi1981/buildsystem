@@ -106,11 +106,7 @@ echo "[rcS] starting titan ->"
 
 until false
 do
-	if [ -e /var/bin/titan ];then
-		/var/bin/titan
-	else
-		/usr/local/bin/titan
-	fi
+	/usr/local/bin/titan /var/etc/titan/titan.cfg
 	rtv=$?
 	echo "titan ended <- RTV: " $rtv
 	case "$rtv" in

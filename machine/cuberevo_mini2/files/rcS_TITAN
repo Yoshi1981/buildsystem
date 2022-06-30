@@ -150,11 +150,7 @@ if [ ! -e /var/etc/.firstboot ]; then
 
    until false
    do
-  	if [ -e /var/bin/titan ];then
-		/var/bin/titan /var/etc/titan/titan.cfg
-  	else
-  		/usr/local/bin/titan /var/etc/titan/titan.cfg
-	fi
+  	/usr/local/bin/titan /var/etc/titan/titan.cfg
      	rtv=$?
       	echo "titan ended <- RTV: " $rtv
       	case "$rtv" in
