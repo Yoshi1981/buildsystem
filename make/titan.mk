@@ -270,13 +270,23 @@ titan-plugins-distclean:
 #
 release-TITAN: release-NONE $(D)/titan
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
-	cp -aR $(SOURCE_DIR)/titan/skins/default $(RELEASE_DIR)/var/usr/local/share/titan/skin
-	cp -af $(SKEL_ROOT)/var/etc/titan $(RELEASE_DIR)/var/etc/
+	cp $(SKEL_ROOT)/var/etc/titan/titan.cfg $(RELEASE_DIR)/var/etc/titan/titan.cfg
+	cp $(SKEL_ROOT)/var/etc/titan/rcconfig.$(BOXTYPE) $(RELEASE_DIR)/var/etc/titan/rcconfig
+	cp $(SKEL_ROOT)/var/etc/titan/satellites.xml $(RELEASE_DIR)/var/tuxbox/config/satellites.xml
+	cp $(SKEL_ROOT)/var/etc/titan/cables.xml $(RELEASE_DIR)/var/tuxbox/config/cables.xml
+	cp $(SKEL_ROOT)/var/etc/titan/terrestrial.xml $(RELEASE_DIR)/var/tuxbox/config/terrestrial.xml
+	cp $(SKEL_ROOT)/var/etc/titan/atsc.xml $(RELEASE_DIR)/var/tuxbox/config/atsc.xml
 	cp -af $(SKEL_ROOT)/var/usr/share/fonts $(RELEASE_DIR)/var/usr/share
+	cp -aR $(SOURCE_DIR)/titan/skins/default $(RELEASE_DIR)/var/usr/local/share/titan/skin
+	cp -aR $(SOURCE_DIR)/titan/web $(RELEASE_DIR)/var/usr/local/share/titan
 	
 #
 # po
 #
+	LANGUAGES='de el en es fr it lt nl pl ru vi'
+	for lang in $$LANGUAGES; do \
+		cd $(SOURCE_DIR)/titan/po/$$lang/LC_MESSAGES && msgfmt -o titan.mo titan.po_auto.po; \
+	done
 	
 #
 #
