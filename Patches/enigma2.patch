@@ -42,6 +42,21 @@ diff -Nur enigma2/lib/dvb/streamserver.cpp enigma2.patched/lib/dvb/streamserver.
  eStreamClient::eStreamClient(eStreamServer *handler, int socket, const std::string remotehost)
   : parent(handler), encoderFd(-1), streamFd(socket), streamThread(NULL), m_remotehost(remotehost), m_timeout(eTimer::create(eApp))
  {
+diff -Nur enigma2/lib/gui/elistboxcontent.cpp enigma2.patched/lib/gui/elistboxcontent.cpp
+--- enigma2/lib/gui/elistboxcontent.cpp	2022-07-04 16:12:32.794436100 +0200
++++ enigma2.patched/lib/gui/elistboxcontent.cpp	2022-07-04 16:51:53.181096891 +0200
+@@ -469,8 +469,10 @@
+ 						if (eConfigManager::getConfigBoolValue("config.usage.show_slider_value", true))
+ 						{
+ 							value_area = 100;
++							std::stringstream value_string;
++							value_string << value;
+ 							painter.setFont(fnt2);
+-							painter.renderText(eRect(ePoint(offset.x()-15, offset.y()), m_itemsize), std::to_string(value), gPainter::RT_HALIGN_RIGHT| gPainter::RT_VALIGN_CENTER, border_color, border_size);
++							painter.renderText(eRect(ePoint(offset.x()-15, offset.y()), m_itemsize), value_string.str(), gPainter::RT_HALIGN_RIGHT| gPainter::RT_VALIGN_CENTER, border_color, border_size);
+ 						}
+ 							/* calc. slider length */
+ 						int width = (m_itemsize.width() - m_seperation - 15 - value_area) * value / size;
 diff -Nur enigma2/lib/service/Makefile.inc enigma2.patched/lib/service/Makefile.inc
 --- enigma2/lib/service/Makefile.inc	2022-07-04 16:12:32.934432671 +0200
 +++ enigma2.patched/lib/service/Makefile.inc	2022-07-04 16:15:39.561877019 +0200
@@ -61,3 +76,32 @@ diff -Nur enigma2/lib/service/Makefile.inc enigma2.patched/lib/service/Makefile.
 +#serviceinclude_HEADERS += \
 +#	service/servicedvd.h
 +#endif
+diff -Nur enigma2/main/bsod.cpp enigma2.patched/main/bsod.cpp
+--- enigma2/main/bsod.cpp	2022-07-04 16:12:32.938432572 +0200
++++ enigma2.patched/main/bsod.cpp	2022-07-04 17:00:10.937321077 +0200
+@@ -268,6 +268,7 @@
+ 	os.clear();
+ 	os_text.clear();
+ 
++	std::stringstream value_string;
+ 	
+ 	if (!bsodpython)
+ 	{	
+@@ -283,9 +284,15 @@
+ 	{	
+ 		std::string txt;
+ 		if (!bsodmax && bsodcnt < bsodmaxmax)
+-			txt = "not (max " + std::to_string(bsodmaxmax) + " times)";	
++		{
++			value_string << bsodmaxmax;
++			txt = "not (max " + value_string.str() + " times)";
++		}	
+ 		else if (bsodmax - bsodcnt > 0)
+-			txt = "if it happens "+ std::to_string(bsodmax - bsodcnt) + " more times";
++		{
++			value_string << (bsodmaxmax - bsodcnt);
++			txt = "if it happens "+ value_string.str() + " more times";
++		}
+ 		else
+ 			txt = "if it happens next times";
+ 		os_text << "We are really sorry. Your receiver encountered "

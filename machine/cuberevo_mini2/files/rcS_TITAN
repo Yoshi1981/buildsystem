@@ -154,10 +154,10 @@ if [ ! -e /var/etc/.firstboot ]; then
      	rtv=$?
       	echo "titan ended <- RTV: " $rtv
       	case "$rtv" in
-		0)
+		1)
 		   echo "SHUTDOWN"
 		   init 0;;
-		1)
+		2)
 		   echo "REBOOT"
 		   init 6;;
 		3)

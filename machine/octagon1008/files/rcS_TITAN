@@ -113,19 +113,18 @@ if [ ! -e /var/etc/.firstboot ]; then
       rtv=$?
       echo "titan ended <- RTV: " $rtv
       case "$rtv" in
-		0) echo "0"
-		   echo "RESTART"
-		   sync;;
-		1) echo "1"
+		1)
 		   echo "SHUTDOWN"
 		   init 0;;
-		2) echo "2"
+		2)
 		   echo "REBOOT"
 		   init 6;;
-		*) echo "*"
+		3)
+		   echo "RESTART";;
+		*) 
 		   echo "ERROR"
 		   init 6;;
-      esac
+      	esac
    done
 fi
 

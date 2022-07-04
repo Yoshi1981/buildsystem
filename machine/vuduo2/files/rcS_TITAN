@@ -253,26 +253,17 @@ do
 	rtv=$?
 	echo "titan ended <- RTV: " $rtv
 	case "$rtv" in
-		0) echo "$rtv"
-			echo "RESTART"
-			echo "RESTART" > /dev/dbox/oled0
-			sync
-			;;
-		1) echo "$rtv"
-			echo "SHUTDOWN"
-			echo "SHUTDOWN" > /dev/dbox/oled0
-			init 0
-			;;
-		2) echo "$rtv"
-			echo "REBOOT"
-			echo "RBOOT" > /dev/dbox/oled0
-			init 6
-			;;
-		*) echo "*"
-			echo -e "\033[01;31mERROR: $rtv\033[00m"
-			echo "ERROR: $rtv" > /dev/dbox/oled0
-			init 6
-			;;
-	esac
+		1)
+		   echo "SHUTDOWN"
+		   init 0;;
+		2)
+		   echo "REBOOT"
+		   init 6;;
+		3)
+		   echo "RESTART";;
+		*) 
+		   echo "ERROR"
+		   init 6;;
+      	esac
 done
 
