@@ -71,7 +71,7 @@ E2_CPPFLAGS   += -I$(APPS_DIR)/tools
 
 E2_CONFIG_OPTS += PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
 
-ENIGMA2_PATCHES =
+ENIGMA2_PATCHES = enigma2.patch
 
 #
 # enigma2
@@ -82,14 +82,14 @@ $(D)/enigma2.do_prepare: $(ENIGMA2_DEPS)
 	[ -d "$(ARCHIVE)/enigma2.git" ] && \
 	(cd $(ARCHIVE)/enigma2.git; git pull;); \
 	[ -d "$(ARCHIVE)/enigma2.git" ] || \
-	git clone https://github.com/OpenVisionE2/enigma2-openvision-sh4.git $(ARCHIVE)/enigma2.git; \
+	git clone -b 6.4 https://github.com/openatv/enigma2.git $(ARCHIVE)/enigma2.git; \
 	cp -ra $(ARCHIVE)/enigma2.git $(SOURCE_DIR)/enigma2; \
 	set -e; cd $(SOURCE_DIR)/enigma2; \
 		$(call apply_patches,$(ENIGMA2_PATCHES))
 	@touch $@
 
 $(D)/enigma2.config.status: $(D)/enigma2.do_prepare
-	$(SILENT)cd $(SOURCE_DIR)/enigma2; \
+	cd $(SOURCE_DIR)/enigma2; \
 		./autogen.sh $(SILENT_OPT); \
 		sed -e 's|#!/usr/bin/python|#!$(HOST_DIR)/bin/python|' -i po/xml2po.py; \
 		$(BUILDENV) \
@@ -104,6 +104,7 @@ $(D)/enigma2.config.status: $(D)/enigma2.do_prepare
 			--prefix=/usr \
 			--sysconfdir=/etc \
 			--with-boxtype=$(BOXTYPE) \
+			--with-libddvd \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			PY_PATH=$(TARGET_DIR)/usr \
@@ -111,7 +112,7 @@ $(D)/enigma2.config.status: $(D)/enigma2.do_prepare
 	@touch $@
 
 $(D)/enigma2.do_compile: $(D)/enigma2.config.status
-	$(SILENT)cd $(SOURCE_DIR)/enigma2; \
+	cd $(SOURCE_DIR)/enigma2; \
 		$(MAKE) all
 	@touch $@
 
@@ -120,29 +121,25 @@ $(D)/enigma2: $(D)/enigma2.do_compile
 	$(TOUCH)
 
 enigma2-clean:
+	$(MAKE) -C $(SOURCE_DIR)/enigma2 clean
+	rm -f $()/enigma2.do_compile
 	rm -f $(D)/enigma2
-	rm -f $(D)/enigma2.do_compile
-	cd $(SOURCE_DIR)/enigma2; \
-		$(MAKE) distclean
 
 enigma2-distclean:
-	rm -f $(D)/enigma2
-	rm -f $(D)/enigma2.do_compile
-	rm -f $(D)/enigma2.do_prepare
-	rm -rf $(SOURCE_DIR)/enigma2
+	$(MAKE) -C $(SOURCE_DIR)/enigma2 distclean
+	rm -f $(D)/enigma2*
 	
 #
 # release-ENIGMA2
 #
 release-ENIGMA2: release-NONE $(D)/enigma2
 	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
-	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
-	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
-	cp -aR $(TARGET_DIR)/usr/share/tuxbox/* $(RELEASE_DIR)/usr/share/tuxbox
+	cp -aR $(TARGET_DIR)/usr/local/share $(RELEASE_DIR)/usr/local
+	cp -aR $(TARGET_DIR)/usr/lib/enigma2 $(RELEASE_DIR)/usr/lib
 	
 #
 #
 #
-PHONY += $(TARGET_DIR)/.version
+#PHONY += $(TARGET_DIR)/.version
 
 	

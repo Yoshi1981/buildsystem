@@ -1,0 +1,63 @@
+diff -Nur enigma2/data/fonts/Makefile.am enigma2.patched/data/fonts/Makefile.am
+--- enigma2/data/fonts/Makefile.am	2022-07-04 16:12:32.678438941 +0200
++++ enigma2.patched/data/fonts/Makefile.am	2022-07-04 16:13:27.485096783 +0200
+@@ -14,9 +14,9 @@
+ 	LiberationSans-Regular.ttf \
+ 	wqy-microhei.ttc
+ 
+-install-data-hook:
+-	cd $(DESTDIR)$(datadir)/fonts && \
+-	$(LN_S) wqy-microhei.ttc fallback.font
++#install-data-hook:
++#	cd $(DESTDIR)$(datadir)/fonts && \
++#	$(LN_S) wqy-microhei.ttc fallback.font
+ 
+ if VUULTIMO
+ dist_install_DATA += analog.ttf MyriadPro-Regular.otf MyriadPro-Semibold.otf MyriadPro-SemiboldIt.otf
+diff -Nur enigma2/lib/base/estring.cpp enigma2.patched/lib/base/estring.cpp
+--- enigma2/lib/base/estring.cpp	2022-07-04 16:12:32.766436786 +0200
++++ enigma2.patched/lib/base/estring.cpp	2022-07-04 16:14:06.520145136 +0200
+@@ -935,9 +935,11 @@
+ 
+ std::string strip_non_graph(std::string s)
+ {
++#if 0
+ 	s = std::regex_replace(s, std::regex("[[^:graph:]]"), " ");
+ 	s = std::regex_replace(s, std::regex("\\s{2,}"), " ");
+ 	s = std::regex_replace(s, std::regex("^\\s+|\\s+$"), "");
++#endif	
+ 	return s;
+ }
+ 
+diff -Nur enigma2/lib/dvb/streamserver.cpp enigma2.patched/lib/dvb/streamserver.cpp
+--- enigma2/lib/dvb/streamserver.cpp	2022-07-04 16:12:32.786436296 +0200
++++ enigma2.patched/lib/dvb/streamserver.cpp	2022-07-04 16:15:00.266834903 +0200
+@@ -20,6 +20,9 @@
+ #include <lib/dvb/streamserver.h>
+ #include <lib/dvb/encoder.h>
+ 
++
++#define TCP_USER_TIMEOUT	18
++
+ eStreamClient::eStreamClient(eStreamServer *handler, int socket, const std::string remotehost)
+  : parent(handler), encoderFd(-1), streamFd(socket), streamThread(NULL), m_remotehost(remotehost), m_timeout(eTimer::create(eApp))
+ {
+diff -Nur enigma2/lib/service/Makefile.inc enigma2.patched/lib/service/Makefile.inc
+--- enigma2/lib/service/Makefile.inc	2022-07-04 16:12:32.934432671 +0200
++++ enigma2.patched/lib/service/Makefile.inc	2022-07-04 16:15:39.561877019 +0200
+@@ -44,9 +44,9 @@
+ 	service/servicexine.h
+ endif
+ 
+-if HAVE_LIBDDVD
+-service_libenigma_service_a_SOURCES += \
+-	service/servicedvd.cpp
+-serviceinclude_HEADERS += \
+-	service/servicedvd.h
+-endif
++#if HAVE_LIBDDVD
++#service_libenigma_service_a_SOURCES += \
++#	service/servicedvd.cpp
++#serviceinclude_HEADERS += \
++#	service/servicedvd.h
++#endif

@@ -80,9 +80,6 @@ N_CONFIG_OPTS += --enable-giflib
 N_CONFIG_OPTS += --with-tremor
 N_CONFIG_OPTS += --enable-ffmpegdec
 #N_CONFIG_OPTS += --enable-pip
-#N_CONFIG_OPTS += --disable-webif
-#N_CONFIG_OPTS += --disable-upnp
-#N_CONFIG_OPTS += --disable-tangos
 N_CONFIG_OPTS += --enable-pugixml
 ifeq ($(BOXARCH), arm)
 N_CONFIG_OPTS += --enable-reschange
@@ -290,13 +287,13 @@ $(D)/neutrino: $(D)/neutrino.do_prepare $(D)/neutrino.do_compile
 	$(TOUCH)
 
 neutrino-clean:
+	$(MAKE) -C $(N_OBJDIR) clean
 	rm -f $(D)/neutrino
-	rm -f $(D)/neutrino.config.status
+	rm -f $(D)/neutrino.do_compile
 	rm -f $(SOURCE_DIR)/$(NEUTRINO)/src/gui/version.h
-	cd $(N_OBJDIR); \
-		$(MAKE) -C $(N_OBJDIR) distclean
 
 neutrino-distclean: libstb-hal-distclean
+	$(MAKE) -C $(N_OBJDIR) distclean
 	rm -rf $(N_OBJDIR)
 	rm -f $(D)/neutrino*
 

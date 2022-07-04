@@ -112,8 +112,10 @@ endif
 	ln -sf ../../bin/busybox $(RELEASE_DIR)/usr/bin/ether-wake
 	ln -sf ../../bin/showiframe $(RELEASE_DIR)/usr/bin/showiframe
 	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
-	
+
 #
+#
+#	
 ifeq ($(BOXARCH), sh4)
 #
 # player
@@ -205,6 +207,9 @@ ifeq ($(WLAN), wlandriver)
 endif
 endif
 
+#
+#
+#
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 #
 #
@@ -428,12 +433,9 @@ release: release-$(FLAVOUR)
 	cp -R $(TARGET_DIR)/lib/* $(RELEASE_DIR)/lib/
 	rm -f $(RELEASE_DIR)/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/lib/*
-
 	cp -R $(TARGET_DIR)/usr/lib/* $(RELEASE_DIR)/usr/lib/
-
 	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,sigc++-2.0,python*,lua}
 	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
-
 	chmod 755 $(RELEASE_DIR)/usr/lib/*
 
 #
@@ -448,6 +450,15 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 	rm -f $(RELEASE_DIR)/sbin/ffmpeg
 	rm -f $(RELEASE_DIR)/etc/ssl/certs/ca-certificates.crt
 endif
+ifeq ($(FLAVOUR), ENIGMA2)
+	rm -f $(RELEASE_DIR)/usr/bin/avahi-*
+	rm -f $(RELEASE_DIR)/usr/bin/easy_install*
+	rm -f $(RELEASE_DIR)/usr/bin/glib-*
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
+endif
 	rm -rf $(RELEASE_DIR)/lib/autofs
 	rm -f $(RELEASE_DIR)/lib/libSegFault*
 	rm -f $(RELEASE_DIR)/lib/libstdc++.*-gdb.py
@@ -461,21 +472,12 @@ endif
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
 	rm -f $(RELEASE_DIR)/usr/lib/xml2Conf.sh
 	rm -f $(RELEASE_DIR)/usr/lib/libfontconfig*
-#	rm -f $(RELEASE_DIR)/usr/lib/libdvdcss*
-#	rm -f $(RELEASE_DIR)/usr/lib/libdvdnav*
-#	rm -f $(RELEASE_DIR)/usr/lib/libdvdread*
 	rm -f $(RELEASE_DIR)/usr/lib/libcurses.so
 	[ ! -e $(RELEASE_DIR)/usr/bin/mc ] && rm -f $(RELEASE_DIR)/usr/lib/libncurses* || true
 	rm -f $(RELEASE_DIR)/usr/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/usr/lib/libanl*
 	rm -f $(RELEASE_DIR)/usr/lib/libopkg*
-	rm -f $(RELEASE_DIR)/bin/gitVCInfo
-	rm -f $(RELEASE_DIR)/bin/evtest
-	rm -f $(RELEASE_DIR)/bin/meta
-	rm -f $(RELEASE_DIR)/bin/streamproxy
-#	rm -f $(RELEASE_DIR)/bin/libstb-hal-test
 	rm -f $(RELEASE_DIR)/sbin/ldconfig
-#	rm -f $(RELEASE_DIR)/usr/bin/pic2m2v
 	rm -f $(RELEASE_DIR)/usr/bin/{gdbus-codegen,glib-*,gtester-report}
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	rm -rf $(RELEASE_DIR)/dev.static
@@ -484,7 +486,7 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 endif
 
 #
-#
+# strip
 #	
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(RELEASE_DIR)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
@@ -500,5 +502,4 @@ endif
 #
 release-clean:
 	rm -rf $(RELEASE_DIR)
-
 

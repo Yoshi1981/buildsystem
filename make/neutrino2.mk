@@ -164,13 +164,12 @@ $(D)/neutrino2: $(D)/neutrino2.do_compile
 	$(TOUCH)
 
 neutrino2-clean:
+	$(MAKE) -C $(SOURCE_DIR)/neutrino2/neutrino2 clean
 	rm -f $(D)/neutrino2
 	rm -f $(D)/neutrino2.do_compile
-	$(MAKE) -C $(SOURCE_DIR)/neutrino2/neutrino2 clean
 
 neutrino2-distclean:
 	$(MAKE) -C $(SOURCE_DIR)/neutrino2/neutrino2 distclean
-	rm -rf $(SOURCE_DIR)/neutrino2/neutrino2/config.status
 	rm -f $(D)/neutrino2*
 	
 #

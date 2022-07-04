@@ -894,8 +894,38 @@ $(D)/libcurl: $(D)/bootstrap $(D)/zlib $(D)/openssl $(D)/ca-bundle $(ARCHIVE)/$(
 #
 # libfribidi
 #
-LIBFRIBIDI_VER = 1.0.3
-LIBFRIBIDI_SOURCE = fribidi-$(LIBFRIBIDI_VER).tar.bz2
+#LIBFRIBIDI_VER = 1.0.3
+#LIBFRIBIDI_SOURCE = fribidi-$(LIBFRIBIDI_VER).tar.bz2
+#LIBFRIBIDI_PATCH = libfribidi-$(LIBFRIBIDI_VER).patch
+
+#$(ARCHIVE)/$(LIBFRIBIDI_SOURCE):
+#	$(WGET) https://github.com/fribidi/fribidi/releases/download/v$(LIBFRIBIDI_VER)/$(LIBFRIBIDI_SOURCE)
+
+#$(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/$(LIBFRIBIDI_SOURCE)
+#	$(START_BUILD)
+#	$(REMOVE)/fribidi-$(LIBFRIBIDI_VER)
+#	$(UNTAR)/$(LIBFRIBIDI_SOURCE)
+#	$(CHDIR)/fribidi-$(LIBFRIBIDI_VER); \
+#		$(call apply_patches, $(LIBFRIBIDI_PATCH)); \
+#		$(CONFIGURE) \
+#			--prefix=/usr \
+#			--mandir=/.remove \
+#			--enable-shared \
+#			--enable-static \
+#			--disable-debug \
+#			--disable-deprecated \
+#			--enable-charsets \
+#			--with-glib=no \
+#		; \
+#		$(MAKE); \
+#		$(MAKE) install DESTDIR=$(TARGET_DIR)
+#	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/fribidi.pc
+#	$(REWRITE_LIBTOOL)/libfribidi.la
+#	cd $(TARGET_DIR) && rm usr/bin/fribidi
+#	$(REMOVE)/fribidi-$(LIBFRIBIDI_VER)
+#	$(TOUCH)
+LIBFRIBIDI_VER = 1.0.11
+LIBFRIBIDI_SOURCE = fribidi-$(LIBFRIBIDI_VER).tar.xz
 LIBFRIBIDI_PATCH = libfribidi-$(LIBFRIBIDI_VER).patch
 
 $(ARCHIVE)/$(LIBFRIBIDI_SOURCE):
@@ -914,8 +944,6 @@ $(D)/libfribidi: $(D)/bootstrap $(ARCHIVE)/$(LIBFRIBIDI_SOURCE)
 			--enable-static \
 			--disable-debug \
 			--disable-deprecated \
-			--enable-charsets \
-			--with-glib=no \
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
