@@ -46,7 +46,6 @@ release-common: $(RELEASE_DEPS)
 	install -d $(RELEASE_DIR)/mnt/{hdd,nfs,usb}
 	install -d $(RELEASE_DIR)/mnt/mnt{0..7}
 	install -d $(RELEASE_DIR)/usr/{bin,lib,sbin,share}
-	install -d $(RELEASE_DIR)/usr/bin/cam
 	install -d $(RELEASE_DIR)/usr/lib/locale
 	cp -aR $(SKEL_ROOT)/usr/lib/locale/* $(RELEASE_DIR)/usr/lib/locale
 	install -d $(RELEASE_DIR)/usr/local/{bin,sbin,share}
@@ -100,8 +99,8 @@ endif
 	cp -aR $(SKEL_ROOT)/etc/mdev_$(BOXARCH).conf $(RELEASE_DIR)/etc/mdev.conf
 	cp -aR $(SKEL_ROOT)/usr/share/udhcpc/* $(RELEASE_DIR)/usr/share/udhcpc/
 	cp -aR $(SKEL_ROOT)/usr/share/zoneinfo/* $(RELEASE_DIR)/usr/share/zoneinfo/
-	cp -aR $(SKEL_ROOT)/usr/share/fonts/* $(RELEASE_DIR)/usr/share/fonts/
-	cp -aR $(SKEL_ROOT)/usr/share/iso-codes/* $(RELEASE_DIR)/usr/share/iso-codes/
+#	cp -aR $(SKEL_ROOT)/usr/share/fonts/* $(RELEASE_DIR)/usr/share/fonts/
+#	cp -aR $(SKEL_ROOT)/usr/share/iso-codes/* $(RELEASE_DIR)/usr/share/iso-codes/
 	cp $(SKEL_ROOT)/bin/autologin $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/bin/vdstandby $(RELEASE_DIR)/bin/
 	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
@@ -354,11 +353,13 @@ endif
 # lua
 #
 ifeq ($(LUA), lua)
+ifneq ($(FLAVOUR), ENIGMA2)
 	cp -R $(TARGET_DIR)/usr/lib/lua $(RELEASE_DIR)/usr/lib/
 
 	if [ -d $(TARGET_DIR)/usr/share/lua ]; then \
 		cp -aR $(TARGET_DIR)/usr/share/lua/* $(RELEASE_DIR)/usr/share/lua; \
 	fi
+endif
 endif
 
 #
@@ -367,12 +368,69 @@ endif
 ifeq ($(PYTHON), python)
 	install -d $(RELEASE_DIR)/$(PYTHON_DIR)
 	cp -R $(TARGET_DIR)/$(PYTHON_DIR)/* $(RELEASE_DIR)/$(PYTHON_DIR)/
+#	install -d $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR)
+endif
+	
+#
+# release-NONE
+#
+$(D)/release-NONE: release-common release-$(BOXTYPE)
+	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
+	rm -fr $(RELEASE_DIR)/etc
+	ln -sf /var/etc $(RELEASE_DIR)
+	ln -s /tmp $(RELEASE_DIR)/var/lock
+	ln -s /tmp $(RELEASE_DIR)/var/log
+	ln -s /tmp $(RELEASE_DIR)/var/run
+	ln -s /tmp $(RELEASE_DIR)/var/tmp
+	$(TUXBOX_CUSTOMIZE)
 
-	# 
-	install -d $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR)
+#
+# release
+#
+release: release-$(FLAVOUR)
+#
+# lib usr/lib
+#
+	cp -R $(TARGET_DIR)/lib/* $(RELEASE_DIR)/lib/
+	rm -f $(RELEASE_DIR)/lib/*.{a,o,la}
+	chmod 755 $(RELEASE_DIR)/lib/*
+	cp -R $(TARGET_DIR)/usr/lib/* $(RELEASE_DIR)/usr/lib/
+	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,python*,sigc++-1.2,sigc++-2.0,lua}
+	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
+	chmod 755 $(RELEASE_DIR)/usr/lib/*
 
-	# delete unneded stuff
-	cp -dp $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR)/
+#
+# delete unnecessary files
+#
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
+	rm -f $(RELEASE_DIR)/sbin/jfs_fsck
+	rm -f $(RELEASE_DIR)/sbin/fsck.jfs
+	rm -f $(RELEASE_DIR)/sbin/jfs_mkfs
+	rm -f $(RELEASE_DIR)/sbin/mkfs.jfs
+	rm -f $(RELEASE_DIR)/sbin/jfs_tune
+	rm -f $(RELEASE_DIR)/sbin/ffmpeg
+	rm -f $(RELEASE_DIR)/etc/ssl/certs/ca-certificates.crt
+endif
+ifeq ($(FLAVOUR), ENIGMA2)
+	rm -f $(RELEASE_DIR)/usr/bin/avahi-*
+	rm -f $(RELEASE_DIR)/usr/bin/easy_install*
+	rm -f $(RELEASE_DIR)/usr/bin/glib-*
+	rm -f $(addprefix $(RELEASE_DIR)/usr/bin/,dvdnav-config gio-querymodules gobject-query gtester gtester-report)
+	rm -f $(addprefix $(RELEASE_DIR)/usr/bin/,livestreamer mailmail manhole opkg-check-config opkg-cl)
+	rm -rf $(RELEASE_DIR)/lib/autofs
+	rm -rf $(RELEASE_DIR)/usr/lib/m4-nofpu/
+	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VER)
+	rm -rf $(RELEASE_DIR)/usr/lib/gcc
+	rm -f $(RELEASE_DIR)/usr/lib/libc.so
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
+	rm -rf $(RELEASE_DIR)/usr/local/share/enigma2/po/*
+	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/en $(RELEASE_DIR)/usr/local/share/enigma2/po
+	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/de $(RELEASE_DIR)/usr/local/share/enigma2/po
+endif
+ifeq ($(PYTHON), python)
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{bsddb,compiler,curses,distutils,lib-old,lib-tk,plat-linux3,test}
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/ctypes/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/email/test
@@ -408,56 +466,11 @@ ifeq ($(PYTHON), python)
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/web/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/words/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VERSION).egg-info
-endif
-	
-#
-# release-NONE
-#
-$(D)/release-NONE: release-common release-$(BOXTYPE)
-	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
-	rm -fr $(RELEASE_DIR)/etc
-	ln -sf /var/etc $(RELEASE_DIR)
-	ln -s /tmp $(RELEASE_DIR)/var/lock
-	ln -s /tmp $(RELEASE_DIR)/var/log
-	ln -s /tmp $(RELEASE_DIR)/var/run
-	ln -s /tmp $(RELEASE_DIR)/var/tmp
-	$(TUXBOX_CUSTOMIZE)
-
-#
-# release
-#
-release: release-$(FLAVOUR)
-#
-# lib usr/lib
-#
-	cp -R $(TARGET_DIR)/lib/* $(RELEASE_DIR)/lib/
-	rm -f $(RELEASE_DIR)/lib/*.{a,o,la}
-	chmod 755 $(RELEASE_DIR)/lib/*
-	cp -R $(TARGET_DIR)/usr/lib/* $(RELEASE_DIR)/usr/lib/
-	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,sigc++-2.0,python*,lua}
-	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
-	chmod 755 $(RELEASE_DIR)/usr/lib/*
-
-#
-# delete unnecessary files
-#
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
-	rm -f $(RELEASE_DIR)/sbin/jfs_fsck
-	rm -f $(RELEASE_DIR)/sbin/fsck.jfs
-	rm -f $(RELEASE_DIR)/sbin/jfs_mkfs
-	rm -f $(RELEASE_DIR)/sbin/mkfs.jfs
-	rm -f $(RELEASE_DIR)/sbin/jfs_tune
-	rm -f $(RELEASE_DIR)/sbin/ffmpeg
-	rm -f $(RELEASE_DIR)/etc/ssl/certs/ca-certificates.crt
-endif
-ifeq ($(FLAVOUR), ENIGMA2)
-	rm -f $(RELEASE_DIR)/usr/bin/avahi-*
-	rm -f $(RELEASE_DIR)/usr/bin/easy_install*
-	rm -f $(RELEASE_DIR)/usr/bin/glib-*
-	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
-	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
-	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
-	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
+#	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.a' -exec rm -f {} \;
+#	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.c' -exec rm -f {} \;
+#	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.pyx' -exec rm -f {} \;
+#	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.o' -exec rm -f {} \;
+#	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.la' -exec rm -f {} \;
 endif
 	rm -rf $(RELEASE_DIR)/lib/autofs
 	rm -f $(RELEASE_DIR)/lib/libSegFault*

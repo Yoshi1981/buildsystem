@@ -164,13 +164,13 @@ $(D)/neutrino2: $(D)/neutrino2.do_compile
 	$(TOUCH)
 
 neutrino2-clean:
+	rm -f $(D)/neutrino2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/neutrino2/neutrino2 clean
 	rm -f $(D)/neutrino2
-	rm -f $(D)/neutrino2.do_compile
 
 neutrino2-distclean:
-	$(MAKE) -C $(SOURCE_DIR)/neutrino2/neutrino2 distclean
 	rm -f $(D)/neutrino2*
+	$(MAKE) -C $(SOURCE_DIR)/neutrino2/neutrino2 distclean
 	
 #
 # neutrino2 plugins
@@ -214,9 +214,9 @@ neutrino2-plugins-clean:
 	$(MAKE) -C $(SOURCE_DIR)/neutrino2/plugins clean
 
 neutrino2-plugins-distclean:
+	rm -f $(D)/neutrino2-plugins*
 	$(MAKE) -C $(SOURCE_DIR)/neutrino2/plugins distclean
 	rm -f $(SOURCE_DIR)/neutrino2/plugins/config.status
-	rm -f $(D)/neutrino2-plugins*
 	
 #
 # release-NEUTRINO2

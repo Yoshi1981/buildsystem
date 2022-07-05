@@ -16,7 +16,7 @@ TITAN_DEPS += $(D)/timezone
 TITAN_DEPS += $(D)/tools-libmme_host
 TITAN_DEPS += $(D)/tools-libmme_image
 
-ifeq ($(MEDIAFW), buildinplayer)
+ifeq ($(MEDIAFW), libeplayer3)
 T_CONFIG_OPTS += --enable-eplayer3
 TITAN_DEPS += $(D)/libcurl
 TITAN_DEPS += $(D)/ffmpeg
@@ -57,7 +57,7 @@ T_CPPFLAGS   += -L$(TARGET_DIR)/usr/lib
 T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/python
 T_CPPFLAGS   += -L$(SOURCE_DIR)/titan/libipkg
 
-ifeq ($(MEDIAFW), buildinplayer)
+ifeq ($(MEDIAFW), libplayer3)
 T_CPPFLAGS   += -DEPLAYER3
 T_CPPFLAGS   += -DEXTEPLAYER3
 T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
@@ -250,8 +250,8 @@ titan-clean:
 	rm -f $(D)/titan.do_compile
 
 titan-distclean:
-	$(MAKE) -C $(SOURCE_DIR)/titan distclean
 	rm -f $(D)/titan*
+	$(MAKE) -C $(SOURCE_DIR)/titan distclean
 
 #
 #
@@ -262,7 +262,7 @@ titan-plugins-clean:
 		$(MAKE) distclean
 
 titan-plugins-distclean:
-	rm -f $(D)/titan-plugins
+	rm -f $(D)/titan-plugins*
 		
 #
 # release-TITAN

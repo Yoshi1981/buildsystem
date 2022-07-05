@@ -106,31 +106,22 @@ echo "[rcS] starting enigma2 ->"
 
 until false
 do
-	if [ -e /var/bin/enigma2 ];then
-		/var/bin/enigma2
-	else
-		/usr/local/bin/enigma2
-	fi
-	rtv=$?
-	echo "enigma2 ended <- RTV: " $rtv
-	case "$rtv" in
-		0) echo "$rtv"
-			echo "RESTART"
-			sync
-			;;
-		1) echo "$rtv"
-			echo "SHUTDOWN"
-			init 0
-			;;
-		2) echo "$rtv"
-			echo "REBOOT"
-			init 6
-			;;
-		*) echo "*"
-			echo -e "\033[01;31mERROR: $rtv\033[00m"
-			init 6
-			;;
-	esac
+	/usr/local/bin/enigma2
+     	rtv=$?
+      	echo "enigma2 ended <- RTV: " $rtv
+      	case "$rtv" in
+		1)
+		   echo "SHUTDOWN"
+		   init 0;;
+		2)
+		   echo "REBOOT"
+		   init 6;;
+		3)
+		   echo "RESTART";;
+		*) 
+		   echo "ERROR"
+		   init 6;;
+      	esac
 done
 
 

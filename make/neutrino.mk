@@ -287,15 +287,15 @@ $(D)/neutrino: $(D)/neutrino.do_prepare $(D)/neutrino.do_compile
 	$(TOUCH)
 
 neutrino-clean:
+	rm -f $(D)/neutrino.do_compile
 	$(MAKE) -C $(N_OBJDIR) clean
 	rm -f $(D)/neutrino
-	rm -f $(D)/neutrino.do_compile
 	rm -f $(SOURCE_DIR)/$(NEUTRINO)/src/gui/version.h
 
 neutrino-distclean: libstb-hal-distclean
+	rm -f $(D)/neutrino*
 	$(MAKE) -C $(N_OBJDIR) distclean
 	rm -rf $(N_OBJDIR)
-	rm -f $(D)/neutrino*
 
 #
 # neutrino-plugins

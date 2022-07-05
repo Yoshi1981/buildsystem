@@ -1,3 +1,26 @@
+diff -Nur enigma2/configure.ac enigma2.patched/configure.ac
+--- enigma2/configure.ac	2022-07-04 16:12:32.650439627 +0200
++++ enigma2.patched/configure.ac	2022-07-05 17:57:31.928147553 +0200
+@@ -35,13 +35,14 @@
+ AM_CONDITIONAL(HAVE_FAKE_GIT_DIR, test -f "$srcdir/.git/last_commit_info")
+ 
+ dnl versions of gstreamer and plugins-base
+-AC_ARG_WITH(gstversion,
+-	AS_HELP_STRING([--with-gstversion],[use gstreamer version (major.minor)]),
+-	[GST_MAJORMINOR=$withval],[GST_MAJORMINOR=0.10])
++#AC_ARG_WITH(gstversion,
++#	AS_HELP_STRING([--with-gstversion],[use gstreamer version (major.minor)]),
++#	[GST_MAJORMINOR=$withval],[GST_MAJORMINOR=0.10])
+ 
+ PKG_CHECK_MODULES(TUXTXT, tuxbox-tuxtxt)
+-PKG_CHECK_MODULES(GSTREAMER, gstreamer-$GST_MAJORMINOR gstreamer-pbutils-$GST_MAJORMINOR)
+-PKG_CHECK_MODULES(BASE, [freetype2 fribidi gstreamer-$GST_MAJORMINOR gstreamer-pbutils-$GST_MAJORMINOR libdvbsi++ libpng libxml-2.0 sigc++-2.0 libssl libcrypto])
++#PKG_CHECK_MODULES(GSTREAMER, gstreamer-$GST_MAJORMINOR gstreamer-pbutils-$GST_MAJORMINOR)
++#PKG_CHECK_MODULES(BASE, [freetype2 fribidi gstreamer-$GST_MAJORMINOR gstreamer-pbutils-$GST_MAJORMINOR libdvbsi++ libpng libxml-2.0 sigc++-2.0 libssl libcrypto])
++PKG_CHECK_MODULES(BASE, [freetype2 fribidi glib-2.0 libdvbsi++ libpng libxml-2.0 sigc++-2.0 libssl libcrypto])
+ PKG_CHECK_MODULES(LIBDDVD, libdreamdvd, HAVE_LIBDDVD="yes", HAVE_LIBDDVD="no")
+ AM_CONDITIONAL(HAVE_LIBDDVD, test "$HAVE_LIBDDVD" = "yes")
+ PKG_CHECK_MODULES(AVAHI, avahi-client)
 diff -Nur enigma2/data/fonts/Makefile.am enigma2.patched/data/fonts/Makefile.am
 --- enigma2/data/fonts/Makefile.am	2022-07-04 16:12:32.678438941 +0200
 +++ enigma2.patched/data/fonts/Makefile.am	2022-07-04 16:13:27.485096783 +0200
@@ -59,8 +82,26 @@ diff -Nur enigma2/lib/gui/elistboxcontent.cpp enigma2.patched/lib/gui/elistboxco
  						int width = (m_itemsize.width() - m_seperation - 15 - value_area) * value / size;
 diff -Nur enigma2/lib/service/Makefile.inc enigma2.patched/lib/service/Makefile.inc
 --- enigma2/lib/service/Makefile.inc	2022-07-04 16:12:32.934432671 +0200
-+++ enigma2.patched/lib/service/Makefile.inc	2022-07-04 16:15:39.561877019 +0200
-@@ -44,9 +44,9 @@
++++ enigma2.patched/lib/service/Makefile.inc	2022-07-05 17:20:03.925940034 +0200
+@@ -10,8 +10,6 @@
+ 	service/servicedvb.cpp \
+ 	service/servicedvbrecord.cpp \
+ 	service/servicefs.cpp \
+-	service/servicemp3.cpp \
+-	service/servicemp3record.cpp \
+ 	service/servicem2ts.cpp \
+ 	service/servicedvbstream.cpp \
+ 	service/servicehdmi.cpp \
+@@ -28,8 +26,6 @@
+ 	service/servicedvb.h \
+ 	service/servicedvbrecord.h \
+ 	service/servicefs.h \
+-	service/servicemp3.h \
+-	service/servicemp3record.h \
+ 	service/servicem2ts.h \
+ 	service/servicedvbstream.h \
+ 	service/servicehdmi.h \
+@@ -44,9 +40,3 @@
  	service/servicexine.h
  endif
  
@@ -70,12 +111,6 @@ diff -Nur enigma2/lib/service/Makefile.inc enigma2.patched/lib/service/Makefile.
 -serviceinclude_HEADERS += \
 -	service/servicedvd.h
 -endif
-+#if HAVE_LIBDDVD
-+#service_libenigma_service_a_SOURCES += \
-+#	service/servicedvd.cpp
-+#serviceinclude_HEADERS += \
-+#	service/servicedvd.h
-+#endif
 diff -Nur enigma2/main/bsod.cpp enigma2.patched/main/bsod.cpp
 --- enigma2/main/bsod.cpp	2022-07-04 16:12:32.938432572 +0200
 +++ enigma2.patched/main/bsod.cpp	2022-07-04 17:00:10.937321077 +0200
@@ -105,3 +140,34 @@ diff -Nur enigma2/main/bsod.cpp enigma2.patched/main/bsod.cpp
  		else
  			txt = "if it happens next times";
  		os_text << "We are really sorry. Your receiver encountered "
+diff -Nur enigma2/main/enigma.cpp enigma2.patched/main/enigma.cpp
+--- enigma2/main/enigma.cpp	2022-07-04 16:12:32.942432475 +0200
++++ enigma2.patched/main/enigma.cpp	2022-07-05 17:26:00.278185551 +0200
+@@ -38,7 +38,7 @@
+ #include "bsod.h"
+ #include "version_info.h"
+ 
+-#include <gst/gst.h>
++//#include <gst/gst.h>
+ 
+ #include <lib/base/eerroroutput.h>
+ ePtr<eErrorOutput> m_erroroutput;
+@@ -272,7 +272,7 @@
+ 	atexit(object_dump);
+ #endif
+ 
+-	gst_init(&argc, &argv);
++	//gst_init(&argc, &argv);
+ 
+ 	for (int i = 0; i < argc; i++)
+ 	{
+@@ -445,7 +445,8 @@
+ 
+ const char *getGStreamerVersionString()
+ {
+-	return gst_version_string();
++	//return gst_version_string();
++	return NULL;
+ }
+ 
+ #include <malloc.h>

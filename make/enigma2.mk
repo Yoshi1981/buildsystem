@@ -17,7 +17,7 @@ ENIGMA2_DEPS += $(D)/openssl
 ENIGMA2_DEPS += $(D)/tuxtxt32bpp
 ENIGMA2_DEPS += $(D)/hotplug_e2_helper
 ENIGMA2_DEPS += $(D)/avahi
-ENIGMA2_DEPS += python-all
+ENIGMA2_DEPS += python
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), size))
 ENIGMA2_DEPS += $(D)/ethtool
 ENIGMA2_DEPS += $(D)/alsa_utils
@@ -38,10 +38,11 @@ ENIGMA2_DEPS  += $(D)/libsigc
 
 E2_CONFIG_OPTS =
 
+#MEDIAFW = gstreamer
 #ifeq ($(MEDIAFW), gstreamer)
-ENIGMA2_DEPS  += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_dvbmediasink
-ENIGMA2_DEPS  += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
-E2_CONFIG_OPTS += --with-gstversion=1.0 --enable-mediafwgstreamer
+#ENIGMA2_DEPS  += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_dvbmediasink
+#ENIGMA2_DEPS  += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
+#E2_CONFIG_OPTS += --with-gstversion=1.0
 #endif
 
 ifeq ($(EXTERNAL_LCD), graphlcd)
@@ -68,6 +69,9 @@ E2_CPPFLAGS    = -I$(DRIVER_DIR)/include
 E2_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
 E2_CPPFLAGS   += -I$(KERNEL_DIR)/include
 E2_CPPFLAGS   += -I$(APPS_DIR)/tools
+
+LUA = 
+PYTHON = python
 
 E2_CONFIG_OPTS += PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
 
@@ -104,7 +108,6 @@ $(D)/enigma2.config.status: $(D)/enigma2.do_prepare
 			--prefix=/usr \
 			--sysconfdir=/etc \
 			--with-boxtype=$(BOXTYPE) \
-			--with-libddvd \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			PY_PATH=$(TARGET_DIR)/usr \
@@ -121,13 +124,13 @@ $(D)/enigma2: $(D)/enigma2.do_compile
 	$(TOUCH)
 
 enigma2-clean:
-	$(MAKE) -C $(SOURCE_DIR)/enigma2 clean
 	rm -f $()/enigma2.do_compile
+	$(MAKE) -C $(SOURCE_DIR)/enigma2 clean
 	rm -f $(D)/enigma2
 
 enigma2-distclean:
-	$(MAKE) -C $(SOURCE_DIR)/enigma2 distclean
 	rm -f $(D)/enigma2*
+	$(MAKE) -C $(SOURCE_DIR)/enigma2 distclean
 	
 #
 # release-ENIGMA2

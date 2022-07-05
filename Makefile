@@ -151,13 +151,13 @@ init:
 	echo ""
 # Media framework
 	@echo -e "\nMedia Framework:"
-	@echo "   1) buildinplayer (revisited libeplayer3) (recommended for sh4 boxes)"
+	@echo "   1) libeplayer3 (rivisited libeplayer 3 recommended for sh4 boxes)"
 	@echo "   2) gstreamer (recommended for mips and arm boxes)"
 	@echo -e "   \033[01;32m3) pre-defined\033[00m"
 	@read -p "Select media framework (1-3)?" MEDIAFW; \
 	MEDIAFW=$${MEDIAFW}; \
 	case "$$MEDIAFW" in \
-		1) echo "MEDIAFW=buildinplayer" >> config;; \
+		1) echo "MEDIAFW=libeplayer" >> config;; \
 		2) echo "MEDIAFW=gstreamer" >> config;; \
 		3|*) ;; \
 	esac; \
