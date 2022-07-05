@@ -549,9 +549,6 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
 TOOLS += $(D)/tools-initfb
 endif
-ifneq ($(wildcard $(APPS_DIR)/tools/own-tools),)
-TOOLS += $(D)/tools-own-tools
-endif
 
 $(D)/tools: $(TOOLS)
 	@touch $@

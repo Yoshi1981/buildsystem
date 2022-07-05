@@ -368,7 +368,8 @@ endif
 ifeq ($(PYTHON), python)
 	install -d $(RELEASE_DIR)/$(PYTHON_DIR)
 	cp -R $(TARGET_DIR)/$(PYTHON_DIR)/* $(RELEASE_DIR)/$(PYTHON_DIR)/
-#	install -d $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR)
+	install -d $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR)
+	cp $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR)
 endif
 	
 #
@@ -395,7 +396,7 @@ release: release-$(FLAVOUR)
 	rm -f $(RELEASE_DIR)/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/lib/*
 	cp -R $(TARGET_DIR)/usr/lib/* $(RELEASE_DIR)/usr/lib/
-	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,python*,sigc++-1.2,sigc++-2.0,lua}
+	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,sigc++-1.2,sigc++-2.0,lua}
 	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/usr/lib/*
 
@@ -423,18 +424,28 @@ ifeq ($(FLAVOUR), ENIGMA2)
 	rm -rf $(RELEASE_DIR)/usr/lib/gcc
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.py' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
 	rm -rf $(RELEASE_DIR)/usr/local/share/enigma2/po/*
 	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/en $(RELEASE_DIR)/usr/local/share/enigma2/po
 	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/de $(RELEASE_DIR)/usr/local/share/enigma2/po
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/DVDBurn
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaScanner
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaPlayer
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/
+	rm -f $(RELEASE_DIR)/usr/local/share/meta/*
 endif
 ifeq ($(PYTHON), python)
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{bsddb,compiler,curses,distutils,lib-old,lib-tk,plat-linux3,test}
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{bsddb,compiler,curses,lib-old,lib-tk,plat-linux3,test,sqlite3,pydoc_data,multiprocessing,hotshot,distutils,email,unitest,ensurepip,wsgiref,lib2to3,logging,idlelib}
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/pdb.doc
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/ctypes/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/email/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/json/tests
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/idlelib/idle_test
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/idlelib/icons
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/lib2to3/tests
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/sqlite3/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/unittest/test
@@ -465,12 +476,13 @@ ifeq ($(PYTHON), python)
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/trial/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/web/test
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/twisted/words/test
-	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VERSION).egg-info
-#	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.a' -exec rm -f {} \;
-#	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.c' -exec rm -f {} \;
-#	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.pyx' -exec rm -f {} \;
-#	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.o' -exec rm -f {} \;
-#	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.la' -exec rm -f {} \;
+	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/site-packages/*-py$(PYTHON_VER_MAJOR).egg-info
+	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.a' -exec rm -f {} \;
+	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.c' -exec rm -f {} \;
+	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.pyx' -exec rm -f {} \;
+	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.py' -exec rm -f {} \;
+	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.o' -exec rm -f {} \;
+	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.la' -exec rm -f {} \;
 endif
 	rm -rf $(RELEASE_DIR)/lib/autofs
 	rm -f $(RELEASE_DIR)/lib/libSegFault*
