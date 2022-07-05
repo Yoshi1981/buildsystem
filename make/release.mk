@@ -437,6 +437,8 @@ ifeq ($(FLAVOUR), ENIGMA2)
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaPlayer
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/
 	rm -f $(RELEASE_DIR)/usr/local/share/meta/*
+	cp -aR $(RELEASE_DIR)/usr/local/share/fonts $(RELEASE_DIR)/usr/share/
+	rm -rf $(RELEASE_DIR)/usr/local/share/fonts
 endif
 ifeq ($(PYTHON), python)
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{bsddb,compiler,curses,lib-old,lib-tk,plat-linux3,test,sqlite3,pydoc_data,multiprocessing,hotshot,distutils,email,unitest,ensurepip,wsgiref,lib2to3,logging,idlelib}
