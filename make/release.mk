@@ -49,6 +49,9 @@ release-common: $(RELEASE_DEPS)
 	install -d $(RELEASE_DIR)/usr/lib/locale
 	cp -aR $(SKEL_ROOT)/usr/lib/locale/* $(RELEASE_DIR)/usr/lib/locale
 	install -d $(RELEASE_DIR)/usr/local/{bin,sbin,share}
+	install -d $(RELEASE_DIR)/usr/share/{udhcpc,zoneinfo,fonts}
+	install -d $(RELEASE_DIR)/var/{bin,etc,lib,net,tuxbox,keys}
+	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
 ifeq ($(FLAVOUR), TITAN)
 	install -d $(RELEASE_DIR)/var/etc/titan
 	install -d $(RELEASE_DIR)/var/etc/autostart
@@ -67,14 +70,14 @@ ifeq ($(FLAVOUR), TITAN)
 	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/vi/LC_MESSAGES
 	install -d $(RELEASE_DIR)/var/usr/share/fonts
 endif
-	install -d $(RELEASE_DIR)/usr/share/{tuxbox,udhcpc,zoneinfo,lua,fonts,iso-codes}
-	install -d $(RELEASE_DIR)/usr/share/lua/5.2
-	install -d $(RELEASE_DIR)/var/{bin,etc,httpd,lib,net,tuxbox,keys}
-	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
-	install -d $(RELEASE_DIR)/var/tuxbox/config
 ifeq ($(FLAVOUR), $(filter $(FLAVOUR), NEUTRINO NEUTRINO2))
+	install -d $(RELEASE_DIR)/usr/share/iso-codes
+	install -d $(RELEASE_DIR)/usr/share/tuxbox
+	install -d $(RELEASE_DIR)/usr/share/lua/5.2
+	install -d $(RELEASE_DIR)/var/tuxbox
 	install -d $(RELEASE_DIR)/var/tuxbox/config/{webtv,zapit}
 	install -d $(RELEASE_DIR)/var/tuxbox/plugins
+	install -d $(RELEASE_DIR)/var/httpd
 endif	
 	mkdir -p $(RELEASE_DIR)/etc/rc.d/rc0.d
 	ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc0.d/S20sendsigs
@@ -98,12 +101,10 @@ endif
 	cp -aR $(SKEL_ROOT)/etc/mdev/* $(RELEASE_DIR)/etc/mdev/
 	cp -aR $(SKEL_ROOT)/etc/mdev_$(BOXARCH).conf $(RELEASE_DIR)/etc/mdev.conf
 	cp -aR $(SKEL_ROOT)/usr/share/udhcpc/* $(RELEASE_DIR)/usr/share/udhcpc/
-	cp -aR $(SKEL_ROOT)/usr/share/zoneinfo/* $(RELEASE_DIR)/usr/share/zoneinfo/
-#	cp -aR $(SKEL_ROOT)/usr/share/fonts/* $(RELEASE_DIR)/usr/share/fonts/
-#	cp -aR $(SKEL_ROOT)/usr/share/iso-codes/* $(RELEASE_DIR)/usr/share/iso-codes/
-	cp $(SKEL_ROOT)/bin/autologin $(RELEASE_DIR)/bin/
-	cp $(SKEL_ROOT)/bin/vdstandby $(RELEASE_DIR)/bin/
-	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
+#	cp -aR $(SKEL_ROOT)/usr/share/zoneinfo/* $(RELEASE_DIR)/usr/share/zoneinfo/
+#	cp $(SKEL_ROOT)/bin/autologin $(RELEASE_DIR)/bin/
+#	cp $(SKEL_ROOT)/bin/vdstandby $(RELEASE_DIR)/bin/
+#	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
 	cp -aR $(TARGET_DIR)/etc/init.d/* $(RELEASE_DIR)/etc/init.d/
 	install -m 0755 $(SKEL_ROOT)/etc/init.d/rcS.local $(RELEASE_DIR)/etc/init.d/rcS.local
 	cp -aR $(TARGET_DIR)/etc/* $(RELEASE_DIR)/etc/
@@ -439,6 +440,12 @@ ifeq ($(FLAVOUR), ENIGMA2)
 	rm -f $(RELEASE_DIR)/usr/local/share/meta/*
 	cp -aR $(RELEASE_DIR)/usr/local/share/fonts $(RELEASE_DIR)/usr/share/
 	rm -rf $(RELEASE_DIR)/usr/local/share/fonts
+	cp -aR $(SKEL_ROOT)/usr/local/share/enigma2/* $(RELEASE_DIR)/usr/local/share/enigma2
+	rm -f $(RELEASE_DIR)/usr/local/share/enigma2/black.mvi
+	rm -f $(RELEASE_DIR)/usr/local/share/enigma2/hd-testcard.mvi
+	rm -f $(RELEASE_DIR)/usr/local/share/enigma2/otv_*
+	rm -f $(RELEASE_DIR)/usr/local/share/enigma2/keymap.u80
+	rm -f $(RELEASE_DIR)/usr/local/bin/enigma2.sh
 endif
 ifeq ($(PYTHON), python)
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{bsddb,compiler,curses,lib-old,lib-tk,plat-linux3,test,sqlite3,pydoc_data,multiprocessing,hotshot,distutils,email,unitest,ensurepip,wsgiref,lib2to3,logging,idlelib}

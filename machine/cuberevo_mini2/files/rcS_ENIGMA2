@@ -148,24 +148,24 @@ if [ ! -e /var/etc/.firstboot ]; then
     /bin/fp_control -t "ENIGMA2"
     echo "starting enigma2 ->"
 
-   until false
-   do
-  	/usr/local/bin/enigma2
-     	rtv=$?
-      	echo "enigma2 ended <- RTV: " $rtv
-      	case "$rtv" in
-		1)
-		   echo "SHUTDOWN"
-		   init 0;;
-		2)
-		   echo "REBOOT"
-		   init 6;;
-		3)
-		   echo "RESTART";;
-		*) 
-		   echo "ERROR"
-		   init 6;;
-      	esac
-   done
+   #until false
+   #do
+  	#/usr/local/bin/enigma2
+     	#rtv=$?
+      	#echo "enigma2 ended <- RTV: " $rtv
+      	#case "$rtv" in
+	#	1)
+	#	   echo "SHUTDOWN"
+	#	   init 0;;
+	#	2)
+	#	   echo "REBOOT"
+	#	   init 6;;
+	#	3)
+	#	   echo "RESTART";;
+	#	*) 
+	#	   echo "ERROR"
+	#	   init 6;;
+      	#esac
+   #done
 fi
 
