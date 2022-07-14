@@ -23,7 +23,12 @@ endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k))
 	$(MAKE) flash-image-$(BOXTYPE)-rootfs flash-image-$(BOXTYPE)-multi-disk $(MAKE) flash-image-$(BOXTYPE)-online
 endif
-	$(TUXBOX_CUSTOMIZE)
+#	$(TUXBOX_CUSTOMIZE)
+	@echo "*****************************************************************"
+	@echo -e "\033[01;32m"
+	@echo " Build of $(FLAVOUR) image for $(BOXTYPE) successfully completed."
+	@echo -e "\033[00m"
+	@echo "*****************************************************************"
 
 #
 # image-clean
