@@ -431,17 +431,13 @@ ifeq ($(FLAVOUR), ENIGMA2)
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
 endif
 	rm -rf $(RELEASE_DIR)/usr/local/share/enigma2/po/*
-#	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/en $(RELEASE_DIR)/usr/local/share/enigma2/po
-#	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/de $(RELEASE_DIR)/usr/local/share/enigma2/po
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/DVDBurn
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaScanner
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaPlayer
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/
 	rm -f $(RELEASE_DIR)/usr/local/share/meta/*
-#	cp -aR $(RELEASE_DIR)/usr/local/share/fonts $(RELEASE_DIR)/usr/share/
 	rm -rf $(RELEASE_DIR)/usr/local/share/fonts
-#	cp -aR $(SKEL_ROOT)/usr/local/share/enigma2/* $(RELEASE_DIR)/usr/local/share/enigma2
 	rm -f $(RELEASE_DIR)/usr/local/share/enigma2/black.mvi
 	rm -f $(RELEASE_DIR)/usr/local/share/enigma2/hd-testcard.mvi
 	rm -f $(RELEASE_DIR)/usr/local/share/enigma2/otv_*

@@ -268,7 +268,7 @@ titan-plugins-distclean:
 # release-TITAN
 #
 release-TITAN: release-NONE $(D)/titan
-	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
+	cp -af $(TARGET_DIR)/usr/local/bin/titan $(RELEASE_DIR)/usr/local/bin/
 	cp $(SKEL_ROOT)/var/etc/titan/titan.cfg $(RELEASE_DIR)/var/etc/titan/titan.cfg
 	cp $(SKEL_ROOT)/var/etc/titan/rcconfig.$(BOXTYPE) $(RELEASE_DIR)/var/etc/titan/rcconfig
 	cp $(SKEL_ROOT)/var/etc/titan/satellites $(RELEASE_DIR)/var/etc/titan/satellites

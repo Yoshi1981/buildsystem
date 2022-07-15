@@ -136,7 +136,7 @@ enigma2-distclean:
 # release-ENIGMA2
 #
 release-ENIGMA2: release-NONE $(D)/enigma2
-	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
+	cp -af $(TARGET_DIR)/usr/local/bin/enigma2 $(RELEASE_DIR)/usr/local/bin/enigma2
 	cp -aR $(TARGET_DIR)/usr/local/share $(RELEASE_DIR)/usr/local
 	cp -aR $(TARGET_DIR)/usr/lib/enigma2 $(RELEASE_DIR)/usr/lib
 	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/en $(RELEASE_DIR)/usr/local/share/enigma2/po

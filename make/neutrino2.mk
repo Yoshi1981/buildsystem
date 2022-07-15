@@ -222,7 +222,14 @@ neutrino2-plugins-distclean:
 # release-NEUTRINO2
 #
 release-NEUTRINO2: release-NONE $(D)/neutrino2 $(D)/neutrino2-plugins
-	cp -af $(TARGET_DIR)/usr/local/bin $(RELEASE_DIR)/usr/local/
+	cp -af $(TARGET_DIR)/usr/local/bin/neutrino $(RELEASE_DIR)/usr/local/bin/
+	cp -af $(TARGET_DIR)/usr/local/bin/backup.sh $(RELEASE_DIR)/usr/local/bin/
+	cp -af $(TARGET_DIR)/usr/local/bin/init_hdd.sh $(RELEASE_DIR)/usr/local/bin/
+	cp -af $(TARGET_DIR)/usr/local/bin/install.sh $(RELEASE_DIR)/usr/local/bin/
+	cp -af $(TARGET_DIR)/usr/local/bin/pzapit $(RELEASE_DIR)/usr/local/bin/
+	cp -af $(TARGET_DIR)/usr/local/bin/rcsim $(RELEASE_DIR)/usr/local/bin/
+	cp -af $(TARGET_DIR)/usr/local/bin/restore.sh $(RELEASE_DIR)/usr/local/bin/
+	cp -af $(TARGET_DIR)/usr/local/bin/sectionsdcontrol $(RELEASE_DIR)/usr/local/bin/
 	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/neutrino2 $(RELEASE_DIR)/usr/share/tuxbox
 	
