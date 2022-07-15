@@ -5,25 +5,12 @@ RELEASE_DEPS = $(KERNEL)
 RELEASE_DEPS += $(D)/driver 
 RELEASE_DEPS += $(D)/system-tools
 RELEASE_DEPS += $(D)/tools
+RELEASE_DEPS += $(D)/diverse-tools
 RELEASE_DEPS += $(LIRC)
-
-ifeq ($(BOXARCH), arm)
-	RELEASE_DEPS += $(D)/ntfs_3g 
-	RELEASE_DEPS += $(D)/gptfdisk
-	RELEASE_DEPS += $(D)/mc 
-endif
 
 ifeq ($(WLAN), wlandriver)	
 	RELEASE_DEPS += $(D)/wpa_supplicant 
 	RELEASE_DEPS += $(D)/wireless_tools
-endif
-
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913))
-	RELEASE_DEPS += $(D)/ntfs_3g
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
-	RELEASE_DEPS += $(D)/mtd_utils 
-	RELEASE_DEPS += $(D)/gptfdisk
-endif
 endif
 
 ifeq ($(PYTHON), python)

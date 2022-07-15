@@ -19,7 +19,18 @@ SYSTEM_TOOLS += $(D)/fbshot
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 SYSTEM_TOOLS += $(D)/ofgwrite
 endif
-SYSTEM_TOOLS += $(D)/diverse-tools
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913))
+	SYSTEM_TOOLS += $(D)/ntfs_3g
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
+	SYSTEM_TOOLS += $(D)/mtd_utils 
+	SYSTEM_TOOLS += $(D)/gptfdisk
+endif
+endif
+ifeq ($(BOXARCH), arm)
+	SYSTEM_TOOLS += $(D)/ntfs_3g 
+	SYSTEM_TOOLS += $(D)/gptfdisk
+	SYSTEM_TOOLS += $(D)/mc 
+endif
 
 $(D)/system-tools: $(SYSTEM_TOOLS)
 	@touch $@
