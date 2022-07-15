@@ -427,7 +427,6 @@ release-NEUTRINO: release-NONE $(D)/neutrino $(D)/neutrino-plugins \
 	$(D)/neutrino-plugins-scripts-lua $(D)/neutrino-plugins-mediathek $(D)/neutrino-plugins-xupnpd
 	cp -af $(TARGET_DIR)/usr/local/bin/neutrino $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/backup.sh $(RELEASE_DIR)/usr/local/bin/
-	cp -af $(TARGET_DIR)/usr/local/bin/init_hdd.sh $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/install.sh $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/luaclient $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/pzapit $(RELEASE_DIR)/usr/local/bin/
@@ -438,7 +437,6 @@ release-NEUTRINO: release-NONE $(D)/neutrino $(D)/neutrino-plugins \
 	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/neutrino $(RELEASE_DIR)/usr/share/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/sokoban $(RELEASE_DIR)/usr/share/tuxbox
-#	cp -aR $(TARGET_DIR)/usr/share/tuxbox/lcdd $(RELEASE_DIR)/usr/share/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/fonts $(RELEASE_DIR)/usr/share/
 		
 #

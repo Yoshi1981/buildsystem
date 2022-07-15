@@ -397,7 +397,7 @@ release: release-$(FLAVOUR)
 	rm -f $(RELEASE_DIR)/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/lib/*
 	cp -R $(TARGET_DIR)/usr/lib/* $(RELEASE_DIR)/usr/lib/
-	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,sigc++-1.2,sigc++-2.0,lua}
+	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,sigc++-1.2,sigc++-2.0}
 	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/usr/lib/*
 
@@ -429,6 +429,11 @@ ifeq ($(FLAVOUR), ENIGMA2)
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
+ifeq ($(BOXARCH), sh4)
+	rm -rf $(RELEASE_DIR)/usr/lib/lua
+	rm -rf $(RELEASE_DIR)/usr/share/lua
+	rm -rf $(RELEASE_DIR)/usr/share/tuxbox
+endif
 endif
 	rm -rf $(RELEASE_DIR)/usr/local/share/enigma2/po/*
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/DVDBurn
