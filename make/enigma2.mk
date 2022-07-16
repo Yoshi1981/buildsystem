@@ -139,10 +139,12 @@ enigma2-distclean:
 #
 release-ENIGMA2: release-NONE $(D)/enigma2
 	cp -af $(TARGET_DIR)/usr/local/bin/enigma2 $(RELEASE_DIR)/usr/local/bin/enigma2
-	cp -aR $(TARGET_DIR)/usr/local/share $(RELEASE_DIR)/usr/local
+	cp -aR $(TARGET_DIR)/usr/local/share/enigma2 $(RELEASE_DIR)/usr/local/share
+	cp -aR $(TARGET_DIR)/usr/local/share/keymaps $(RELEASE_DIR)/usr/local/share
+	cp -aR $(TARGET_DIR)/usr/local/share/meta $(RELEASE_DIR)/usr/local/share
+	cp -aR $(TARGET_DIR)/usr/local/share/fonts $(RELEASE_DIR)/usr/share
 	cp -aR $(TARGET_DIR)/usr/lib/enigma2 $(RELEASE_DIR)/usr/lib
 	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/en $(RELEASE_DIR)/usr/local/share/enigma2/po
 	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/de $(RELEASE_DIR)/usr/local/share/enigma2/po
-	cp -aR $(RELEASE_DIR)/usr/local/share/fonts $(RELEASE_DIR)/usr/share/
 	cp -aR $(SKEL_ROOT)/usr/local/share/enigma2/* $(RELEASE_DIR)/usr/local/share/enigma2
 		
