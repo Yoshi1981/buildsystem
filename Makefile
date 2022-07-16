@@ -330,8 +330,6 @@ include make/root-etc.mk
 include make/python.mk
 include make/lua.mk
 include make/tools.mk
-include make/release.mk
-include make/flashimage.mk
 include make/cleantargets.mk
 include make/bootstrap.mk
 include make/system-tools.mk
@@ -339,6 +337,8 @@ include make/neutrino2.mk
 include make/enigma2.mk
 include make/titan.mk
 include make/neutrino.mk
+include make/release.mk
+include make/flashimage.mk
 
 update:
 	@if test -d $(BASE_DIR); then \

@@ -70,7 +70,10 @@ E2_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
 E2_CPPFLAGS   += -I$(KERNEL_DIR)/include
 E2_CPPFLAGS   += -I$(APPS_DIR)/tools
 
-PYTHON ?= python
+ifeq ($(FLAVOUR), ENIGMA2)
+PYTHON = python
+LUA =
+endif
 
 E2_CONFIG_OPTS += PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
 
