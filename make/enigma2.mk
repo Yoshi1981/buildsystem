@@ -1,5 +1,5 @@
 #
-# enigma2
+# ENIGMA2
 #
 ENIGMA2_DEPS  = $(D)/bootstrap
 ENIGMA2_DEPS += $(D)/opkg
@@ -70,8 +70,7 @@ E2_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
 E2_CPPFLAGS   += -I$(KERNEL_DIR)/include
 E2_CPPFLAGS   += -I$(APPS_DIR)/tools
 
-LUA = 
-PYTHON = python
+PYTHON ?= python
 
 E2_CONFIG_OPTS += PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
 
@@ -143,10 +142,4 @@ release-ENIGMA2: release-NONE $(D)/enigma2
 	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/de $(RELEASE_DIR)/usr/local/share/enigma2/po
 	cp -aR $(RELEASE_DIR)/usr/local/share/fonts $(RELEASE_DIR)/usr/share/
 	cp -aR $(SKEL_ROOT)/usr/local/share/enigma2/* $(RELEASE_DIR)/usr/local/share/enigma2
-	
-#
-#
-#
-#PHONY += $(TARGET_DIR)/.version
-
-	
+		

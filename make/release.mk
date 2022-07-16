@@ -88,21 +88,13 @@ endif
 	cp -aR $(SKEL_ROOT)/etc/mdev/* $(RELEASE_DIR)/etc/mdev/
 	cp -aR $(SKEL_ROOT)/etc/mdev_$(BOXARCH).conf $(RELEASE_DIR)/etc/mdev.conf
 	cp -aR $(SKEL_ROOT)/usr/share/udhcpc/* $(RELEASE_DIR)/usr/share/udhcpc/
-#	cp -aR $(SKEL_ROOT)/usr/share/zoneinfo/* $(RELEASE_DIR)/usr/share/zoneinfo/
-#	cp $(SKEL_ROOT)/bin/autologin $(RELEASE_DIR)/bin/
-#	cp $(SKEL_ROOT)/bin/vdstandby $(RELEASE_DIR)/bin/
-#	cp $(SKEL_ROOT)/usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/
 	cp -aR $(TARGET_DIR)/etc/init.d/* $(RELEASE_DIR)/etc/init.d/
 	install -m 0755 $(SKEL_ROOT)/etc/init.d/rcS.local $(RELEASE_DIR)/etc/init.d/rcS.local
 	cp -aR $(TARGET_DIR)/etc/* $(RELEASE_DIR)/etc/
 	echo "$(BOXTYPE)" > $(RELEASE_DIR)/etc/hostname
 	ln -sf ../../bin/busybox $(RELEASE_DIR)/usr/bin/ether-wake
 	ln -sf ../../bin/showiframe $(RELEASE_DIR)/usr/bin/showiframe
-	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv
-
-#
-#
-#	
+	ln -sf ../../usr/sbin/fw_printenv $(RELEASE_DIR)/usr/sbin/fw_setenv	
 ifeq ($(BOXARCH), sh4)
 #
 # player
@@ -151,7 +143,7 @@ ifeq ($(BOXARCH), sh4)
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/embxshm/embxshm.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/embxshm/embxshm.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/mme/mme_host.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/multicom/mme/mme_host.ko $(RELEASE_DIR)/lib/modules/ || true
 #
-#
+# modules
 #
 	cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/simu_button/simu_button.ko $(RELEASE_DIR)/lib/modules/
 ifneq ($(BOXTYPE), $(filter $(BOXTYPE), vip2_v1 spark spark7162 ipbox99))
@@ -194,12 +186,9 @@ ifeq ($(WLAN), wlandriver)
 endif
 endif
 
-#
-#
-#
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 #
-#
+# modules
 #
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/usbserial.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/usbserial.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/ftdi_sio.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/ftdi_sio.ko $(RELEASE_DIR)/lib/modules/ftdi_sio.ko || true
@@ -391,15 +380,6 @@ release: release-$(FLAVOUR)
 #
 # delete unnecessary files
 #
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
-	rm -f $(RELEASE_DIR)/sbin/jfs_fsck
-	rm -f $(RELEASE_DIR)/sbin/fsck.jfs
-	rm -f $(RELEASE_DIR)/sbin/jfs_mkfs
-	rm -f $(RELEASE_DIR)/sbin/mkfs.jfs
-	rm -f $(RELEASE_DIR)/sbin/jfs_tune
-	rm -f $(RELEASE_DIR)/sbin/ffmpeg
-	rm -f $(RELEASE_DIR)/etc/ssl/certs/ca-certificates.crt
-endif
 	rm -f $(RELEASE_DIR)/usr/bin/avahi-*
 	rm -f $(RELEASE_DIR)/usr/bin/easy_install*
 	rm -f $(RELEASE_DIR)/usr/bin/glib-*
@@ -410,18 +390,6 @@ endif
 	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VER)
 	rm -rf $(RELEASE_DIR)/usr/lib/gcc
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
-ifeq ($(FLAVOUR), ENIGMA2)
-	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
-	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.py' -exec rm -f {} \;
-	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
-	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
-	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
-ifeq ($(BOXARCH), sh4)
-	rm -rf $(RELEASE_DIR)/usr/lib/lua
-	rm -rf $(RELEASE_DIR)/usr/share/lua
-	rm -rf $(RELEASE_DIR)/usr/share/tuxbox
-endif
-endif
 	rm -rf $(RELEASE_DIR)/usr/local/share/enigma2/po/*
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/DVDBurn
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
@@ -435,6 +403,38 @@ endif
 	rm -f $(RELEASE_DIR)/usr/local/share/enigma2/otv_*
 	rm -f $(RELEASE_DIR)/usr/local/share/enigma2/keymap.u80
 	rm -f $(RELEASE_DIR)/usr/local/bin/enigma2.sh
+	rm -rf $(RELEASE_DIR)/lib/autofs
+	rm -f $(RELEASE_DIR)/lib/libSegFault*
+	rm -f $(RELEASE_DIR)/lib/libstdc++.*-gdb.py
+	rm -f $(RELEASE_DIR)/lib/libthread_db*
+	rm -f $(RELEASE_DIR)/lib/libanl*
+	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VER)
+	rm -rf $(RELEASE_DIR)/usr/lib/alsa
+	rm -rf $(RELEASE_DIR)/usr/lib/glib-2.0
+	rm -rf $(RELEASE_DIR)/usr/lib/cmake
+	rm -f $(RELEASE_DIR)/usr/lib/*.py
+	rm -f $(RELEASE_DIR)/usr/lib/libc.so
+	rm -f $(RELEASE_DIR)/usr/lib/xml2Conf.sh
+	rm -f $(RELEASE_DIR)/usr/lib/libfontconfig*
+	rm -f $(RELEASE_DIR)/usr/lib/libcurses.so
+	[ ! -e $(RELEASE_DIR)/usr/bin/mc ] && rm -f $(RELEASE_DIR)/usr/lib/libncurses* || true
+	rm -f $(RELEASE_DIR)/usr/lib/libthread_db*
+	rm -f $(RELEASE_DIR)/usr/lib/libanl*
+	rm -f $(RELEASE_DIR)/usr/lib/libopkg*
+	rm -f $(RELEASE_DIR)/sbin/ldconfig
+	rm -f $(RELEASE_DIR)/usr/bin/{gdbus-codegen,glib-*,gtester-report}
+ifeq ($(FLAVOUR), ENIGMA2)
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.py' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
+	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
+ifeq ($(BOXARCH), sh4)
+	rm -rf $(RELEASE_DIR)/usr/lib/lua
+	rm -rf $(RELEASE_DIR)/usr/share/lua
+	rm -rf $(RELEASE_DIR)/usr/share/tuxbox
+endif
+endif
 ifeq ($(PYTHON), python)
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/{bsddb,compiler,curses,lib-old,lib-tk,plat-linux3,test,sqlite3,pydoc_data,multiprocessing,hotshot,distutils,email,unitest,ensurepip,wsgiref,lib2to3,logging,idlelib}
 	rm -rf $(RELEASE_DIR)/$(PYTHON_DIR)/pdb.doc
@@ -481,26 +481,15 @@ ifeq ($(PYTHON), python)
 	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.o' -exec rm -f {} \;
 	find $(RELEASE_DIR)/$(PYTHON_DIR)/ -name '*.la' -exec rm -f {} \;
 endif
-	rm -rf $(RELEASE_DIR)/lib/autofs
-	rm -f $(RELEASE_DIR)/lib/libSegFault*
-	rm -f $(RELEASE_DIR)/lib/libstdc++.*-gdb.py
-	rm -f $(RELEASE_DIR)/lib/libthread_db*
-	rm -f $(RELEASE_DIR)/lib/libanl*
-	rm -rf $(RELEASE_DIR)/lib/modules/$(KERNEL_VER)
-	rm -rf $(RELEASE_DIR)/usr/lib/alsa
-	rm -rf $(RELEASE_DIR)/usr/lib/glib-2.0
-	rm -rf $(RELEASE_DIR)/usr/lib/cmake
-	rm -f $(RELEASE_DIR)/usr/lib/*.py
-	rm -f $(RELEASE_DIR)/usr/lib/libc.so
-	rm -f $(RELEASE_DIR)/usr/lib/xml2Conf.sh
-	rm -f $(RELEASE_DIR)/usr/lib/libfontconfig*
-	rm -f $(RELEASE_DIR)/usr/lib/libcurses.so
-	[ ! -e $(RELEASE_DIR)/usr/bin/mc ] && rm -f $(RELEASE_DIR)/usr/lib/libncurses* || true
-	rm -f $(RELEASE_DIR)/usr/lib/libthread_db*
-	rm -f $(RELEASE_DIR)/usr/lib/libanl*
-	rm -f $(RELEASE_DIR)/usr/lib/libopkg*
-	rm -f $(RELEASE_DIR)/sbin/ldconfig
-	rm -f $(RELEASE_DIR)/usr/bin/{gdbus-codegen,glib-*,gtester-report}
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
+	rm -f $(RELEASE_DIR)/sbin/jfs_fsck
+	rm -f $(RELEASE_DIR)/sbin/fsck.jfs
+	rm -f $(RELEASE_DIR)/sbin/jfs_mkfs
+	rm -f $(RELEASE_DIR)/sbin/mkfs.jfs
+	rm -f $(RELEASE_DIR)/sbin/jfs_tune
+	rm -f $(RELEASE_DIR)/sbin/ffmpeg
+	rm -f $(RELEASE_DIR)/etc/ssl/certs/ca-certificates.crt
+endif
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	rm -rf $(RELEASE_DIR)/dev.static
 	rm -rf $(RELEASE_DIR)/ram

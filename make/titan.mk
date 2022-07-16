@@ -1,5 +1,5 @@
 #
-# titan
+# TITAN
 #
 TITAN_DEPS  = $(D)/bootstrap
 TITAN_DEPS += $(KERNEL)
@@ -285,11 +285,4 @@ release-TITAN: release-NONE $(D)/titan
 	for lang in $$LANGUAGES; do \
 		cd $(SOURCE_DIR)/titan/po/$$lang/LC_MESSAGES && msgfmt -o titan.mo titan.po_auto.po; \
 	done
-	
-#
-#
-#
-#PHONY += $(TARGET_DIR)/.version
-
-
 

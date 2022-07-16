@@ -1,5 +1,5 @@
 #
-# Makefile to build NEUTRINO
+# NEUTRINO
 #
 $(TARGET_DIR)/.version:
 	echo "distro=$(FLAVOUR)" > $@
