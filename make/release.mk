@@ -185,7 +185,6 @@ ifeq ($(WLAN), wlandriver)
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/wireless/rtl8192du/8192du.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/wireless/rtl8192du/8192du.ko $(RELEASE_DIR)/lib/modules/ || true
 endif
 endif
-
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 #
 # modules
@@ -193,7 +192,6 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/usbserial.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/usbserial.ko $(RELEASE_DIR)/lib/modules/ || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/ftdi_sio.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/ftdi_sio.ko $(RELEASE_DIR)/lib/modules/ftdi_sio.ko || true
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/pl2303.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/usb/serial/pl2303.ko $(RELEASE_DIR)/lib/modules/ || true
-
 #
 # wlan
 #
@@ -213,7 +211,6 @@ ifeq ($(WLAN), wlandriver)
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/kernel/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu.ko $(RELEASE_DIR)/lib/modules/ || true
 endif
 endif
-
 #
 # wlan firmware
 #
@@ -223,12 +220,10 @@ ifeq ($(WLAN), wlandriver)
 	cp -aR $(SKEL_ROOT)/lib/firmware/rtlwifi $(RELEASE_DIR)/lib/firmware/
 	cp -aR $(SKEL_ROOT)/lib/firmware/*.bin $(RELEASE_DIR)/lib/firmware/
 endif
-
 #
 # modules.available
 #
 	cp -aR $(SKEL_ROOT)/etc/modules.available_$(BOXARCH) $(RELEASE_DIR)/etc/modules.available
-
 #
 # mc
 #
@@ -236,7 +231,6 @@ endif
 		cp -aR $(TARGET_DIR)/usr/share/mc $(RELEASE_DIR)/usr/share/; \
 		cp -af $(TARGET_DIR)/usr/libexec $(RELEASE_DIR)/usr/; \
 	fi
-
 #
 # shairport
 #
@@ -248,8 +242,7 @@ endif
 		chmod 755 $(RELEASE_DIR)/etc/init.d/shairport; \
 		cp -f $(TARGET_DIR)/usr/lib/libhowl.so* $(RELEASE_DIR)/usr/lib; \
 		cp -f $(TARGET_DIR)/usr/lib/libmDNSResponder.so* $(RELEASE_DIR)/usr/lib; \
-	fi
-	
+	fi	
 #
 # alsa
 #
@@ -281,7 +274,6 @@ ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs912))
 #		ln -s /usr/sbin/automount $(RELEASE_DIR)/sbin/automount; \
 	fi
 endif
-
 #
 # graphlcd
 #
@@ -325,20 +317,17 @@ endif
 		cp -aR $(TARGET_DIR)/usr/share/xupnpd $(RELEASE_DIR)/usr/share; \
 		mkdir -p $(RELEASE_DIR)/usr/share/xupnpd/playlists; \
 	fi
-
 #
 # lua
 #
 ifeq ($(LUA), lua)
 ifneq ($(FLAVOUR), ENIGMA2)
 	cp -R $(TARGET_DIR)/usr/lib/lua $(RELEASE_DIR)/usr/lib/
-
 	if [ -d $(TARGET_DIR)/usr/share/lua ]; then \
 		cp -aR $(TARGET_DIR)/usr/share/lua/* $(RELEASE_DIR)/usr/share/lua; \
 	fi
 endif
 endif
-
 #
 # python
 #
@@ -376,7 +365,6 @@ release: release-$(FLAVOUR)
 	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,sigc++-1.2,sigc++-2.0}
 	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/usr/lib/*
-
 #
 # delete unnecessary files
 #
@@ -495,7 +483,6 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	rm -rf $(RELEASE_DIR)/ram
 	rm -rf $(RELEASE_DIR)/root
 endif
-
 #
 # strip
 #	
