@@ -1,6 +1,9 @@
 #
 # NEUTRINO
 #
+N_OBJDIR = $(BUILD_TMP)/neutrino
+LH_OBJDIR = $(BUILD_TMP)/libstb-hal
+
 $(TARGET_DIR)/.version:
 	echo "distro=$(FLAVOUR)" > $@
 	echo "imagename=`sed -n 's/\#define PACKAGE_NAME "//p' $(N_OBJDIR)/config.h | sed 's/"//'`" >> $@
@@ -12,9 +15,9 @@ $(TARGET_DIR)/.version:
 	echo "version=0200`date +%Y%m%d%H%M`" >> $@
 	echo "git=`git log | grep "^commit" | wc -l`" >> $@
 
-NEUTRINO_DEPS  = $(D)/bootstrap 
-NEUTRINO_DEPS += $(D)/ncurses 
-NEUTRINO_DEPS += $(LIRC) 
+NEUTRINO_DEPS  = $(D)/bootstrap
+NEUTRINO_DEPS += $(D)/e2fsprogs
+NEUTRINO_DEPS += $(D)/ncurses  
 NEUTRINO_DEPS += $(D)/libcurl
 NEUTRINO_DEPS += $(D)/libpng 
 NEUTRINO_DEPS += $(D)/libjpeg 
@@ -49,49 +52,49 @@ endif
 
 NEUTRINO_DEPS += $(D)/libid3tag $(D)/libmad $(D)/flac
 
-N_CFLAGS       = -Wall -W -Wshadow -pipe -Os
-N_CFLAGS      += -D__KERNEL_STRICT_NAMES
-N_CFLAGS      += -D__STDC_FORMAT_MACROS
-N_CFLAGS      += -D__STDC_CONSTANT_MACROS
-N_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata-sections
+NEUTRINO_CFLAGS       = -Wall -W -Wshadow -pipe -Os
+NEUTRINO_CFLAGS      += -D__KERNEL_STRICT_NAMES
+NEUTRINO_CFLAGS      += -D__STDC_FORMAT_MACROS
+NEUTRINO_CFLAGS      += -D__STDC_CONSTANT_MACROS
+NEUTRINO_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata-sections
 
-N_CPPFLAGS     = -I$(TARGET_DIR)/usr/include
+NEUTRINO_CPPFLAGS     = -I$(TARGET_DIR)/usr/include
 ifeq ($(BOXARCH), arm)
-N_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
-N_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
-N_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
-N_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
-N_CPPFLAGS    += -I$(CROSS_BASE)/$(TARGET)/sys-root/usr/include
+NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
+NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
+NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
+NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
+NEUTRINO_CPPFLAGS    += -I$(CROSS_BASE)/$(TARGET)/sys-root/usr/include
 endif
 ifeq ($(BOXARCH), sh4)
-N_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
-N_CPPFLAGS    += -I$(KERNEL_DIR)/include
+NEUTRINO_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
+NEUTRINO_CPPFLAGS    += -I$(KERNEL_DIR)/include
 endif
 
-N_CPPFLAGS    += -ffunction-sections -fdata-sections
+NEUTRINO_CPPFLAGS    += -ffunction-sections -fdata-sections
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
-N_CPPFLAGS += -I$(DRIVER_DIR)/frontcontroller/aotom_spark
+NEUTRINO_CPPFLAGS += -I$(DRIVER_DIR)/frontcontroller/aotom_spark
 endif
 
-N_CONFIG_OPTS = --enable-freesatepg
-N_CONFIG_OPTS += --enable-lua
-N_CONFIG_OPTS += --enable-giflib
-N_CONFIG_OPTS += --with-tremor
-N_CONFIG_OPTS += --enable-ffmpegdec
-#N_CONFIG_OPTS += --enable-pip
-N_CONFIG_OPTS += --enable-pugixml
+NEUTRINO_CONFIG_OPTS = --enable-freesatepg
+NEUTRINO_CONFIG_OPTS += --enable-lua
+NEUTRINO_CONFIG_OPTS += --enable-giflib
+NEUTRINO_CONFIG_OPTS += --with-tremor
+NEUTRINO_CONFIG_OPTS += --enable-ffmpegdec
+#NEUTRINO_CONFIG_OPTS += --enable-pip
+NEUTRINO_CONFIG_OPTS += --enable-pugixml
 ifeq ($(BOXARCH), arm)
-N_CONFIG_OPTS += --enable-reschange
+NEUTRINO_CONFIG_OPTS += --enable-reschange
 endif
 
 ifeq ($(GRAPHLCD), graphlcd)
-N_CONFIG_OPTS += --with-graphlcd
+NEUTRINO_CONFIG_OPTS += --with-graphlcd
 NEUTRINO_DEPS_ += $(D)/graphlcd
 endif
 
 ifeq ($(LCD4LINUX), lcd4linux)
-N_CONFIG_OPTS += --with-lcd4linux
+NEUTRINO_CONFIG_OPTS += --with-lcd4linux
 NEUTRINO_DEPS += $(D)/lcd4linux
 endif
 
@@ -103,7 +106,7 @@ ifeq ($(BOXARCH), mips)
 MACHINE = vuduo
 endif
 
-N_CONFIG_OPTS += \
+NEUTRINO_CONFIG_OPTS += \
 	--with-boxtype=$(MACHINE) \
 	--with-libdir=/usr/lib \
 	--with-datadir=/usr/share/tuxbox \
@@ -125,12 +128,7 @@ N_CONFIG_OPTS += \
 	--with-webtvdir_var=/var/tuxbox/plugins/webtv \
 	PKG_CONFIG=$(PKG_CONFIG) \
 	PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
-	CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
-
-
-OBJDIR = $(BUILD_TMP)
-N_OBJDIR = $(OBJDIR)/neutrino
-LH_OBJDIR = $(OBJDIR)/libstb-hal
+	CFLAGS="$(NEUTRINO_CFLAGS)" CXXFLAGS="$(NEUTRINO_CFLAGS)" CPPFLAGS="$(NEUTRINO_CPPFLAGS)"
 
 #
 # DDT
@@ -205,7 +203,7 @@ $(D)/libstb-hal.config.status: | $(NEUTRINO_DEPS)
 			--enable-silent-rules \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
-			CFLAGS="$(N_CFLAGS)" CXXFLAGS="$(N_CFLAGS)" CPPFLAGS="$(N_CPPFLAGS)"
+			CFLAGS="$(NEUTRINO_CFLAGS)" CXXFLAGS="$(NEUTRINO_CFLAGS)" CPPFLAGS="$(NEUTRINO_CPPFLAGS)"
 	@touch $@
 
 $(D)/libstb-hal.do_compile: $(D)/libstb-hal.config.status
@@ -254,7 +252,7 @@ $(D)/neutrino.config.status:
 		$(SOURCE_DIR)/$(NEUTRINO)/configure --enable-silent-rules \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
-			$(N_CONFIG_OPTS) \
+			$(NEUTRINO_CONFIG_OPTS) \
 			--with-stb-hal-includes=$(SOURCE_DIR)/$(LIBSTB-HAL)/include \
 			--with-stb-hal-build=$(LH_OBJDIR)
 	@touch $@
@@ -348,7 +346,7 @@ $(D)/neutrino-plugins.config.status: $(D)/bootstrap
 			--with-fontdir=/usr/share/fonts \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
-			CPPFLAGS="$(N_CPPFLAGS) $(EXTRA_CPPFLAGS_MP_PLUGINS) -DNEW_LIBCURL" \
+			CPPFLAGS="$(NEUTRINO_CPPFLAGS) $(EXTRA_CPPFLAGS_MP_PLUGINS) -DNEW_LIBCURL" \
 			LDFLAGS="$(TARGET_LDFLAGS) -L$(NP_OBJDIR)/fx2/lib/.libs"
 	@touch $@
 

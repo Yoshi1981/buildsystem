@@ -2,11 +2,7 @@
 # TITAN
 #
 TITAN_DEPS  = $(D)/bootstrap
-TITAN_DEPS += $(KERNEL)
 TITAN_DEPS += $(D)/libopenthreads
-TITAN_DEPS += $(D)/system-tools
-TITAN_DEPS += $(D)/module_init_tools
-TITAN_DEPS += $(LIRC)
 TITAN_DEPS += $(D)/libpng
 TITAN_DEPS += $(D)/freetype
 TITAN_DEPS += $(D)/libjpeg
@@ -17,7 +13,7 @@ TITAN_DEPS += $(D)/tools-libmme_host
 TITAN_DEPS += $(D)/tools-libmme_image
 
 ifeq ($(MEDIAFW), libeplayer3)
-T_CONFIG_OPTS += --enable-eplayer3
+TITAN_CONFIG_OPTS += --enable-eplayer3
 TITAN_DEPS += $(D)/libcurl
 TITAN_DEPS += $(D)/ffmpeg
 endif
@@ -32,57 +28,57 @@ TITAN_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
 
 ifeq ($(GRAPHLCD), graphlcd)
-T_CONFIG_OPTS += --with-graphlcd
+TITAN_CONFIG_OPTS += --with-graphlcd
 TITAN_DEPS_ += $(D)/graphlcd
 endif
 
 ifeq ($(LCD4LINUX), lcd4linux)
-T_CONFIG_OPTS += --with-lcd4linux
+TITAN_CONFIG_OPTS += --with-lcd4linux
 TITAN_DEPS += $(D)/lcd4linux
 endif
 
-T_CPPFLAGS   += -DDVDPLAYER
-T_CPPFLAGS   += -Wno-unused-but-set-variable
-T_CPPFLAGS   += -I$(DRIVER_DIR)/include
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/freetype2
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/openssl
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/libpng16
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/dreamdvd
-T_CPPFLAGS   += -I$(KERNEL_DIR)/include
-T_CPPFLAGS   += -I$(DRIVER_DIR)/bpamem
-T_CPPFLAGS   += -I$(APPS_DIR)/tools
-T_CPPFLAGS   += -I$(APPS_DIR)/tools/libmme_image
-T_CPPFLAGS   += -L$(TARGET_DIR)/usr/lib
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/python
-T_CPPFLAGS   += -L$(SOURCE_DIR)/titan/libipkg
+TITAN_CPPFLAGS   += -DDVDPLAYER
+TITAN_CPPFLAGS   += -Wno-unused-but-set-variable
+TITAN_CPPFLAGS   += -I$(DRIVER_DIR)/include
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/freetype2
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/openssl
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/libpng16
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/dreamdvd
+TITAN_CPPFLAGS   += -I$(KERNEL_DIR)/include
+TITAN_CPPFLAGS   += -I$(DRIVER_DIR)/bpamem
+TITAN_CPPFLAGS   += -I$(APPS_DIR)/tools
+TITAN_CPPFLAGS   += -I$(APPS_DIR)/tools/libmme_image
+TITAN_CPPFLAGS   += -L$(TARGET_DIR)/usr/lib
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/python
+TITAN_CPPFLAGS   += -L$(SOURCE_DIR)/titan/libipkg
 
 ifeq ($(MEDIAFW), libplayer3)
-T_CPPFLAGS   += -DEPLAYER3
-T_CPPFLAGS   += -DEXTEPLAYER3
-T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
-T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
+TITAN_CPPFLAGS   += -DEPLAYER3
+TITAN_CPPFLAGS   += -DEXTEPLAYER3
+TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
+TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
 endif
 
 ifeq ($(MEDIAFW), gstreamer)
-T_CPPFLAGS   += -DEPLAYER4
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/gstreamer-1.0
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/glib-2.0
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/libxml2
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/lib/gstreamer-1.0/include
-T_CPPFLAGS   += -I$(TARGET_DIR)/usr/lib/gstreamer-1.0/include
-T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
-T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
-T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
-T_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
-T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
-T_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
+TITAN_CPPFLAGS   += -DEPLAYER4
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/gstreamer-1.0
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/glib-2.0
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/libxml2
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/lib/gstreamer-1.0/include
+TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/lib/gstreamer-1.0/include
+TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
+TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
+TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
+TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
+TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
+TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
 endif
 
 ifeq ($(BOXARCH), sh4)
-T_CPPFLAGS   += -DSH4
+TITAN_CPPFLAGS   += -DSH4
 else
-T_CPPFLAGS   += -DMIPSEL
+TITAN_CPPFLAGS   += -DMIPSEL
 endif
 
 #
@@ -117,7 +113,7 @@ $(D)/titan.config.status: $(D)/titan.do_prepare
 		./configure $(SILENT_CONFIGURE) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
-			$(T_CONFIG_OPTS) \
+			$(TITAN_CONFIG_OPTS) \
 			--datadir=/usr/local/share \
 			--libdir=/usr/lib \
 			--bindir=/usr/local/bin \
@@ -126,7 +122,7 @@ $(D)/titan.config.status: $(D)/titan.do_prepare
 			--with-boxtype=$(MACHINE) \
 			--enable-multicom324 \
 			PKG_CONFIG=$(PKG_CONFIG) \
-			CPPFLAGS="$(T_CPPFLAGS)"
+			CPPFLAGS="$(TITAN_CPPFLAGS)"
 	@touch $@
 
 $(D)/titan.do_compile: $(D)/titan.config.status $(D)/titan-libipkg $(D)/titan-libdreamdvd $(D)/titan-libeplayer3
@@ -150,7 +146,7 @@ $(SOURCE_DIR)/titan/plugins/config.status: $(D)/titan.do_prepare $(D)/python
 		./configure $(SILENT_CONFIGURE) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
-			$(T_CONFIG_OPTS) \
+			$(TITAN_CONFIG_OPTS) \
 			--datadir=/usr/local/share \
 			--libdir=/usr/lib \
 			--bindir=/usr/local/bin \
@@ -158,7 +154,7 @@ $(SOURCE_DIR)/titan/plugins/config.status: $(D)/titan.do_prepare $(D)/python
 			--sysconfdir=/etc \
 			--enable-multicom324 \
 			PKG_CONFIG=$(PKG_CONFIG) \
-			CPPFLAGS="$(T_CPPFLAGS)"
+			CPPFLAGS="$(TITAN_CPPFLAGS)"
 #		$(MAKE) all
 #		$(MAKE) -C $(SOURCE_DIR)/titan/plugins all install DESTDIR=$(TARGET_DIR)
 #		$(TOUCH)		
@@ -190,7 +186,7 @@ $(D)/titan-libipkg: $(D)/titan.do_prepare
 	./configure $(SILENT_CONFIGURE) \
 		--build=$(BUILD) \
 		--host=$(TARGET) \
-		$(T_CONFIG_OPTS) \
+		$(TITAN_CONFIG_OPTS) \
 		--datadir=/usr/local/share \
 		--libdir=/usr/lib \
 		--bindir=/usr/local/bin \

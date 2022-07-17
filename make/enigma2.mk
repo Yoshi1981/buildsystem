@@ -4,8 +4,6 @@
 ENIGMA2_DEPS  = $(D)/bootstrap
 ENIGMA2_DEPS += $(D)/opkg
 ENIGMA2_DEPS += $(D)/ncurses
-ENIGMA2_DEPS += $(D)/module_init_tools
-ENIGMA2_DEPS += $(LIRC)
 ENIGMA2_DEPS += $(D)/libpng
 ENIGMA2_DEPS += $(D)/libjpeg
 ENIGMA2_DEPS += $(D)/giflib
@@ -17,7 +15,7 @@ ENIGMA2_DEPS += $(D)/openssl
 ENIGMA2_DEPS += $(D)/tuxtxt32bpp
 ENIGMA2_DEPS += $(D)/hotplug_e2_helper
 ENIGMA2_DEPS += $(D)/avahi
-ENIGMA2_DEPS += python
+ENIGMA2_DEPS += $(D)/python
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), size))
 ENIGMA2_DEPS += $(D)/ethtool
 ENIGMA2_DEPS += $(D)/alsa_utils
@@ -36,46 +34,36 @@ endif
 
 ENIGMA2_DEPS  += $(D)/libsigc
 
-E2_CONFIG_OPTS =
+ENIGMA2_CONFIG_OPTS =
 
 #MEDIAFW = gstreamer
 #ifeq ($(MEDIAFW), gstreamer)
 #ENIGMA2_DEPS  += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_dvbmediasink
 #ENIGMA2_DEPS  += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
-#E2_CONFIG_OPTS += --with-gstversion=1.0
+#ENIGMA2_CONFIG_OPTS += --with-gstversion=1.0
 #endif
 
-ifeq ($(EXTERNAL_LCD), graphlcd)
-E2_CONFIG_OPTS += --with-graphlcd
-ENIGMA2_DEPS_ += $(D)/graphlcd
-endif
-
-ifeq ($(EXTERNAL_LCD), lcd4linux)
-E2_CONFIG_OPTS += --with-lcd4linux
-ENIGMA2_DEPS += $(D)/lcd4linux
-endif
-
 ifeq ($(GRAPHLCD), graphlcd)
-E2_CONFIG_OPTS += --with-graphlcd
+ENIGMA2_CONFIG_OPTS += --with-graphlcd
 ENIGMA2_DEPS_ += $(D)/graphlcd
 endif
 
 ifeq ($(LCD4LINUX), lcd4linux)
-E2_CONFIG_OPTS += --with-lcd4linux
+ENIGMA2_CONFIG_OPTS += --with-lcd4linux
 ENIGMA2_DEPS += $(D)/lcd4linux
 endif
 
-E2_CPPFLAGS    = -I$(DRIVER_DIR)/include
-E2_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
-E2_CPPFLAGS   += -I$(KERNEL_DIR)/include
-E2_CPPFLAGS   += -I$(APPS_DIR)/tools
+ENIGMA2_CPPFLAGS    = -I$(DRIVER_DIR)/include
+ENIGMA2_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
+ENIGMA2_CPPFLAGS   += -I$(KERNEL_DIR)/include
+ENIGMA2_CPPFLAGS   += -I$(APPS_DIR)/tools
 
 ifeq ($(FLAVOUR), ENIGMA2)
 PYTHON = python
 LUA =
 endif
 
-E2_CONFIG_OPTS += PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
+ENIGMA2_CONFIG_OPTS += PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
 
 ENIGMA2_PATCHES = enigma2.patch
 
@@ -102,7 +90,7 @@ $(D)/enigma2.config.status: $(D)/enigma2.do_prepare
 		./configure $(SILENT_CONFIGURE) \
 			--build=$(BUILD) \
 			--host=$(TARGET) \
-			$(E2_CONFIG_OPTS) \
+			$(ENIGMA2_CONFIG_OPTS) \
 			--with-libsdl=no \
 			--datadir=/usr/local/share \
 			--libdir=/usr/lib \
@@ -113,7 +101,7 @@ $(D)/enigma2.config.status: $(D)/enigma2.do_prepare
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			PY_PATH=$(TARGET_DIR)/usr \
-			CPPFLAGS="$(E2_CPPFLAGS)"
+			CPPFLAGS="$(ENIGMA2_CPPFLAGS)"
 	@touch $@
 
 $(D)/enigma2.do_compile: $(D)/enigma2.config.status
