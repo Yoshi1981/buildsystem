@@ -128,7 +128,7 @@ init:
 	WLAN=$${WLAN}; \
 	case "$$WLAN" in \
 		1) echo "WLAN=wlandriver" >> config;; \
-		2|*) ;; \
+		2|*) echo "WLAN=" >> config;; \
 	esac; \
 	echo ""
 # Flavour
@@ -171,7 +171,8 @@ init:
 	LUA=$${LUA}; \
 	case "$$LUA" in \
 		1) echo "LUA=lua" >> config;; \
-		2|3|*) ;; \
+		2) echo "LUA=" >> config;; \
+		3|*) ;; \
 	esac; \
 	echo ""
 # python
@@ -183,7 +184,8 @@ init:
 	PYTHON=$${PYTHON}; \
 	case "$$PYTHON" in \
 		1) echo "PYTHON=python" >> config;; \
-		2|3|*) ;; \
+		2) echo "PYTHON=" >> config;; \
+		3|*) ;; \
 	esac; \
 	echo ""
 # GraphLCD

@@ -16,6 +16,7 @@ ENIGMA2_DEPS += $(D)/tuxtxt32bpp
 ENIGMA2_DEPS += $(D)/hotplug_e2_helper
 ENIGMA2_DEPS += $(D)/avahi
 ENIGMA2_DEPS += $(D)/python
+ENIGMA2_DEPS  += $(D)/libsigc
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), size))
 ENIGMA2_DEPS += $(D)/ethtool
 ENIGMA2_DEPS += $(D)/alsa_utils
@@ -31,8 +32,6 @@ endif
 ifeq ($(WLAN), wlandriver)
 ENIGMA2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
-
-ENIGMA2_DEPS  += $(D)/libsigc
 
 ENIGMA2_CONFIG_OPTS =
 
@@ -60,7 +59,6 @@ ENIGMA2_CPPFLAGS   += -I$(APPS_DIR)/tools
 
 ifeq ($(FLAVOUR), ENIGMA2)
 PYTHON = python
-LUA =
 endif
 
 ENIGMA2_CONFIG_OPTS += PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"

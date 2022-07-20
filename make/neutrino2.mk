@@ -54,6 +54,12 @@ endif
 NEUTRINO2_CONFIG_OPTS =
 
 ifeq ($(MEDIAFW), gstreamer)
+NEUTRINO2_DEPS  += $(D)/gstreamer 
+NEUTRINO2_DEPS  += $(D)/gst_plugins_base 
+NEUTRINO2_DEPS  += $(D)/gst_plugins_good 
+NEUTRINO2_DEPS  += $(D)/gst_plugins_bad 
+NEUTRINO2_DEPS  += $(D)/gst_plugins_ugly 
+NEUTRINO2_DEPS  += $(D)/gst_plugin_subsink
 NEUTRINO2_DEPS  += $(D)/gst_plugins_dvbmediasink
 NEUTRINO2_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
 NEUTRINO2_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)

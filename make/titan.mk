@@ -19,8 +19,13 @@ TITAN_DEPS += $(D)/ffmpeg
 endif
 
 ifeq ($(MEDIAFW), gstreamer)
-TITAN_DEPS += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_dvbmediasink
-TITAN_DEPS += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
+TITAN_DEPS  += $(D)/gstreamer 
+TITAN_DEPS  += $(D)/gst_plugins_base 
+TITAN_DEPS  += $(D)/gst_plugins_good 
+TITAN_DEPS  += $(D)/gst_plugins_bad 
+TITAN_DEPS  += $(D)/gst_plugins_ugly 
+TITAN_DEPS  += $(D)/gst_plugin_subsink
+TITAN_DEPS  += $(D)/gst_plugins_dvbmediasink
 endif
 
 ifeq ($(WLAN), wlandriver)

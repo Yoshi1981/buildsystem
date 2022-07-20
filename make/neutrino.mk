@@ -59,13 +59,7 @@ NEUTRINO_CFLAGS      += -D__STDC_CONSTANT_MACROS
 NEUTRINO_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata-sections
 
 NEUTRINO_CPPFLAGS     = -I$(TARGET_DIR)/usr/include
-ifeq ($(BOXARCH), arm)
-NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
-NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
-NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
-NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
-NEUTRINO_CPPFLAGS    += -I$(CROSS_BASE)/$(TARGET)/sys-root/usr/include
-endif
+
 ifeq ($(BOXARCH), sh4)
 NEUTRINO_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
 NEUTRINO_CPPFLAGS    += -I$(KERNEL_DIR)/include
@@ -86,6 +80,22 @@ NEUTRINO_CONFIG_OPTS += --enable-ffmpegdec
 NEUTRINO_CONFIG_OPTS += --enable-pugixml
 ifeq ($(BOXARCH), arm)
 NEUTRINO_CONFIG_OPTS += --enable-reschange
+endif
+
+ifeq ($(MEDIAFW), gstreamer)
+LH_CONFIG_OPTS += --enable-gstreamer_10
+NEUTRINO_DEPS  += $(D)/gstreamer 
+NEUTRINO_DEPS  += $(D)/gst_plugins_base 
+NEUTRINO_DEPS  += $(D)/gst_plugins_good 
+NEUTRINO_DEPS  += $(D)/gst_plugins_bad 
+NEUTRINO_DEPS  += $(D)/gst_plugins_ugly 
+NEUTRINO_DEPS  += $(D)/gst_plugin_subsink
+NEUTRINO_DEPS  += $(D)/gst_plugins_dvbmediasink
+NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
+NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
+NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
+NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
+NEUTRINO_CPPFLAGS    += -I$(CROSS_BASE)/$(TARGET)/sys-root/usr/include
 endif
 
 ifeq ($(GRAPHLCD), graphlcd)
@@ -199,6 +209,7 @@ $(D)/libstb-hal.config.status: | $(NEUTRINO_DEPS)
 			--build=$(BUILD) \
 			--prefix= \
 			--with-target=cdk \
+			$(LH_CONFIG_OPTS) \
 			--with-boxtype=$(MACHINE) \
 			--enable-silent-rules \
 			PKG_CONFIG=$(PKG_CONFIG) \
@@ -436,7 +447,7 @@ release-NEUTRINO: release-NONE $(D)/neutrino $(D)/neutrino-plugins \
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/neutrino $(RELEASE_DIR)/usr/share/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/sokoban $(RELEASE_DIR)/usr/share/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/fonts $(RELEASE_DIR)/usr/share/
-		
+	
 #
 #
 #
