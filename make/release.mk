@@ -60,7 +60,9 @@ endif
 ifeq ($(FLAVOUR), $(filter $(FLAVOUR), NEUTRINO NEUTRINO2))
 	install -d $(RELEASE_DIR)/usr/share/iso-codes
 	install -d $(RELEASE_DIR)/usr/share/tuxbox
+ifeq ($(LUA), lua)
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
+endif
 	install -d $(RELEASE_DIR)/var/tuxbox
 	install -d $(RELEASE_DIR)/var/tuxbox/config/{webtv,zapit}
 	install -d $(RELEASE_DIR)/var/tuxbox/plugins
@@ -422,11 +424,6 @@ endif
 	rm -rf $(RELEASE_DIR)/usr/lib/gcc
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
 	rm -rf $(RELEASE_DIR)/usr/local/share/enigma2/po/*
-	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/DVDBurn
-	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
-	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaScanner
-	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaPlayer
-	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/
 	rm -f $(RELEASE_DIR)/usr/local/share/meta/*
 	rm -rf $(RELEASE_DIR)/usr/local/share/fonts
 	rm -f $(RELEASE_DIR)/usr/local/share/enigma2/black.mvi
@@ -459,6 +456,11 @@ endif
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/zapit/ubouquets.xml
 ifeq ($(FLAVOUR), ENIGMA2)
 	cp -aR $(TARGET_DIR)/usr/lib/enigma2 $(RELEASE_DIR)/usr/lib
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/DVDBurn
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaScanner
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaPlayer
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.py' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
