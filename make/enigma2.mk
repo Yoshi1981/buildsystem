@@ -35,13 +35,6 @@ endif
 
 ENIGMA2_CONFIG_OPTS =
 
-#MEDIAFW = gstreamer
-#ifeq ($(MEDIAFW), gstreamer)
-#ENIGMA2_DEPS  += $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_dvbmediasink
-#ENIGMA2_DEPS  += $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
-#ENIGMA2_CONFIG_OPTS += --with-gstversion=1.0
-#endif
-
 ifeq ($(GRAPHLCD), graphlcd)
 ENIGMA2_CONFIG_OPTS += --with-graphlcd
 ENIGMA2_DEPS_ += $(D)/graphlcd

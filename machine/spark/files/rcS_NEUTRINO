@@ -136,19 +136,16 @@ if [ ! -e /var/etc/.firstboot ]; then
       rtv=$?
       echo "neutrino ended <- RTV: " $rtv
       case "$rtv" in
-		0) echo "0"
-		   echo "RESTART"
-		   sync;;
-		1) echo "1"
+		0)
 		   echo "SHUTDOWN"
 		   init 0;;
-		2) echo "2"
+		1)
 		   echo "REBOOT"
 		   init 6;;
-		*) echo "*"
+		*)
 		   echo "ERROR"
 		   init 6;;
-      esac
+      	esac
    done
 fi
 

@@ -224,131 +224,11 @@ endif
 # modules.available
 #
 	cp -aR $(SKEL_ROOT)/etc/modules.available_$(BOXARCH) $(RELEASE_DIR)/etc/modules.available
-#
-# mc
-#
-#	if [ -e $(TARGET_DIR)/usr/bin/mc ]; then \
-#		cp -aR $(TARGET_DIR)/usr/share/mc $(RELEASE_DIR)/usr/share/; \
-#		cp -af $(TARGET_DIR)/usr/libexec $(RELEASE_DIR)/usr/; \
-#	fi
-#
-# shairport
-#
-#	if [ -e $(TARGET_DIR)/usr/bin/shairport ]; then \
-#		cp -f $(TARGET_DIR)/usr/bin/shairport $(RELEASE_DIR)/usr/bin; \
-#		cp -f $(TARGET_DIR)/usr/bin/mDNSPublish $(RELEASE_DIR)/usr/bin; \
-#		cp -f $(TARGET_DIR)/usr/bin/mDNSResponder $(RELEASE_DIR)/usr/bin; \
-#		cp -f $(SKEL_ROOT)/etc/init.d/shairport $(RELEASE_DIR)/etc/init.d/shairport; \
-#		chmod 755 $(RELEASE_DIR)/etc/init.d/shairport; \
-#		cp -f $(TARGET_DIR)/usr/lib/libhowl.so* $(RELEASE_DIR)/usr/lib; \
-#		cp -f $(TARGET_DIR)/usr/lib/libmDNSResponder.so* $(RELEASE_DIR)/usr/lib; \
-#	fi	
-#
-# alsa
-#
-#	if [ -e $(TARGET_DIR)/usr/share/alsa ]; then \
-#		mkdir -p $(RELEASE_DIR)/usr/share/alsa/; \
-#		mkdir $(RELEASE_DIR)/usr/share/alsa/cards/; \
-#		mkdir $(RELEASE_DIR)/usr/share/alsa/pcm/; \
-#		cp -dp $(TARGET_DIR)/usr/share/alsa/alsa.conf $(RELEASE_DIR)/usr/share/alsa/alsa.conf; \
-#		cp $(TARGET_DIR)/usr/share/alsa/cards/aliases.conf $(RELEASE_DIR)/usr/share/alsa/cards/; \
-#		cp $(TARGET_DIR)/usr/share/alsa/pcm/default.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
-#		cp $(TARGET_DIR)/usr/share/alsa/pcm/dmix.conf $(RELEASE_DIR)/usr/share/alsa/pcm/; \
-#		cp $(TARGET_DIR)/usr/bin/amixer $(RELEASE_DIR)/usr/bin/; \
-#	fi
-#
-# nfs-utils
-#
-#	if [ -e $(TARGET_DIR)/usr/sbin/rpc.nfsd ]; then \
-#		cp -f $(TARGET_DIR)/usr/sbin/exportfs $(RELEASE_DIR)/usr/sbin/; \
-#		cp -f $(TARGET_DIR)/usr/sbin/rpc.nfsd $(RELEASE_DIR)/usr/sbin/; \
-#		cp -f $(TARGET_DIR)/usr/sbin/rpc.mountd $(RELEASE_DIR)/usr/sbin/; \
-#		cp -f $(TARGET_DIR)/usr/sbin/rpc.statd $(RELEASE_DIR)/usr/sbin/; \
-#	fi
-#
-# autofs
-#
-#ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs912))
-#	if [ -d $(RELEASE_DIR)/usr/lib/autofs ]; then \
-#		cp -f $(TARGET_DIR)/usr/sbin/automount $(RELEASE_DIR)/usr/sbin/; \
-##		ln -s /usr/sbin/automount $(RELEASE_DIR)/sbin/automount; \
-#	fi
-#endif
-#
-# graphlcd
-#
-#	if [ -e $(RELEASE_DIR)/usr/lib/libglcddrivers.so ]; then \
-#		cp -f $(TARGET_DIR)/etc/graphlcd.conf $(RELEASE_DIR)/etc/; \
-#		rm -f $(RELEASE_DIR)/usr/lib/libglcdskin.so*; \
-#	fi
-#
-# lcd4linux
-#
-#	if [ -e $(TARGET_DIR)/usr/bin/lcd4linux ]; then \
-#		cp -f $(TARGET_DIR)/usr/bin/lcd4linux $(RELEASE_DIR)/usr/bin/; \
-#		cp -f $(TARGET_DIR)/etc/init.d/lcd4linux $(RELEASE_DIR)/etc/init.d/; \
-#		cp -a $(TARGET_DIR)/etc/lcd4linux.conf $(RELEASE_DIR)/etc/; \
-#	fi
-#
-# minidlna
-#
-#	if [ -e $(TARGET_DIR)/usr/sbin/minidlnad ]; then \
-#		cp -f $(TARGET_DIR)/usr/sbin/minidlnad $(RELEASE_DIR)/usr/sbin/; \
-#	fi
-#
-# openvpn
-#
-#	if [ -e $(TARGET_DIR)/usr/sbin/openvpn ]; then \
-#		cp -f $(TARGET_DIR)/usr/sbin/openvpn $(RELEASE_DIR)/usr/sbin; \
-#		install -d $(RELEASE_DIR)/etc/openvpn; \
-#	fi
-#
-# udpxy
-#
-#	if [ -e $(TARGET_DIR)/usr/bin/udpxy ]; then \
-#		cp -f $(TARGET_DIR)/usr/bin/udpxy $(RELEASE_DIR)/usr/bin; \
-#		cp -a $(TARGET_DIR)/usr/bin/udpxrec $(RELEASE_DIR)/usr/bin; \
-#	fi
-#
-# xupnpd
-#
-#	if [ -e $(TARGET_DIR)/usr/bin/xupnpd ]; then \
-#		cp -f $(TARGET_DIR)/usr/bin/xupnpd $(RELEASE_DIR)/usr/bin; \
-#		cp -aR $(TARGET_DIR)/usr/share/xupnpd $(RELEASE_DIR)/usr/share; \
-#		mkdir -p $(RELEASE_DIR)/usr/share/xupnpd/playlists; \
-#	fi
-#
-# lua
-#
-#ifeq ($(LUA), lua)
-#ifneq ($(FLAVOUR), ENIGMA2)
-#	cp -R $(TARGET_DIR)/usr/lib/lua $(RELEASE_DIR)/usr/lib/
-#	if [ -d $(TARGET_DIR)/usr/share/lua ]; then \
-#		cp -aR $(TARGET_DIR)/usr/share/lua/* $(RELEASE_DIR)/usr/share/lua; \
-#	fi
-#endif
-#endif
-#
-# python
-#
-#ifeq ($(PYTHON), python)
-#	install -d $(RELEASE_DIR)/$(PYTHON_DIR)
-#	cp -R $(TARGET_DIR)/$(PYTHON_DIR)/* $(RELEASE_DIR)/$(PYTHON_DIR)/
-#	install -d $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR)
-#	cp $(TARGET_DIR)/$(PYTHON_INCLUDE_DIR)/pyconfig.h $(RELEASE_DIR)/$(PYTHON_INCLUDE_DIR)
-#endif
 	
 #
 # release-NONE
 #
 $(D)/release-NONE: release-common release-$(BOXTYPE)
-	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
-	rm -fr $(RELEASE_DIR)/etc
-	ln -sf /var/etc $(RELEASE_DIR)
-	ln -s /tmp $(RELEASE_DIR)/var/lock
-	ln -s /tmp $(RELEASE_DIR)/var/log
-	ln -s /tmp $(RELEASE_DIR)/var/run
-	ln -s /tmp $(RELEASE_DIR)/var/tmp
 	$(TUXBOX_CUSTOMIZE)
 
 #
@@ -604,6 +484,13 @@ ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 	rm -rf $(RELEASE_DIR)/ram
 	rm -rf $(RELEASE_DIR)/root
 endif
+	cp -dpfr $(RELEASE_DIR)/etc $(RELEASE_DIR)/var
+	rm -fr $(RELEASE_DIR)/etc
+	ln -sf /var/etc $(RELEASE_DIR)
+	ln -s /tmp $(RELEASE_DIR)/var/lock
+	ln -s /tmp $(RELEASE_DIR)/var/log
+	ln -s /tmp $(RELEASE_DIR)/var/run
+	ln -s /tmp $(RELEASE_DIR)/var/tmp
 #
 # strip
 #	

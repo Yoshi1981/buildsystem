@@ -31,7 +31,10 @@ NEUTRINO_DEPS += $(D)/libdvbsi
 NEUTRINO_DEPS += $(D)/libusb
 NEUTRINO_DEPS += $(D)/pugixml 
 NEUTRINO_DEPS += $(D)/libopenthreads
+
+ifeq ($(LUA), lua)
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
+endif
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910))
 NEUTRINO_DEPS += $(D)/ntfs_3g
@@ -46,7 +49,7 @@ NEUTRINO_DEPS += $(D)/ntfs_3g
 NEUTRINO_DEPS += $(D)/mc
 endif
 
-ifeq ($(WLAN), neutrino-wlandriver)
+ifeq ($(WLAN), wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
 
@@ -310,9 +313,11 @@ neutrino-distclean: libstb-hal-distclean
 # neutrino-plugins
 #
 NEUTRINO_PLUGINS  = $(D)/neutrino-plugins
+ifeq ($(LUA), lua)
 NEUTRINO_PLUGINS += $(D)/neutrino-plugins-scripts-lua
 NEUTRINO_PLUGINS += $(D)/neutrino-plugins-mediathek
 NEUTRINO_PLUGINS += $(D)/neutrino-plugins-xupnpd
+endif
 NEUTRINO_PLUGINS_PATCHES =
 
 NP_OBJDIR = $(BUILD_TMP)/neutrino-plugins
@@ -384,7 +389,6 @@ neutrino-plugins-distclean:
 # neutrino-plugins-xupnpd
 #
 $(D)/neutrino-plugins-xupnpd: $(D)/xupnpd $(D)/lua $(D)/neutrino-plugins-scripts-lua
-	rm $(TARGET_DIR)/usr/share/xupnpd/plugins/staff/xupnpd_18plus.lua
 	install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_18plus.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
 	install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_cczwei.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
 	: install -m 644 $(ARCHIVE)/neutrino-plugin-scripts-lua.git/xupnpd/xupnpd_coolstream.lua ${TARGET_DIR}/usr/share/xupnpd/plugins/
@@ -432,8 +436,7 @@ $(D)/neutrino-plugins-mediathek:
 #
 # release-NEUTRINO
 #
-release-NEUTRINO: release-NONE $(D)/neutrino $(D)/neutrino-plugins \
-	$(D)/neutrino-plugins-scripts-lua $(D)/neutrino-plugins-mediathek $(D)/neutrino-plugins-xupnpd
+release-NEUTRINO: release-NONE $(D)/neutrino $(NEUTRINO_PLUGINS)
 	cp -af $(TARGET_DIR)/usr/local/bin/neutrino $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/backup.sh $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/install.sh $(RELEASE_DIR)/usr/local/bin/
@@ -445,7 +448,7 @@ release-NEUTRINO: release-NONE $(D)/neutrino $(D)/neutrino-plugins \
 	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
 	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/neutrino $(RELEASE_DIR)/usr/share/tuxbox
-	cp -aR $(TARGET_DIR)/usr/share/tuxbox/sokoban $(RELEASE_DIR)/usr/share/tuxbox
+#	cp -aR $(TARGET_DIR)/usr/share/tuxbox/sokoban $(RELEASE_DIR)/usr/share/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/fonts $(RELEASE_DIR)/usr/share/
 	
 #
