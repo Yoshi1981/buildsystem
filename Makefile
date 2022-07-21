@@ -105,19 +105,17 @@ init:
 	@echo ""		
 # kernel debug	
 	@echo -e "\nOptimization:"
-	@echo "   1)  optimization for size"
+	@echo -e "   \033[01;32m1)  optimization for size\033[00m"
 	@echo "   2)  optimization normal"
 	@echo "   3)  Kernel debug"
 	@echo "   4)  debug (includes Kernel debug)"
-	@echo -e "   \033[01;32m5)  pre-defined\033[00m"
-	@read -p "Select optimization (1-5)?" OPTIMIZATIONS; \
+	@read -p "Select optimization (1-4)?" OPTIMIZATIONS; \
 	OPTIMIZATIONS=$${OPTIMIZATIONS}; \
 	case "$$OPTIMIZATIONS" in \
-		1) echo "OPTIMIZATIONS=size" >> config;; \
+		1|*) echo "OPTIMIZATIONS=size" >> config;; \
 		2) echo "OPTIMIZATIONS=normal" >> config;; \
 		3) echo "OPTIMIZATIONS=kerneldebug" >> config;;\
 		4) echo "OPTIMIZATIONS=debug" >> config;; \
-		5|*) ;; \
 	esac;
 	@echo;
 # WLAN driver
@@ -151,41 +149,35 @@ init:
 	echo ""
 # Media framework
 	@echo -e "\nMedia Framework:"
-	@echo "   1) libeplayer3 (rivisited libeplayer 3 recommended for sh4 boxes)"
+	@echo -e "   \033[01;32m1) libeplayer3 (rivisited libeplayer 3 recommended for sh4 boxes)\033[00m"
 	@echo "   2) gstreamer (recommended for mips and arm boxes)"
-	@echo -e "   \033[01;32m3) pre-defined\033[00m"
-	@read -p "Select media framework (1-3)?" MEDIAFW; \
+	@read -p "Select media framework (1-2)?" MEDIAFW; \
 	MEDIAFW=$${MEDIAFW}; \
 	case "$$MEDIAFW" in \
-		1) echo "MEDIAFW=libeplayer" >> config;; \
+		1|*) echo "MEDIAFW=libeplayer3" >> config;; \
 		2) echo "MEDIAFW=gstreamer" >> config;; \
-		3|*) ;; \
 	esac; \
 	echo ""
 # lua
 	@echo -e "\nlua support ?:"
 	@echo "   1)  yes"
-	@echo "   2)  no"
-	@echo -e "   \033[01;32m3) pre-defined\033[00m"
-	@read -p "Select lua support (1-3)?" LUA; \
+	@echo -e "   \033[01;32m2)  no\033[00m"
+	@read -p "Select lua support (1-2)?" LUA; \
 	LUA=$${LUA}; \
 	case "$$LUA" in \
 		1) echo "LUA=lua" >> config;; \
-		2) echo "LUA=" >> config;; \
-		3|*) ;; \
+		2|*) echo "LUA=" >> config;; \
 	esac; \
 	echo ""
 # python
 	@echo -e "\npython support ?:"
 	@echo "   1)  yes"
-	@echo "   2)  no"
-	@echo -e "   \033[01;32m3) pre-defined\033[00m"
-	@read -p "Select python support (1-3)?" PYTHON; \
+	@echo -e "   \033[01;32m2)  no\033[00m"
+	@read -p "Select python support (1-2)?" PYTHON; \
 	PYTHON=$${PYTHON}; \
 	case "$$PYTHON" in \
 		1) echo "PYTHON=python" >> config;; \
-		2) echo "PYTHON=" >> config;; \
-		3|*) ;; \
+		2|*) echo "PYTHON=" >> config;; \
 	esac; \
 	echo ""
 # GraphLCD

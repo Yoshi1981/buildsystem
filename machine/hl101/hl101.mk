@@ -1,14 +1,8 @@
 BOXARCH = sh4
-OPTIMIZATIONS ?= size
-WLAN ?= 
-LUA ?=lua
-PYTHON ?=
-FLAVOUR ?= NEUTRINO2
-MEDIAFW ?= libeplayer3
-CICAM ?= ci-cam
-SCART ?=
-LCD ?= vfd
-FKEYS ?=
+CICAM = ci-cam
+SCART =
+LCD = vfd
+FKEYS =
 
 #
 # kernel

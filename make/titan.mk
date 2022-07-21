@@ -62,7 +62,6 @@ ifeq ($(MEDIAFW), libplayer3)
 TITAN_CPPFLAGS   += -DEPLAYER3
 TITAN_CPPFLAGS   += -DEXTEPLAYER3
 TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
-TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
 endif
 
 ifeq ($(MEDIAFW), gstreamer)
@@ -77,7 +76,6 @@ TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
 TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
 TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
 TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
-TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include/external
 endif
 
 ifeq ($(BOXARCH), sh4)
