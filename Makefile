@@ -112,10 +112,11 @@ init:
 	@read -p "Select optimization (1-4)?" OPTIMIZATIONS; \
 	OPTIMIZATIONS=$${OPTIMIZATIONS}; \
 	case "$$OPTIMIZATIONS" in \
-		1|*) echo "OPTIMIZATIONS=size" >> config;; \
+		1) echo "OPTIMIZATIONS=size" >> config;; \
 		2) echo "OPTIMIZATIONS=normal" >> config;; \
 		3) echo "OPTIMIZATIONS=kerneldebug" >> config;;\
 		4) echo "OPTIMIZATIONS=debug" >> config;; \
+		*) echo "OPTIMIZATIONS=size" >> config;; \
 	esac;
 	@echo;
 # WLAN driver
@@ -149,13 +150,13 @@ init:
 	echo ""
 # Media framework
 	@echo -e "\nMedia Framework:"
-	@echo -e "   \033[01;32m1) libeplayer3 (rivisited libeplayer 3 recommended for sh4 boxes)\033[00m"
-	@echo "   2) gstreamer (recommended for mips and arm boxes)"
+	@echo "   1) gstreamer (recommended for mips and arm boxes)"
+	@echo -e "   \033[01;32m2) libeplayer3 (rivisited libeplayer 3 recommended for sh4 boxes)\033[00m"
 	@read -p "Select media framework (1-2)?" MEDIAFW; \
 	MEDIAFW=$${MEDIAFW}; \
 	case "$$MEDIAFW" in \
-		1|*) echo "MEDIAFW=libeplayer3" >> config;; \
-		2) echo "MEDIAFW=gstreamer" >> config;; \
+		1) echo "MEDIAFW=gstreamer" >> config;; \
+		2|*) echo "MEDIAFW=libeplayer3" >> config;; \
 	esac; \
 	echo ""
 # lua
@@ -261,6 +262,8 @@ printenv:
 	@echo "SCART            : $(SCART)"
 	@echo "LCD              : $(LCD)"
 	@echo "F-KEYS           : $(FKEYS)"
+	@echo "GRAPHLCD         : $(GRAPHLCD)"
+	@echo "LCD4LINUX        : $(LCD4LINUX)"
 	@echo "PARALLEL_JOBS    : $(PARALLEL_JOBS)"
 	@echo '================================================================================'
 	@make --no-print-directory toolcheck
