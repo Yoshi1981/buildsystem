@@ -31,10 +31,7 @@ NEUTRINO_DEPS += $(D)/libdvbsi
 NEUTRINO_DEPS += $(D)/libusb
 NEUTRINO_DEPS += $(D)/pugixml 
 NEUTRINO_DEPS += $(D)/libopenthreads
-
-ifeq ($(LUA), lua)
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
-endif
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910))
 NEUTRINO_DEPS += $(D)/ntfs_3g
@@ -81,6 +78,7 @@ NEUTRINO_CONFIG_OPTS += --with-tremor
 NEUTRINO_CONFIG_OPTS += --enable-ffmpegdec
 #NEUTRINO_CONFIG_OPTS += --enable-pip
 NEUTRINO_CONFIG_OPTS += --enable-pugixml
+
 ifeq ($(BOXARCH), arm)
 NEUTRINO_CONFIG_OPTS += --enable-reschange
 endif
@@ -313,11 +311,10 @@ neutrino-distclean: libstb-hal-distclean
 # neutrino-plugins
 #
 NEUTRINO_PLUGINS  = $(D)/neutrino-plugins
-ifeq ($(LUA), lua)
 NEUTRINO_PLUGINS += $(D)/neutrino-plugins-scripts-lua
 NEUTRINO_PLUGINS += $(D)/neutrino-plugins-mediathek
 NEUTRINO_PLUGINS += $(D)/neutrino-plugins-xupnpd
-endif
+
 NEUTRINO_PLUGINS_PATCHES =
 
 NP_OBJDIR = $(BUILD_TMP)/neutrino-plugins
