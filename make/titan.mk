@@ -13,7 +13,6 @@ TITAN_DEPS += $(D)/tools-libmme_host
 TITAN_DEPS += $(D)/tools-libmme_image
 
 ifeq ($(MEDIAFW), libeplayer3)
-TITAN_CONFIG_OPTS += --enable-eplayer3
 TITAN_DEPS += $(D)/libcurl
 TITAN_DEPS += $(D)/ffmpeg
 endif
@@ -58,7 +57,7 @@ TITAN_CPPFLAGS   += -L$(TARGET_DIR)/usr/lib
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/python
 TITAN_CPPFLAGS   += -L$(SOURCE_DIR)/titan/libipkg
 
-ifeq ($(MEDIAFW), libplayer3)
+ifeq ($(MEDIAFW), libeplayer3)
 TITAN_CPPFLAGS   += -DEPLAYER3
 TITAN_CPPFLAGS   += -DEXTEPLAYER3
 TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
