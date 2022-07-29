@@ -18,6 +18,10 @@ NEUTRINO2_DEPS += $(D)/flac
 NEUTRINO2_DEPS += $(D)/libopenthreads
 NEUTRINO2_DEPS += $(D)/libass
 
+ifeq ($(WLAN), wlandriver)
+NEUTRINO2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
+endif
+
 ifeq ($(PYTHON), python)
 NEUTRINO2_DEPS += $(D)/python
 endif

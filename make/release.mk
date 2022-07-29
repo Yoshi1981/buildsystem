@@ -21,6 +21,28 @@ ifeq ($(LUA), lua)
 RELEASE_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
 endif
 
+ifeq ($(MEDIAFW), gstreamer)
+RELEASE_DEPS  += $(D)/gstreamer 
+RELEASE_DEPS  += $(D)/gst_plugins_base 
+RELEASE_DEPS  += $(D)/gst_plugins_good 
+RELEASE_DEPS  += $(D)/gst_plugins_bad 
+RELEASE_DEPS  += $(D)/gst_plugins_ugly 
+RELEASE_DEPS  += $(D)/gst_plugin_subsink
+RELEASE_DEPS  += $(D)/gst_plugins_dvbmediasink
+endif
+
+ifeq ($(MEDIAFW), libeplayer3)
+RELEASE_DEPS += $(D)/tools-exteplayer3
+endif
+
+ifeq ($(GRAPHLCD), graphlcd)
+RELEASE_DEPS_ += $(D)/graphlcd
+endif
+
+ifeq ($(LCD4LINUX), lcd4linux)
+RELEASE_DEPS += $(D)/lcd4linux
+endif
+
 release-common: $(RELEASE_DEPS)
 	rm -rf $(RELEASE_DIR) || true
 	install -d $(RELEASE_DIR)
