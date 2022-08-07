@@ -313,7 +313,7 @@ neutrino-distclean: libstb-hal-distclean
 NEUTRINO_PLUGINS  = $(D)/neutrino-plugins
 NEUTRINO_PLUGINS += $(D)/neutrino-plugins-scripts-lua
 NEUTRINO_PLUGINS += $(D)/neutrino-plugins-mediathek
-NEUTRINO_PLUGINS += $(D)/neutrino-plugins-xupnpd
+#NEUTRINO_PLUGINS += $(D)/neutrino-plugins-xupnpd
 
 NEUTRINO_PLUGINS_PATCHES =
 
