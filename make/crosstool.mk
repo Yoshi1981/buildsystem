@@ -1,12 +1,3 @@
-# 
-# crosstool-renew
-#
-crosstool-renew:
-	ccache -cCz
-	make distclean
-	rm -rf $(CROSS_DIR)
-	make crosstool
-
 #
 # libc
 #
@@ -104,6 +95,15 @@ crosstool-restore: $(CROSSTOOL_NG_BACKUP)
 		mkdir -p $(CROSS_DIR); \
 	fi;
 	tar xzvf $(CROSSTOOL_NG_BACKUP) -C $(CROSS_DIR)
+	
+# 
+# crosstool-renew
+#
+crosstool-renew:
+	ccache -cCz
+	make distclean
+	rm -rf $(CROSS_DIR)
+	make crosstool
 
 #
 # crossmenuconfig
