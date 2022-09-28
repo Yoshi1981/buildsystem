@@ -1,14 +1,4 @@
 #
-# libc
-#
-$(TARGET_DIR)/lib/libc.so.6:
-	if test -e $(CROSS_DIR)/$(TARGET)/sys-root/lib; then \
-		cp -a $(CROSS_DIR)/$(TARGET)/sys-root/lib/*so* $(TARGET_DIR)/lib; \
-	else \
-		cp -a $(CROSS_DIR)/$(TARGET)/lib/*so* $(TARGET_DIR)/lib; \
-	fi
-
-#
 # crosstool-ng
 #
 CROSSTOOL_NG_VER = 6737cfa
@@ -120,4 +110,13 @@ crossmenuconfig: $(D)/directories $(ARCHIVE)/$(CROSSTOOL_NG_SOURCE)
 		chmod 0755 ct-ng; \
 		./ct-ng menuconfig
 
-
+#
+# libc
+#
+$(TARGET_DIR)/lib/libc.so.6:
+	if test -e $(CROSS_DIR)/$(TARGET)/sys-root/lib; then \
+		cp -a $(CROSS_DIR)/$(TARGET)/sys-root/lib/*so* $(TARGET_DIR)/lib; \
+	else \
+		cp -a $(CROSS_DIR)/$(TARGET)/lib/*so* $(TARGET_DIR)/lib; \
+	fi
+	
