@@ -61,7 +61,7 @@ release-common: $(RELEASE_DEPS)
 	install -d $(RELEASE_DIR)/usr/share/{udhcpc,zoneinfo,fonts}
 	install -d $(RELEASE_DIR)/var/{bin,etc,lib,net,tuxbox,keys}
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
-ifeq ($(FLAVOUR), TITAN)
+ifeq ($(GUI), TITAN)
 	install -d $(RELEASE_DIR)/var/etc/titan
 	install -d $(RELEASE_DIR)/var/etc/autostart
 	install -d $(RELEASE_DIR)/var/usr/local/share/titan/{skin,po,web,plugins}
@@ -79,7 +79,7 @@ ifeq ($(FLAVOUR), TITAN)
 	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/vi/LC_MESSAGES
 	install -d $(RELEASE_DIR)/var/usr/share/fonts
 endif
-ifeq ($(FLAVOUR), $(filter $(FLAVOUR), NEUTRINO NEUTRINO2))
+ifeq ($(GUI), $(filter $(GUI), NEUTRINO NEUTRINO2))
 	install -d $(RELEASE_DIR)/usr/share/iso-codes
 	install -d $(RELEASE_DIR)/usr/share/tuxbox
 ifeq ($(LUA), lua)
@@ -259,7 +259,7 @@ $(D)/release-NONE: release-common release-$(BOXTYPE)
 #
 # release
 #
-release: release-$(FLAVOUR)
+release: release-$(GUI)
 #
 # lib usr/lib
 #
@@ -278,7 +278,7 @@ endif
 # lua
 #
 ifeq ($(LUA), lua)
-ifneq ($(FLAVOUR), ENIGMA2)
+ifneq ($(GUI), ENIGMA2)
 	cp -R $(TARGET_DIR)/usr/lib/lua $(RELEASE_DIR)/usr/lib/
 	if [ -d $(TARGET_DIR)/usr/share/lua ]; then \
 		cp -aR $(TARGET_DIR)/usr/share/lua/* $(RELEASE_DIR)/usr/share/lua; \
@@ -477,7 +477,7 @@ endif
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/zapit/services.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/zapit/bouquets.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/zapit/ubouquets.xml
-ifeq ($(FLAVOUR), ENIGMA2)
+ifeq ($(GUI), ENIGMA2)
 	cp -aR $(TARGET_DIR)/usr/lib/enigma2 $(RELEASE_DIR)/usr/lib
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/DVDBurn
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
@@ -524,7 +524,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	@echo "*****************************************************************"
 	@echo -e "\033[01;32m"
-	@echo " Build of $(FLAVOUR) Release for $(BOXTYPE) successfully completed."
+	@echo " Build of $(GUI) Release for $(BOXTYPE) successfully completed."
 	@echo -e "\033[00m"
 	@echo "*****************************************************************"
 

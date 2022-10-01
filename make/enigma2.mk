@@ -50,7 +50,7 @@ ENIGMA2_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
 ENIGMA2_CPPFLAGS   += -I$(KERNEL_DIR)/include
 ENIGMA2_CPPFLAGS   += -I$(APPS_DIR)/tools
 
-ifeq ($(FLAVOUR), ENIGMA2)
+ifeq ($(GUI), ENIGMA2)
 PYTHON = python
 endif
 

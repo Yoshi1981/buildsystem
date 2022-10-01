@@ -130,22 +130,22 @@ init:
 		2|*) echo "WLAN=" >> config;; \
 	esac; \
 	echo ""
-# Flavour
-	@echo -e "\nFlavour:"
+# GUI
+	@echo -e "\nGUI:"
 	@echo "   1) NONE"
 	@echo -e "   \033[01;32m2) NEUTRINO2\033[00m"
 	@echo "   3) NEUTRINO"
 	@echo "   4) ENIGMA2 (experimental)"
 	@echo "   5) TITAN (experimental)"
-	@read -p "Select Flavour (1-5)?" FLAVOUR; \
-	FLAVOUR=$${FLAVOUR}; \
-	case "$$FLAVOUR" in \
-		1) echo "FLAVOUR=NONE" >> config;; \
-		2) echo "FLAVOUR=NEUTRINO2" >> config;; \
-		3) echo "FLAVOUR=NEUTRINO" >> config;; \
-		4) echo "FLAVOUR=ENIGMA2" >> config;; \
-		5) echo "FLAVOUR=TITAN" >> config;; \
-		*) echo "FLAVOUR=NEUTRINO2" >> config;; \
+	@read -p "Select GUI (1-5)?" GUI; \
+	GUI=$${GUI}; \
+	case "$$GUI" in \
+		1) echo "GUI=NONE" >> config;; \
+		2) echo "GUI=NEUTRINO2" >> config;; \
+		3) echo "GUI=NEUTRINO" >> config;; \
+		4) echo "GUI=ENIGMA2" >> config;; \
+		5) echo "GUI=TITAN" >> config;; \
+		*) echo "GUI=NEUTRINO2" >> config;; \
 	esac; \
 	echo ""
 # Media framework
@@ -253,11 +253,11 @@ printenv:
 	@echo "BOXTYPE          : $(BOXTYPE)"
 	@echo "KERNEL_VERSION   : $(KERNEL_VER)"
 	@echo "OPTIMIZATIONS    : $(OPTIMIZATIONS)"
-	@echo "FLAVOUR          : $(FLAVOUR)"
+	@echo "GUI              : $(GUI)"
 	@echo "MEDIAFW          : $(MEDIAFW)"
 	@echo "WLAN             : $(WLAN)"
-	@echo "LUA        	 : $(LUA)"
-	@echo "PYTHON        	 : $(PYTHON)"
+	@echo "LUA              : $(LUA)"
+	@echo "PYTHON           : $(PYTHON)"
 	@echo "CICAM            : $(CICAM)"
 	@echo "SCART            : $(SCART)"
 	@echo "LCD              : $(LCD)"
