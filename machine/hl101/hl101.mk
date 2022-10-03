@@ -196,6 +196,7 @@ release-hl101:
 #
 # flashimage
 #
+flash-image-hl101:
 
 #
 # usbimage
