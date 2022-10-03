@@ -21,7 +21,7 @@ ifeq ($(LUA), lua)
 RELEASE_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
 endif
 
-ifeq ($(MEDIAFW), gstreamer)
+ifeq ($(GSTREAMER), gstreamer)
 RELEASE_DEPS  += $(D)/gstreamer 
 RELEASE_DEPS  += $(D)/gst_plugins_base 
 RELEASE_DEPS  += $(D)/gst_plugins_good 
@@ -31,7 +31,7 @@ RELEASE_DEPS  += $(D)/gst_plugin_subsink
 RELEASE_DEPS  += $(D)/gst_plugins_dvbmediasink
 endif
 
-ifeq ($(MEDIAFW), libeplayer3)
+ifeq ($(EXTEPLAYER3), exteplayer3)
 RELEASE_DEPS += $(D)/tools-exteplayer3
 endif
 
@@ -270,7 +270,7 @@ release: release-$(GUI)
 	rm -rf $(RELEASE_DIR)/usr/lib/{engines,gconv,libxslt-plugins,pkgconfig,sigc++-1.2,sigc++-2.0,lua,python$(PYTHON_VER_MAJOR),enigma2,gstreamer-1.0,gio}
 	rm -f $(RELEASE_DIR)/usr/lib/*.{a,o,la}
 	chmod 755 $(RELEASE_DIR)/usr/lib/*
-ifeq ($(MEDIAFW), gstreamer)
+ifeq ($(GSTREAMER), gstreamer)
 	cp -aR $(TARGET_DIR)/usr/lib/gstreamer-1.0 $(RELEASE_DIR)/usr/lib
 	cp -aR $(TARGET_DIR)/usr/lib/gio $(RELEASE_DIR)/usr/lib
 endif

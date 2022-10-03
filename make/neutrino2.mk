@@ -57,7 +57,7 @@ endif
 
 NEUTRINO2_CONFIG_OPTS =
 
-ifeq ($(MEDIAFW), gstreamer)
+ifeq ($(GSTREAMER), gstreamer)
 NEUTRINO2_DEPS  += $(D)/gstreamer 
 NEUTRINO2_DEPS  += $(D)/gst_plugins_base 
 NEUTRINO2_DEPS  += $(D)/gst_plugins_good 

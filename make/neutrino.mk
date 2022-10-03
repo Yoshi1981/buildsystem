@@ -83,7 +83,7 @@ ifeq ($(BOXARCH), arm)
 NEUTRINO_CONFIG_OPTS += --enable-reschange
 endif
 
-ifeq ($(MEDIAFW), gstreamer)
+ifeq ($(GSTREAMER), gstreamer)
 LH_CONFIG_OPTS += --enable-gstreamer_10
 NEUTRINO_DEPS  += $(D)/gstreamer 
 NEUTRINO_DEPS  += $(D)/gst_plugins_base 

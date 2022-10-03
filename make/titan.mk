@@ -12,12 +12,12 @@ TITAN_DEPS += $(D)/timezone
 TITAN_DEPS += $(D)/tools-libmme_host
 TITAN_DEPS += $(D)/tools-libmme_image
 
-ifeq ($(MEDIAFW), libeplayer3)
+ifeq ($(EXTEPLAYER3), exteplayer3)
 TITAN_DEPS += $(D)/libcurl
 TITAN_DEPS += $(D)/ffmpeg
 endif
 
-ifeq ($(MEDIAFW), gstreamer)
+ifeq ($(GSTREAMER), gstreamer)
 TITAN_DEPS  += $(D)/gstreamer 
 TITAN_DEPS  += $(D)/gst_plugins_base 
 TITAN_DEPS  += $(D)/gst_plugins_good 
@@ -57,13 +57,13 @@ TITAN_CPPFLAGS   += -L$(TARGET_DIR)/usr/lib
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/python
 TITAN_CPPFLAGS   += -L$(SOURCE_DIR)/titan/libipkg
 
-ifeq ($(MEDIAFW), libeplayer3)
+ifeq ($(EXTEPLAYER3), exteplayer3)
 TITAN_CPPFLAGS   += -DEPLAYER3
 TITAN_CPPFLAGS   += -DEXTEPLAYER3
 TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
 endif
 
-ifeq ($(MEDIAFW), gstreamer)
+ifeq ($(GSTREAMER), gstreamer)
 TITAN_CPPFLAGS   += -DEPLAYER4
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/gstreamer-1.0
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/glib-2.0

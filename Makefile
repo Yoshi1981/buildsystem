@@ -134,7 +134,7 @@ init:
 	@echo -e "\nGUI:"
 	@echo "   1) NONE"
 	@echo -e "   \033[01;32m2) NEUTRINO2\033[00m"
-	@echo "   3) NEUTRINO"
+	@echo "   3) NEUTRINO (experimental)"
 	@echo "   4) ENIGMA2 (experimental)"
 	@echo "   5) TITAN (experimental)"
 	@read -p "Select GUI (1-5)?" GUI; \
@@ -148,15 +148,26 @@ init:
 		*) echo "GUI=NEUTRINO2" >> config;; \
 	esac; \
 	echo ""
-# Media framework
-	@echo -e "\nMedia Framework:"
-	@echo "   1) gstreamer (recommended for mips and arm boxes)"
-	@echo -e "   \033[01;32m2) libeplayer3 (rivisited libeplayer 3 recommended for sh4 boxes)\033[00m"
-	@read -p "Select media framework (1-2)?" MEDIAFW; \
-	MEDIAFW=$${MEDIAFW}; \
-	case "$$MEDIAFW" in \
-		1) echo "MEDIAFW=gstreamer" >> config;; \
-		2|*) echo "MEDIAFW=libeplayer3" >> config;; \
+# Gstreamer
+	@echo -e "\nGstreamer:"
+	@echo "   1) yes (recommended for mips and arm boxes)"
+	@echo -e "   \033[01;32m2) no\033[00m"
+	@read -p "Select Gstreamer (1-2)?" GSTREAMER; \
+	GSTREAMER=$${GSTREAMER}; \
+	case "$$GSTREAMER" in \
+		1) echo "GSTREAMER=gstreamer" >> config;; \
+		2|*) echo "GSTREAMER=" >> config;; \
+	esac; \
+	echo ""
+# Exteplayer3
+	@echo -e "\nExteplayer3:"
+	@echo "   1) yes (recommended sh4 boxes)"
+	@echo -e "   \033[01;32m2) no\033[00m"
+	@read -p "Select Exteplayer3 (1-2)?" EXTEPLAYER3; \
+	EXTEPLAYER3=$${EXTEPLAYER3}; \
+	case "$$EXTEPLAYER3" in \
+		1) echo "EXTEPLAYER3=exteplayer3" >> config;; \
+		2|*) echo "EXTEPLAYER3=" >> config;; \
 	esac; \
 	echo ""
 # lua
@@ -254,7 +265,8 @@ printenv:
 	@echo "KERNEL_VERSION   : $(KERNEL_VER)"
 	@echo "OPTIMIZATIONS    : $(OPTIMIZATIONS)"
 	@echo "GUI              : $(GUI)"
-	@echo "MEDIAFW          : $(MEDIAFW)"
+	@echo "GSTREAMER        : $(GSTREAMER)"
+	@echo "EXTEPLAYER3      : $(EXTEPLAYER3)"
 	@echo "WLAN             : $(WLAN)"
 	@echo "LUA              : $(LUA)"
 	@echo "PYTHON           : $(PYTHON)"
