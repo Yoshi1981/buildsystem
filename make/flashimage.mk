@@ -2,11 +2,8 @@
 # image
 #
 image: release
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 ipbox55 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd spark spark7162 atevio7500 tf7700 ufs910 ufs912 ufs913 ufs922))
-	$(MAKE) flash-image-$(BOXTYPE)
-endif
-ifeq ($(BOXTYPE), hl101)
-	$(MAKE) usb-image-hl101
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), fortis_hdbox octagon1008 ipbox55 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd spark spark7162 atevio7500 tf7700 ufs910 ufs912 ufs913 ufs922 hl101))
+	$(MAKE) usb-image-$(BOXTYPE) flash-image-$(BOXTYPE)
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo vuduo2 gb800se bre2zet2c osnino osninoplus osninopro))
 	$(MAKE) flash-image-$(BOXTYPE)
@@ -25,7 +22,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vuduo4k))
 endif
 	@echo "*****************************************************************"
 	@echo -e "\033[01;32m"
-	@echo " Build of $(GUI) image for $(BOXTYPE) successfully completed."
+	@echo " Build of $(GUI) images for $(BOXTYPE) successfully completed."
 	@echo -e "\033[00m"
 	@echo "*****************************************************************"
 

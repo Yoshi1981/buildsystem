@@ -11,11 +11,8 @@ TITAN_DEPS += $(D)/openssl
 TITAN_DEPS += $(D)/timezone
 TITAN_DEPS += $(D)/tools-libmme_host
 TITAN_DEPS += $(D)/tools-libmme_image
-
-ifeq ($(EXTEPLAYER3), exteplayer3)
 TITAN_DEPS += $(D)/libcurl
 TITAN_DEPS += $(D)/ffmpeg
-endif
 
 ifeq ($(GSTREAMER), gstreamer)
 TITAN_DEPS  += $(D)/gstreamer 
@@ -56,12 +53,9 @@ TITAN_CPPFLAGS   += -I$(APPS_DIR)/tools/libmme_image
 TITAN_CPPFLAGS   += -L$(TARGET_DIR)/usr/lib
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/python
 TITAN_CPPFLAGS   += -L$(SOURCE_DIR)/titan/libipkg
-
-ifeq ($(EXTEPLAYER3), exteplayer3)
 TITAN_CPPFLAGS   += -DEPLAYER3
 TITAN_CPPFLAGS   += -DEXTEPLAYER3
 TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
-endif
 
 ifeq ($(GSTREAMER), gstreamer)
 TITAN_CPPFLAGS   += -DEPLAYER4
@@ -74,7 +68,6 @@ TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
 TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
 TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
 TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
-TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
 endif
 
 ifeq ($(BOXARCH), sh4)
