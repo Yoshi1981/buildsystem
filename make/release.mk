@@ -7,6 +7,7 @@ RELEASE_DEPS += $(D)/system-tools
 RELEASE_DEPS += $(D)/tools
 RELEASE_DEPS += $(D)/diverse-tools
 RELEASE_DEPS += $(LIRC)
+RELEASE_DEPS += $(D)/tools-exteplayer3
 
 ifeq ($(WLAN), wlandriver)	
 	RELEASE_DEPS += $(D)/wpa_supplicant 
@@ -29,10 +30,6 @@ RELEASE_DEPS  += $(D)/gst_plugins_bad
 RELEASE_DEPS  += $(D)/gst_plugins_ugly 
 RELEASE_DEPS  += $(D)/gst_plugin_subsink
 RELEASE_DEPS  += $(D)/gst_plugins_dvbmediasink
-endif
-
-ifeq ($(EXTEPLAYER3), exteplayer3)
-RELEASE_DEPS += $(D)/tools-exteplayer3
 endif
 
 ifeq ($(GRAPHLCD), graphlcd)

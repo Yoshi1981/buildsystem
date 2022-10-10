@@ -159,17 +159,6 @@ init:
 		2|*) echo "GSTREAMER=" >> config;; \
 	esac; \
 	echo ""
-# Exteplayer3
-	@echo -e "\nExteplayer3:"
-	@echo "   1) yes (recommended sh4 boxes)"
-	@echo -e "   \033[01;32m2) no\033[00m"
-	@read -p "Select Exteplayer3 (1-2)?" EXTEPLAYER3; \
-	EXTEPLAYER3=$${EXTEPLAYER3}; \
-	case "$$EXTEPLAYER3" in \
-		1) echo "EXTEPLAYER3=exteplayer3" >> config;; \
-		2|*) echo "EXTEPLAYER3=" >> config;; \
-	esac; \
-	echo ""
 # lua
 	@echo -e "\nlua support ?:"
 	@echo "   1)  yes"
@@ -266,7 +255,6 @@ printenv:
 	@echo "OPTIMIZATIONS    : $(OPTIMIZATIONS)"
 	@echo "GUI              : $(GUI)"
 	@echo "GSTREAMER        : $(GSTREAMER)"
-	@echo "EXTEPLAYER3      : $(EXTEPLAYER3)"
 	@echo "WLAN             : $(WLAN)"
 	@echo "LUA              : $(LUA)"
 	@echo "PYTHON           : $(PYTHON)"
