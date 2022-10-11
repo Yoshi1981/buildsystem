@@ -50,8 +50,8 @@ external/plugins/src/png.c
 libeplayer3_la_LIBADD = -lswscale -ldl -lpthread -lavformat -lavcodec -lavutil -lswresample
 
 
-bin_PROGRAMS = eplayer3
-eplayer3_SOURCES = main/exteplayer.c
-eplayer3_LDADD = -leplayer3 -lpthread
-eplayer3_DEPENDENCIES = libeplayer3.la
+bin_PROGRAMS = exteplayer3
+exteplayer3_SOURCES = main/exteplayer.c
+exteplayer3_LDADD = -leplayer3 -lpthread
+exteplayer3_DEPENDENCIES = libeplayer3.la
 
