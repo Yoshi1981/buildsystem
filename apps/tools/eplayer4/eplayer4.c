@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
 				gint64 time_nanoseconds;
 				gint64 pos;
 				GstFormat fmt = GST_FORMAT_TIME;
-				gst_element_query_position(m_gst_playbin, &fmt, &pos);
+				gst_element_query_position(m_gst_playbin, fmt, &pos);
 
 				time_nanoseconds = pos + (sec * 1000000000);
 				if (time_nanoseconds < 0) time_nanoseconds = 0;
@@ -173,7 +173,7 @@ int main(int argc, char *argv[])
 				double length = 0;
 				GstFormat fmt = GST_FORMAT_TIME; //Returns time in nanosecs
 				gint64 len;
-				gst_element_query_duration(m_gst_playbin, &fmt, &len);
+				gst_element_query_duration(m_gst_playbin, fmt, &len);
 				length = len / 1000000000.0;
 				printf("Length = %02d:%02d:%02d (%.4f sec)\n", (int)((length / 60) / 60) % 60, (int)(length / 60) % 60, (int)length % 60, length);
 				break;
@@ -183,7 +183,7 @@ int main(int argc, char *argv[])
 				double sec = 0;
 				GstFormat fmt = GST_FORMAT_TIME; //Returns time in nanosecs
 				gint64 pos;
-				gst_element_query_position(m_gst_playbin, &fmt, &pos);
+				gst_element_query_position(m_gst_playbin, fmt, &pos);
 				sec = pos / 1000000000.0;
 				printf("Pts = %02d:%02d:%02d (%.4f sec)\n", (int)((sec / 60) / 60) % 60, (int)(sec / 60) % 60, (int)sec % 60, sec);
 				break;

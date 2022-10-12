@@ -30,6 +30,7 @@ RELEASE_DEPS  += $(D)/gst_plugins_bad
 RELEASE_DEPS  += $(D)/gst_plugins_ugly 
 RELEASE_DEPS  += $(D)/gst_plugin_subsink
 RELEASE_DEPS  += $(D)/gst_plugins_dvbmediasink
+RELEASE_DEPS  += $(D)/tools-eplayer4
 endif
 
 ifeq ($(GRAPHLCD), graphlcd)

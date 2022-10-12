@@ -236,6 +236,25 @@ $(D)/tools-exteplayer3: $(D)/bootstrap $(D)/ffmpeg $(D)/libass
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	$(TOUCH)
+	
+#
+# eplayer4
+#
+EPLAYER4_CPPFLAGS     = $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
+EPLAYER4_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
+EPLAYER4_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
+EPLAYER4_CPPFLAGS     += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
+$(D)/tools-eplayer4: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good \
+	$(D)/gst_plugins_bad $(D)/gst_plugins_ugly $(D)/gst_plugin_subsink $(D)/gst_plugins_dvbmediasink
+	$(START_BUILD)
+	set -e; cd $(APPS_DIR)/tools/eplayer4; \
+		$(CONFIGURE_TOOLS) \
+			CPPFLAGS="$(EPLAYER4_CPPFLAGS)" \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(TOUCH)
 
 #
 # libmme_host

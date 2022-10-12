@@ -63,7 +63,6 @@ TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/gstreamer-1.0
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/glib-2.0
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/libxml2
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/lib/gstreamer-1.0/include
-TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/lib/gstreamer-1.0/include
 TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
 TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
 TITAN_CPPFLAGS   += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
