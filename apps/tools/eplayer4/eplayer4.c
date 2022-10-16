@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 	gchar *uri;
 	uri = g_filename_to_uri(file, NULL, NULL);
 
-	m_gst_playbin = gst_element_factory_make("playbin2", "playbin");
+	m_gst_playbin = gst_element_factory_make("playbin", "playbin");
 
 	printf("URI=%s\n", uri);
 
