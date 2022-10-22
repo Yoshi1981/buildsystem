@@ -152,36 +152,6 @@ LH_BRANCH = master
 HAL_URL = https://github.com/Duckbox-Developers/libstb-hal-ddt.git
 
 #
-# tuxbox
-#
-#NEUTRINO ?= gui-neutrino
-#N_BRANCH ?= master
-#N_URL ?= https://github.com/tuxbox-neutrino/$(NEUTRINO).git
-#LIBSTB-HAL ?= library-stb-hal
-#LH_BRANCH ?= mpx
-#HAL_URL ?= https://github.com/tuxbox-neutrino/$(LIBSTB-HAL).git
-
-#
-#
-#
-#NEUTRINO = neutrino-tangos
-#N_BRANCH = master
-#N_URL = https://github.com/TangoCash/neutrino-tangos.git
-#LIBSTB-HAL = libstb-hal-tangos
-#LH_BRANCH = master
-#HAL_URL = https://github.com/TangoCash/libstb-hal-tangos.git
-
-#
-# ni
-#
-#NEUTRINO = ni-neutrino
-#N_BRANCH = master
-#N_URL = https://github.com/neutrino-images/ni-neutrino.git
-#LIBSTB-HAL = ni-libstb-hal
-#LH_BRANCH = master
-#HAL_URL = https://github.com/neutrino-images/ni-libstb-hal.git
-
-#
 # libstb-hal
 #
 LIBSTB_HAL_PATCHES =
@@ -443,10 +413,11 @@ release-NEUTRINO: release-NONE $(D)/neutrino $(NEUTRINO_PLUGINS)
 	cp -af $(TARGET_DIR)/usr/local/bin/restore.sh $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/sectionsdcontrol $(RELEASE_DIR)/usr/local/bin/
 	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
-	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/tuxbox/neutrino $(RELEASE_DIR)/usr/share/tuxbox
 #	cp -aR $(TARGET_DIR)/usr/share/tuxbox/sokoban $(RELEASE_DIR)/usr/share/tuxbox
 	cp -aR $(TARGET_DIR)/usr/share/fonts $(RELEASE_DIR)/usr/share/
+	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
+	cp -dp $(TARGET_DIR)/.version $(RELEASE_DIR)/
 	
 #
 #
