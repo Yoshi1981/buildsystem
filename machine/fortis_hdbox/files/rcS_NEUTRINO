@@ -116,6 +116,8 @@ if [ ! -e /var/etc/.firstboot ]; then
 		1)
 		   echo "REBOOT"
 		   init 6;;
+		3)
+		   echo "RESTART";;
 		*)
 		   echo "ERROR"
 		   init 6;;
