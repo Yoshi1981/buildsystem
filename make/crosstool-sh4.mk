@@ -2,25 +2,29 @@
 STM_RELOCATE     = /opt/STM/STLinux-2.4
 
 # updates / downloads
-STL_FTP          = http://archive.stlinux.com/stlinux/2.4
-STL_FTP_UPD_SRC  = $(STL_FTP)/updates/SRPMS
-STL_FTP_UPD_SH4  = $(STL_FTP)/updates/RPMS/sh4
-STL_FTP_UPD_HOST = $(STL_FTP)/updates/RPMS/host
+#STL_FTP          = http://archive.stlinux.com/stlinux/2.4
+STL_FTP          = $(GITHUB)/Duckbox-Developers/stlinux/raw/master
+#STL_FTP_UPD_SRC  = $(STL_FTP)/updates/SRPMS
+#STL_FTP_UPD_SH4  = $(STL_FTP)/updates/RPMS/sh4
+#STL_FTP_UPD_HOST = $(STL_FTP)/updates/RPMS/host
 
 ## ordering is important here. The /host/ rule must stay before the less
 ## specific %.sh4/%.i386/%.noarch rule. No idea if this is portable or
 ## even reliable :-(
 $(ARCHIVE)/stlinux24-host-%.i386.rpm \
 $(ARCHIVE)/stlinux24-host-%noarch.rpm:
-	$(WGET) $(STL_FTP_UPD_HOST)/$(subst $(ARCHIVE)/,"",$@)
+#	$(WGET) $(STL_FTP_UPD_HOST)/$(subst $(ARCHIVE)/,"",$@)
+	$(WGET) $(STL_FTP)/$(subst $(ARCHIVE)/,"",$@)
 
 $(ARCHIVE)/stlinux24-host-%.src.rpm:
-	$(WGET) $(STL_FTP_UPD_SRC)/$(subst $(ARCHIVE)/,"",$@)
+#	$(WGET) $(STL_FTP_UPD_SRC)/$(subst $(ARCHIVE)/,"",$@)
+	$(WGET) $(STL_FTP)/$(subst $(ARCHIVE)/,"",$@)
 
 $(ARCHIVE)/stlinux24-sh4-%.sh4.rpm \
 $(ARCHIVE)/stlinux24-cross-%.i386.rpm \
 $(ARCHIVE)/stlinux24-sh4-%.noarch.rpm:
-	$(WGET) $(STL_FTP_UPD_SH4)/$(subst $(ARCHIVE)/,"",$@)
+#	$(WGET) $(STL_FTP_UPD_SH4)/$(subst $(ARCHIVE)/,"",$@)
+	$(WGET) $(STL_FTP)/$(subst $(ARCHIVE)/,"",$@)
 
 #
 # install the RPMs
@@ -33,9 +37,13 @@ $(ARCHIVE)/stlinux24-sh4-%.noarch.rpm:
 #GLIBC_VER    = 2.10.2-42
 
 # 4.8.4
-BINUTILS_VER = 2.24.51.0.3-76
+#BINUTILS_VER = 2.24.51.0.3-76
+#GCC_VER      = 4.8.4-139
+#LIBGCC_VER   = 4.8.4-148
+#GLIBC_VER    = 2.14.1-59
+BINUTILS_VER = 2.24.51.0.3-77
 GCC_VER      = 4.8.4-139
-LIBGCC_VER   = 4.8.4-148
+LIBGCC_VER   = 4.8.4-149
 GLIBC_VER    = 2.14.1-59
 
 crosstool-rpminstall: \
