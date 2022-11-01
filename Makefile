@@ -164,13 +164,14 @@ init:
 	echo ""
 # lua
 	@echo -e "\nlua support ?:"
-	@echo "   1)  yes"
-	@echo -e "   \033[01;32m2)  no\033[00m"
+	@echo -e "   \033[01;32m1)  yes\033[00m"
+	@echo "   2)  yes"
 	@read -p "Select lua support (1-2)?" LUA; \
 	LUA=$${LUA}; \
 	case "$$LUA" in \
 		1) echo "LUA=lua" >> config;; \
-		2|*) echo "LUA=" >> config;; \
+		2) echo "LUA=" >> config;; \
+		*) echo "LUA=lua" >> config;; \
 	esac; \
 	echo ""
 # python

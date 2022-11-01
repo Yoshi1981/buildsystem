@@ -9,19 +9,10 @@ FKEYS =
 #
 KERNEL_STM ?= p0217
 
-ifeq ($(KERNEL_STM), p0209)
-KERNEL_VER             = 2.6.32.46_stm24_0209
-KERNEL_REVISION        = 8c676f1a85935a94de1fb103c0de1dd25ff69014
-STM_KERNEL_HEADERS_VER = 2.6.32.46-47
-P0209                  = p0209
-endif
-
-ifeq ($(KERNEL_STM), p0217)
 KERNEL_VER             = 2.6.32.71_stm24_0217
 KERNEL_REVISION        = 3ec500f4212f9e4b4d2537c8be5ea32ebf68c43b
 STM_KERNEL_HEADERS_VER = 2.6.32.46-48
 P0217                  = p0217
-endif
 
 split_version=$(subst _, ,$(1))
 KERNEL_UPSTREAM    =$(word 1,$(call split_version,$(KERNEL_VER)))
@@ -54,8 +45,7 @@ COMMON_PATCHES_24 = \
 		linux-sh4-permit_gcc_command_line_sections_stm24.patch \
 		linux-sh4-mmap_stm24.patch \
 		linux-defined_is_deprecated_timeconst.pl_stm24_$(KERNEL_LABEL).patch \
-		$(if $(P0217),linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch) \
-		$(if $(P0209),linux-sh4-dwmac_stm24_$(KERNEL_LABEL).patch)
+		linux-patch_swap_notify_core_support_stm24_$(KERNEL_LABEL).patch
 
 CUBEREVO_MINI_PATCHES_24 = $(COMMON_PATCHES_24) \
 		linux-sh4-cuberevo_mini_setup_stm24_$(KERNEL_LABEL).patch \
@@ -67,8 +57,7 @@ KERNEL_PATCHES_24  = $(CUBEREVO_MINI_PATCHES_24)
 KERNEL_PATCHES = $(KERNEL_PATCHES_24)
 KERNEL_CONFIG = linux-sh4-$(subst _stm24_,_,$(KERNEL_VER))_$(BOXTYPE).config
 
-$(D)/kernel.do_prepare: $(PATCHES)/$(BOXARCH)/$(KERNEL_CONFIG) \
-	$(if $(KERNEL_PATCHES),$(KERNEL_PATCHES:%=$(PATCHES)/$(BOXARCH)/stm24/%))
+$(D)/kernel.do_prepare: $(BASE_DIR)/machine/$(BOXTYPE)/files/$(KERNEL_CONFIG)
 	$(START_BUILD)
 	rm -rf $(KERNEL_DIR)
 	REPO=https://github.com/Duckbox-Developers/linux-sh4-2.6.32.71.git;protocol=https;branch=stmicro; \
@@ -81,9 +70,9 @@ $(D)/kernel.do_prepare: $(PATCHES)/$(BOXARCH)/$(KERNEL_CONFIG) \
 	set -e; cd $(KERNEL_DIR); \
 		for i in $(KERNEL_PATCHES); do \
 			echo -e "==> $(TERM_RED)Applying Patch:$(TERM_NORMAL) $$i"; \
-			$(PATCH)/$(BOXARCH)/stm24/$$i; \
+			$(APATCH) $(BASE_DIR)/machine/$(BOXTYPE)/patches/$$i; \
 		done
-	install -m 644 $(PATCHES)/$(BOXARCH)/$(KERNEL_CONFIG) $(KERNEL_DIR)/.config
+	install -m 644 $(BASE_DIR)/machine/$(BOXTYPE)/files/$(KERNEL_CONFIG) $(KERNEL_DIR)/.config
 	sed -i "s#^\(CONFIG_EXTRA_FIRMWARE_DIR=\).*#\1\"$(BASE_DIR)/root/lib/integrated_firmware\"#" $(KERNEL_DIR)/.config
 	-rm $(KERNEL_DIR)/localversion*
 	echo "$(KERNEL_STM_LABEL)" > $(KERNEL_DIR)/localversion-stm

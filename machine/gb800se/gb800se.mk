@@ -18,7 +18,7 @@ CUSTOM_KERNEL_VER      = $(KERNEL_VER)
 
 KERNEL_PATCHES_MIPSEL  = \
 		nor-maps-gb800solo.patch \
-       	add-dmx-source-timecode.patch \
+       		add-dmx-source-timecode.patch \
     		af9015-output-full-range-SNR.patch \
     		af9033-output-full-range-SNR.patch \
     		as102-adjust-signal-strength-report.patch \
