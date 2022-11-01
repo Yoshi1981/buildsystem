@@ -1,3 +1,37 @@
+diff -Nur neutrino-ddt.git/data/locale/deutsch.locale neutrino-ddt.git.patched/data/locale/deutsch.locale
+--- neutrino-ddt.git/data/locale/deutsch.locale	2022-11-01 14:52:23.549229731 +0100
++++ neutrino-ddt.git.patched/data/locale/deutsch.locale	2022-11-01 15:12:29.881705827 +0100
+@@ -1052,6 +1052,7 @@
+ menu.hint_back_brief Zurück zum vorherigen Menü.
+ menu.hint_backup Sichern von Konfigurationen und Kanallisten
+ menu.hint_bedit Bearbeiten ihrer Favoriten und der Bouquets
++menu.hint_buildinfo Informationen über Compiler, Compilerflags, Kernel
+ menu.hint_cache_txt Startet das Zwischenspeichern des Videotextes nach einem Kanalwechsel
+ menu.hint_cec_mode CEC-Modus
+ menu.hint_cec_standby CEC-Standby
+diff -Nur neutrino-ddt.git/data/locale/english.locale neutrino-ddt.git.patched/data/locale/english.locale
+--- neutrino-ddt.git/data/locale/english.locale	2022-11-01 14:52:23.549229731 +0100
++++ neutrino-ddt.git.patched/data/locale/english.locale	2022-11-01 15:11:59.166476717 +0100
+@@ -1052,6 +1052,7 @@
+ menu.hint_back_brief Return to previous menu
+ menu.hint_backup Backup configs and channels to selected dir
+ menu.hint_bedit Edit favorites and bouquets
++menu.hint_buildinfo Information about compilers, compiler flags, kernel
+ menu.hint_cache_txt Start teletext caching after channel switch
+ menu.hint_cec_mode CEC mode
+ menu.hint_cec_standby CEC standby
+diff -Nur neutrino-ddt.git/src/driver/audiodec/mp3dec.cpp neutrino-ddt.git.patched/src/driver/audiodec/mp3dec.cpp
+--- neutrino-ddt.git/src/driver/audiodec/mp3dec.cpp	2022-11-01 14:52:23.585229463 +0100
++++ neutrino-ddt.git.patched/src/driver/audiodec/mp3dec.cpp	2022-11-01 15:23:37.340371656 +0100
+@@ -59,6 +59,8 @@
+ #include <driver/display.h>
+ extern cAudio *audioDecoder;
+ 
++extern "C"
++{
+ //void id3_tag_addref(struct id3_tag *);
+ void my_id3_tag_delref(struct id3_tag *);
+ struct filetag
 diff -Nur neutrino-ddt.git/src/gui/audio_setup.cpp neutrino-ddt.git.patched/src/gui/audio_setup.cpp
 --- neutrino-ddt.git/src/gui/audio_setup.cpp	2022-11-01 14:52:23.601229344 +0100
 +++ neutrino-ddt.git.patched/src/gui/audio_setup.cpp	2022-11-01 14:54:57.783666958 +0100
@@ -31,6 +65,28 @@ diff -Nur neutrino-ddt.git/src/gui/imageinfo.cpp neutrino-ddt.git.patched/src/gu
  #include <gui/buildinfo.h>
  #define LICENSEDIR DATADIR "/neutrino/license/"
  #ifdef ENABLE_LUA
+diff -Nur neutrino-ddt.git/src/system/locals.h neutrino-ddt.git.patched/src/system/locals.h
+--- neutrino-ddt.git/src/system/locals.h	2022-11-01 14:52:23.641229046 +0100
++++ neutrino-ddt.git.patched/src/system/locals.h	2022-11-01 15:09:42.641856149 +0100
+@@ -1079,6 +1079,7 @@
+ 	LOCALE_MENU_HINT_BACK_BRIEF,
+ 	LOCALE_MENU_HINT_BACKUP,
+ 	LOCALE_MENU_HINT_BEDIT,
++	LOCALE_MENU_HINT_BUILDINFO,
+ 	LOCALE_MENU_HINT_CACHE_TXT,
+ 	LOCALE_MENU_HINT_CEC_MODE,
+ 	LOCALE_MENU_HINT_CEC_STANDBY,
+diff -Nur neutrino-ddt.git/src/system/locals_intern.h neutrino-ddt.git.patched/src/system/locals_intern.h
+--- neutrino-ddt.git/src/system/locals_intern.h	2022-11-01 14:52:23.641229046 +0100
++++ neutrino-ddt.git.patched/src/system/locals_intern.h	2022-11-01 15:10:59.723958116 +0100
+@@ -1079,6 +1079,7 @@
+ 	"menu.hint_back_brief",
+ 	"menu.hint_backup",
+ 	"menu.hint_bedit",
++	"menu.hint_buildinfo",
+ 	"menu.hint_cache_txt",
+ 	"menu.hint_cec_mode",
+ 	"menu.hint_cec_standby",
 diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/audio.h neutrino-ddt.git.patched/src/zapit/include/linux/dvb/audio.h
 --- neutrino-ddt.git/src/zapit/include/linux/dvb/audio.h	1970-01-01 01:00:00.000000000 +0100
 +++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/audio.h	2022-11-01 14:52:23.645229000 +0100
