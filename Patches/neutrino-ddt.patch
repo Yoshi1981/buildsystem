@@ -1,6 +1,39 @@
+diff -Nur neutrino-ddt.git/src/gui/audio_setup.cpp neutrino-ddt.git.patched/src/gui/audio_setup.cpp
+--- neutrino-ddt.git/src/gui/audio_setup.cpp	2022-11-01 14:52:23.601229344 +0100
++++ neutrino-ddt.git.patched/src/gui/audio_setup.cpp	2022-11-01 14:54:57.783666958 +0100
+@@ -103,7 +103,7 @@
+ 	{ 2, LOCALE_AUDIOMENU_AVSYNC_AM }
+ };
+ 
+-#if HAVE_SH4_HARDWARE
++//#if HAVE_SH4_HARDWARE
+ #define AUDIOMENU_HDMI_DD_OPTION_COUNT 3
+ const CMenuOptionChooser::keyval AUDIOMENU_HDMI_DD_OPTIONS[AUDIOMENU_HDMI_DD_OPTION_COUNT] =
+ {
+@@ -111,7 +111,7 @@
+ 	{ HDMI_ENCODED_AUTO,		LOCALE_AUDIOMENU_HDMI_DD_AUTO	},
+ 	{ HDMI_ENCODED_FORCED,		LOCALE_AUDIOMENU_HDMI_DD_FORCE	}
+ };
+-#endif
++//#endif
+ 
+ /* audio settings menu */
+ int CAudioSetup::showAudioSetup()
+diff -Nur neutrino-ddt.git/src/gui/imageinfo.cpp neutrino-ddt.git.patched/src/gui/imageinfo.cpp
+--- neutrino-ddt.git/src/gui/imageinfo.cpp	2022-11-01 14:52:23.609229283 +0100
++++ neutrino-ddt.git.patched/src/gui/imageinfo.cpp	2022-11-01 14:55:12.251482488 +0100
+@@ -38,7 +38,7 @@
+ #include <daemonc/remotecontrol.h>
+ #include <system/flashtool.h>
+ #include <system/helpers.h>
+-#include "version.h"
++//#include "version.h"
+ #include <gui/buildinfo.h>
+ #define LICENSEDIR DATADIR "/neutrino/license/"
+ #ifdef ENABLE_LUA
 diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/audio.h neutrino-ddt.git.patched/src/zapit/include/linux/dvb/audio.h
 --- neutrino-ddt.git/src/zapit/include/linux/dvb/audio.h	1970-01-01 01:00:00.000000000 +0100
-+++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/audio.h	2022-07-23 18:37:34.616465000 +0200
++++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/audio.h	2022-11-01 14:52:23.645229000 +0100
 @@ -0,0 +1,135 @@
 +/*
 + * audio.h
@@ -139,7 +172,7 @@ diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/audio.h neutrino-ddt.git.
 +#endif /* _DVBAUDIO_H_ */
 diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/ca.h neutrino-ddt.git.patched/src/zapit/include/linux/dvb/ca.h
 --- neutrino-ddt.git/src/zapit/include/linux/dvb/ca.h	1970-01-01 01:00:00.000000000 +0100
-+++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/ca.h	2022-07-23 18:37:34.616465000 +0200
++++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/ca.h	2022-11-01 14:52:23.645229000 +0100
 @@ -0,0 +1,90 @@
 +/*
 + * ca.h
@@ -233,7 +266,7 @@ diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/ca.h neutrino-ddt.git.pat
 +#endif
 diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/dmx.h neutrino-ddt.git.patched/src/zapit/include/linux/dvb/dmx.h
 --- neutrino-ddt.git/src/zapit/include/linux/dvb/dmx.h	1970-01-01 01:00:00.000000000 +0100
-+++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/dmx.h	2022-07-23 18:37:34.616465000 +0200
++++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/dmx.h	2022-11-01 14:52:23.645229000 +0100
 @@ -0,0 +1,330 @@
 +/*
 + * dmx.h
@@ -567,7 +600,7 @@ diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/dmx.h neutrino-ddt.git.pa
 +#endif /* _UAPI_DVBDMX_H_ */
 diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/frontend.h neutrino-ddt.git.patched/src/zapit/include/linux/dvb/frontend.h
 --- neutrino-ddt.git/src/zapit/include/linux/dvb/frontend.h	1970-01-01 01:00:00.000000000 +0100
-+++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/frontend.h	2022-07-23 18:37:34.616465000 +0200
++++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/frontend.h	2022-11-01 14:52:23.645229000 +0100
 @@ -0,0 +1,613 @@
 +/*
 + * frontend.h
@@ -1184,7 +1217,7 @@ diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/frontend.h neutrino-ddt.g
 +#endif /*_DVBFRONTEND_H_*/
 diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/net.h neutrino-ddt.git.patched/src/zapit/include/linux/dvb/net.h
 --- neutrino-ddt.git/src/zapit/include/linux/dvb/net.h	1970-01-01 01:00:00.000000000 +0100
-+++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/net.h	2022-07-23 18:37:34.616465000 +0200
++++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/net.h	2022-11-01 14:52:23.645229000 +0100
 @@ -0,0 +1,52 @@
 +/*
 + * net.h
@@ -1240,7 +1273,7 @@ diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/net.h neutrino-ddt.git.pa
 +#endif /*_DVBNET_H_*/
 diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/osd.h neutrino-ddt.git.patched/src/zapit/include/linux/dvb/osd.h
 --- neutrino-ddt.git/src/zapit/include/linux/dvb/osd.h	1970-01-01 01:00:00.000000000 +0100
-+++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/osd.h	2022-07-23 18:37:34.616465000 +0200
++++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/osd.h	2022-11-01 14:52:23.645229000 +0100
 @@ -0,0 +1,144 @@
 +/*
 + * osd.h
@@ -1388,7 +1421,7 @@ diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/osd.h neutrino-ddt.git.pa
 +#endif
 diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/version.h neutrino-ddt.git.patched/src/zapit/include/linux/dvb/version.h
 --- neutrino-ddt.git/src/zapit/include/linux/dvb/version.h	1970-01-01 01:00:00.000000000 +0100
-+++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/version.h	2022-07-23 18:37:34.616465000 +0200
++++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/version.h	2022-11-01 14:52:23.645229000 +0100
 @@ -0,0 +1,29 @@
 +/*
 + * version.h
@@ -1421,7 +1454,7 @@ diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/version.h neutrino-ddt.gi
 +#endif /*_DVBVERSION_H_*/
 diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/video.h neutrino-ddt.git.patched/src/zapit/include/linux/dvb/video.h
 --- neutrino-ddt.git/src/zapit/include/linux/dvb/video.h	1970-01-01 01:00:00.000000000 +0100
-+++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/video.h	2022-07-23 18:37:34.616465000 +0200
++++ neutrino-ddt.git.patched/src/zapit/include/linux/dvb/video.h	2022-11-01 14:52:23.645229000 +0100
 @@ -0,0 +1,274 @@
 +/*
 + * video.h
