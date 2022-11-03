@@ -47,6 +47,7 @@ NEUTRINO2_CPPFLAGS    += -I$(CROSS_DIR)/$(TARGET)/sys-root/usr/include
 endif
 
 ifeq ($(BOXARCH), sh4)
+NEUTRINO2_CPPFLAGS    += -I$(DRIVER_DIR)/include
 NEUTRINO2_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
 NEUTRINO2_CPPFLAGS    += -I$(KERNEL_DIR)/include
 endif

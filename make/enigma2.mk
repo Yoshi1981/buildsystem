@@ -45,9 +45,10 @@ ENIGMA2_CONFIG_OPTS += --with-lcd4linux
 ENIGMA2_DEPS += $(D)/lcd4linux
 endif
 
-ENIGMA2_CPPFLAGS    = -I$(DRIVER_DIR)/include
-ENIGMA2_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
 ENIGMA2_CPPFLAGS   += -I$(KERNEL_DIR)/include
+ENIGMA2_CPPFLAGS   += -I$(DRIVER_DIR)/include
+ENIGMA2_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
+ENIGMA2_CPPFLAGS   += -I$(CROSS_DIR)/$(TARGET)/sys-root/usr/include
 ENIGMA2_CPPFLAGS   += -I$(APPS_DIR)/tools
 
 ifeq ($(GUI), ENIGMA2)

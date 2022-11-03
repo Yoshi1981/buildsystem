@@ -40,13 +40,16 @@ endif
 
 TITAN_CPPFLAGS   += -DDVDPLAYER
 TITAN_CPPFLAGS   += -Wno-unused-but-set-variable
+ifeq ($(BOXARCH), sh4)
+TITAN_CPPFLAGS   += -I$(KERNEL_DIR)/include
 TITAN_CPPFLAGS   += -I$(DRIVER_DIR)/include
+endif
+TITAN_CPPFLAGS   += -I$(CROSS_DIR)/$(TARGET)/sys-root/usr/include
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/freetype2
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/openssl
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/libpng16
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/dreamdvd
-TITAN_CPPFLAGS   += -I$(KERNEL_DIR)/include
 TITAN_CPPFLAGS   += -I$(DRIVER_DIR)/bpamem
 TITAN_CPPFLAGS   += -I$(APPS_DIR)/tools
 TITAN_CPPFLAGS   += -I$(APPS_DIR)/tools/libmme_image
@@ -56,6 +59,7 @@ TITAN_CPPFLAGS   += -L$(SOURCE_DIR)/titan/libipkg
 TITAN_CPPFLAGS   += -DEPLAYER3
 TITAN_CPPFLAGS   += -DEXTEPLAYER3
 TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
+TITAN_CPPFLAGS   += -I$(APPS_DIR)/tools/exteplayer3/include
 
 ifeq ($(GSTREAMER), gstreamer)
 TITAN_CPPFLAGS   += -DEPLAYER4

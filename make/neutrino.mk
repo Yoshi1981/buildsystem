@@ -59,10 +59,12 @@ NEUTRINO_CFLAGS      += -D__STDC_CONSTANT_MACROS
 NEUTRINO_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-sections -fdata-sections
 
 NEUTRINO_CPPFLAGS     = -I$(TARGET_DIR)/usr/include
+NEUTRINO_CPPFLAGS    += -I$(CROSS_DIR)/$(TARGET)/sys-root/usr/include
 
 ifeq ($(BOXARCH), sh4)
-NEUTRINO_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
 NEUTRINO_CPPFLAGS    += -I$(KERNEL_DIR)/include
+NEUTRINO_CPPFLAGS    += -I$(DRIVER_DIR)/include
+NEUTRINO_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
 endif
 
 NEUTRINO_CPPFLAGS    += -ffunction-sections -fdata-sections
