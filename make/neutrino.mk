@@ -31,6 +31,9 @@ NEUTRINO_DEPS += $(D)/libdvbsi
 NEUTRINO_DEPS += $(D)/libusb
 NEUTRINO_DEPS += $(D)/pugixml 
 NEUTRINO_DEPS += $(D)/libopenthreads
+NEUTRINO_DEPS += $(D)/libid3tag
+NEUTRINO_DEPS += $(D)/libmad
+NEUTRINO_DEPS += $(D)/flac
 NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910))
@@ -49,8 +52,6 @@ endif
 ifeq ($(WLAN), wlandriver)
 NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
 endif
-
-NEUTRINO_DEPS += $(D)/libid3tag $(D)/libmad $(D)/flac
 
 NEUTRINO_CFLAGS       = -Wall -W -Wshadow -pipe -Os
 NEUTRINO_CFLAGS      += -D__KERNEL_STRICT_NAMES
@@ -87,18 +88,10 @@ endif
 
 ifeq ($(GSTREAMER), gstreamer)
 LH_CONFIG_OPTS += --enable-gstreamer_10
-NEUTRINO_DEPS  += $(D)/gstreamer 
-NEUTRINO_DEPS  += $(D)/gst_plugins_base 
-NEUTRINO_DEPS  += $(D)/gst_plugins_good 
-NEUTRINO_DEPS  += $(D)/gst_plugins_bad 
-NEUTRINO_DEPS  += $(D)/gst_plugins_ugly 
-NEUTRINO_DEPS  += $(D)/gst_plugin_subsink
-NEUTRINO_DEPS  += $(D)/gst_plugins_dvbmediasink
 NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-1.0)
 NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-audio-1.0)
 NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs gstreamer-video-1.0)
 NEUTRINO_CPPFLAGS    += $(shell $(PKG_CONFIG) --cflags --libs glib-2.0)
-NEUTRINO_CPPFLAGS    += -I$(CROSS_BASE)/$(TARGET)/sys-root/usr/include
 endif
 
 ifeq ($(GRAPHLCD), graphlcd)
