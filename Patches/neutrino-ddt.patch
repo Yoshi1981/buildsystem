@@ -20,6 +20,19 @@ diff -Nur neutrino-ddt.git/data/locale/english.locale neutrino-ddt.git.patched/d
  menu.hint_cache_txt Start teletext caching after channel switch
  menu.hint_cec_mode CEC mode
  menu.hint_cec_standby CEC standby
+diff -Nur neutrino-ddt.git/.git/FETCH_HEAD neutrino-ddt.git.patched/.git/FETCH_HEAD
+--- neutrino-ddt.git/.git/FETCH_HEAD	2022-11-01 18:54:49.369503025 +0100
++++ neutrino-ddt.git.patched/.git/FETCH_HEAD	1970-01-01 01:00:00.000000000 +0100
+@@ -1,4 +0,0 @@
+-87ed58d19ee2e537148d0d4287a6c2e96be5d1d6		branch 'master' of https://github.com/Duckbox-Developers/neutrino-ddt
+-ecd28f032060a2c6832625e7567895ff84af60f8	not-for-merge	branch 'master-eol' of https://github.com/Duckbox-Developers/neutrino-ddt
+-497e30da3469adb2d445a6033ad7551ee9ff86ed	not-for-merge	branch 'test' of https://github.com/Duckbox-Developers/neutrino-ddt
+-11bc98219fe23087030dab6dd295c01df14e1fe4	not-for-merge	branch 'youtube' of https://github.com/Duckbox-Developers/neutrino-ddt
+diff -Nur neutrino-ddt.git/.git/ORIG_HEAD neutrino-ddt.git.patched/.git/ORIG_HEAD
+--- neutrino-ddt.git/.git/ORIG_HEAD	2022-11-01 16:34:50.897113348 +0100
++++ neutrino-ddt.git.patched/.git/ORIG_HEAD	1970-01-01 01:00:00.000000000 +0100
+@@ -1 +0,0 @@
+-87ed58d19ee2e537148d0d4287a6c2e96be5d1d6
 diff -Nur neutrino-ddt.git/src/driver/audiodec/mp3dec.cpp neutrino-ddt.git.patched/src/driver/audiodec/mp3dec.cpp
 --- neutrino-ddt.git/src/driver/audiodec/mp3dec.cpp	2022-11-01 14:52:23.585229463 +0100
 +++ neutrino-ddt.git.patched/src/driver/audiodec/mp3dec.cpp	2022-11-01 15:23:37.340371656 +0100
@@ -1786,3 +1799,15 @@ diff -Nur neutrino-ddt.git/src/zapit/include/linux/dvb/video.h neutrino-ddt.git.
 +#define VIDEO_TRY_COMMAND 	   _IOWR('o', 60, struct video_command)
 +
 +#endif /* _UAPI_DVBVIDEO_H_ */
+diff -Nur neutrino-ddt.git/src/zapit/src/bouquets.cpp neutrino-ddt.git.patched/src/zapit/src/bouquets.cpp
+--- neutrino-ddt.git/src/zapit/src/bouquets.cpp	2022-11-01 14:52:23.649228985 +0100
++++ neutrino-ddt.git.patched/src/zapit/src/bouquets.cpp	2022-11-03 17:19:11.030638826 +0100
+@@ -802,7 +802,7 @@
+ 
+ 			if (strcasecmp("xml", extension.c_str()) == 0)
+ 				xml = true;
+-			if (strcasecmp("m3u", extension.c_str()) == 0)
++			if (strcasecmp("m3u8", extension.c_str()) == 0)
+ 				m3u = true;
+ 			if (strcasecmp("tv", extension.c_str()) == 0)
+ 				e2tv = true;
