@@ -93,7 +93,7 @@ ifeq ($(LCD4LINUX), lcd4linux)
 NEUTRINO_CONFIG_OPTS += --with-lcd4linux
 endif
 
-MACHINE := $(BOXTYPE)
+MACHINE = $(BOXTYPE)
 ifeq ($(BOXARCH), arm)
 MACHINE = hd51
 endif

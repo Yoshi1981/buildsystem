@@ -65,10 +65,10 @@ endif
 #
 #
 #
-MACHINE := $(BOXTYPE)
+BOARD = $(BOXTYPE)
 
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
-MACHINE = generic
+BOARD = vuduo
 endif
 
 #
@@ -101,7 +101,7 @@ $(D)/titan.config.status: $(D)/titan.do_prepare
 			--bindir=/usr/local/bin \
 			--prefix=/usr \
 			--sysconfdir=/etc \
-			--with-boxtype=$(MACHINE) \
+			--with-boxtype=$(BOARD) \
 			--enable-multicom324 \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			CPPFLAGS="$(TITAN_CPPFLAGS)"
