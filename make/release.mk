@@ -3,25 +3,109 @@
 #
 RELEASE_DEPS = $(KERNEL) 
 RELEASE_DEPS += $(D)/driver 
-RELEASE_DEPS += $(D)/system-tools
-RELEASE_DEPS += $(D)/tools
-RELEASE_DEPS += $(D)/diverse-tools
-RELEASE_DEPS += $(LIRC)
-RELEASE_DEPS += $(D)/tools-exteplayer3
+RELEASE_DEPS += $(D)/busybox
+RELEASE_DEPS += $(D)/sysvinit
+RELEASE_DEPS += $(D)/util_linux
+RELEASE_DEPS += $(D)/e2fsprogs
+RELEASE_DEPS += $(D)/hdidle
+RELEASE_DEPS += $(D)/portmap
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
+RELEASE_DEPS += $(D)/jfsutils
+RELEASE_DEPS += $(D)/nfs_utils
+endif
+RELEASE_DEPS += $(D)/vsftpd
+RELEASE_DEPS += $(D)/autofs
+RELEASE_DEPS += $(D)/udpxy
+RELEASE_DEPS += $(D)/dvbsnoop
+RELEASE_DEPS += $(D)/fbshot
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+RELEASE_DEPS += $(D)/ofgwrite
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913))
+	RELEASE_DEPS += $(D)/ntfs_3g
+ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
+	RELEASE_DEPS += $(D)/mtd_utils 
+	RELEASE_DEPS += $(D)/gptfdisk
+endif
+endif
+ifeq ($(BOXARCH), arm)
+	RELEASE_DEPS += $(D)/ntfs_3g 
+	RELEASE_DEPS += $(D)/gptfdisk
+	RELEASE_DEPS += $(D)/mc 
+endif
 
+#
+# tools
+#
+RELEASE_DEPS += $(D)/tools-aio-grab
+RELEASE_DEPS += $(D)/tools-satfind
+RELEASE_DEPS += $(D)/tools-showiframe
+ifeq ($(BOXARCH), sh4)
+RELEASE_DEPS += $(D)/tools-devinit
+RELEASE_DEPS += $(D)/tools-evremote2
+RELEASE_DEPS += $(D)/tools-fp_control
+RELEASE_DEPS += $(D)/tools-flashtool-fup
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs912))
+RELEASE_DEPS += $(D)/tools_flashtool_mup
+endif
+RELEASE_DEPS += $(D)/tools-flashtool-mup
+RELEASE_DEPS += $(D)/tools-flashtool-pad
+RELEASE_DEPS += $(D)/tools-hotplug
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ipbox55 ipbox99 ipbox9900 cuberevo cuberevo_mini cuberevo_mini2 cuberevo_250hd cuberevo_2000hd cuberevo_3000hd))
+RELEASE_DEPS += $(D)/tools-ipbox_eeprom
+endif
+RELEASE_DEPS += $(D)/tools-stfbcontrol
+RELEASE_DEPS += $(D)/tools-streamproxy
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), tf7700))
+RELEASE_DEPS += $(D)/tools-tfd2mtd
+RELEASE_DEPS += $(D)/tools-tffpctl
+endif
+RELEASE_DEPS += $(D)/tools-ustslave
+RELEASE_DEPS += $(D)/tools-vfdctl
+RELEASE_DEPS += $(D)/tools-wait4button
+endif
+ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
+RELEASE_DEPS += $(D)/tools-initfb
+endif
+RELEASE_DEPS += $(D)/tools-exteplayer3
+RELEASE_DEPS += $(LIRC)
+
+#
+# diverse-tools
+#
+RELEASE_DEPS += $(D)/diverse-tools
+
+#
+# wlan
+#
 ifeq ($(WLAN), wlandriver)	
 	RELEASE_DEPS += $(D)/wpa_supplicant 
 	RELEASE_DEPS += $(D)/wireless_tools
 endif
 
+#
+# python
+#
 ifeq ($(PYTHON), python)
 RELEASE_DEPS += $(D)/python
 endif
 
+#
+# lua
+#
 ifeq ($(LUA), lua)
-RELEASE_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
+RELEASE_DEPS += $(D)/lua 
+RELEASE_DEPS += $(D)/luaexpat 
+RELEASE_DEPS += $(D)/luacurl 
+RELEASE_DEPS += $(D)/luasocket 
+RELEASE_DEPS += $(D)/luafeedparser 
+RELEASE_DEPS += $(D)/luasoap 
+RELEASE_DEPS += $(D)/luajson
 endif
 
+#
+# gstreamer
+#
 ifeq ($(GSTREAMER), gstreamer)
 RELEASE_DEPS  += $(D)/gstreamer 
 RELEASE_DEPS  += $(D)/gst_plugins_base 
@@ -33,10 +117,16 @@ RELEASE_DEPS  += $(D)/gst_plugins_dvbmediasink
 RELEASE_DEPS  += $(D)/tools-eplayer4
 endif
 
+#
+# graphlcd
+#
 ifeq ($(GRAPHLCD), graphlcd)
-RELEASE_DEPS_ += $(D)/graphlcd
+RELEASE_DEPS += $(D)/graphlcd
 endif
 
+#
+# lcd4linux
+#
 ifeq ($(LCD4LINUX), lcd4linux)
 RELEASE_DEPS += $(D)/lcd4linux
 endif

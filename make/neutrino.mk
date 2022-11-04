@@ -34,24 +34,15 @@ NEUTRINO_DEPS += $(D)/libopenthreads
 NEUTRINO_DEPS += $(D)/libid3tag
 NEUTRINO_DEPS += $(D)/libmad
 NEUTRINO_DEPS += $(D)/flac
-NEUTRINO_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
-
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913 ufs910))
-NEUTRINO_DEPS += $(D)/ntfs_3g
-ifneq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910))
-NEUTRINO_DEPS += $(D)/mtd_utils $(D)/parted
-endif
-NEUTRINO_DEPS +=  $(D)/minidlna
-endif
-
-ifeq ($(BOXARCH), arm)
-NEUTRINO_DEPS += $(D)/ntfs_3g
-NEUTRINO_DEPS += $(D)/mc
-endif
-
-ifeq ($(WLAN), wlandriver)
-NEUTRINO_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
-endif
+#ifeq ($(LUA), lua)
+NEUTRINO_DEPS += $(D)/lua 
+NEUTRINO_DEPS += $(D)/luaexpat 
+NEUTRINO_DEPS += $(D)/luacurl 
+NEUTRINO_DEPS += $(D)/luasocket 
+NEUTRINO_DEPS += $(D)/luafeedparser 
+NEUTRINO_DEPS += $(D)/luasoap 
+NEUTRINO_DEPS += $(D)/luajson
+#endif
 
 NEUTRINO_CFLAGS       = -Wall -W -Wshadow -pipe -Os
 NEUTRINO_CFLAGS      += -D__KERNEL_STRICT_NAMES
@@ -96,12 +87,10 @@ endif
 
 ifeq ($(GRAPHLCD), graphlcd)
 NEUTRINO_CONFIG_OPTS += --with-graphlcd
-NEUTRINO_DEPS_ += $(D)/graphlcd
 endif
 
 ifeq ($(LCD4LINUX), lcd4linux)
 NEUTRINO_CONFIG_OPTS += --with-lcd4linux
-NEUTRINO_DEPS += $(D)/lcd4linux
 endif
 
 MACHINE := $(BOXTYPE)

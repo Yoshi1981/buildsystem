@@ -29,27 +29,21 @@ ENIGMA2_DEPS += $(D)/sdparm
 ENIGMA2_DEPS += $(D)/parted 
 endif
 
-ifeq ($(WLAN), wlandriver)
-ENIGMA2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
-endif
-
 ENIGMA2_CONFIG_OPTS =
 
 ifeq ($(GRAPHLCD), graphlcd)
 ENIGMA2_CONFIG_OPTS += --with-graphlcd
-ENIGMA2_DEPS_ += $(D)/graphlcd
 endif
 
 ifeq ($(LCD4LINUX), lcd4linux)
 ENIGMA2_CONFIG_OPTS += --with-lcd4linux
-ENIGMA2_DEPS += $(D)/lcd4linux
 endif
 
+ifeq ($(BOXARCH), sh4)
 ENIGMA2_CPPFLAGS   += -I$(KERNEL_DIR)/include
 ENIGMA2_CPPFLAGS   += -I$(DRIVER_DIR)/include
+endif
 ENIGMA2_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
-ENIGMA2_CPPFLAGS   += -I$(CROSS_DIR)/$(TARGET)/sys-root/usr/include
-ENIGMA2_CPPFLAGS   += -I$(APPS_DIR)/tools
 
 ifeq ($(GUI), ENIGMA2)
 PYTHON = python
@@ -90,6 +84,7 @@ $(D)/enigma2.config.status: $(D)/enigma2.do_prepare
 			--prefix=/usr \
 			--sysconfdir=/etc \
 			--with-boxtype=$(BOXTYPE) \
+			-with-gstversion=1.0 \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			PKG_CONFIG_PATH=$(PKG_CONFIG_PATH) \
 			PY_PATH=$(TARGET_DIR)/usr \

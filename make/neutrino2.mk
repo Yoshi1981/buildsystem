@@ -18,18 +18,6 @@ NEUTRINO2_DEPS += $(D)/flac
 NEUTRINO2_DEPS += $(D)/libopenthreads
 NEUTRINO2_DEPS += $(D)/libass
 
-ifeq ($(WLAN), wlandriver)
-NEUTRINO2_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
-endif
-
-ifeq ($(PYTHON), python)
-NEUTRINO2_DEPS += $(D)/python
-endif
-
-ifeq ($(LUA), lua)
-NEUTRINO2_DEPS += $(D)/lua $(D)/luaexpat $(D)/luacurl $(D)/luasocket $(D)/luafeedparser $(D)/luasoap $(D)/luajson
-endif
-
 #
 # CFLAGS / CPPFLAGS
 #
@@ -41,15 +29,12 @@ NEUTRINO2_CFLAGS      += -fno-strict-aliasing -funsigned-char -ffunction-section
 
 NEUTRINO2_CPPFLAGS     = -I$(TARGET_DIR)/usr/include
 NEUTRINO2_CPPFLAGS    += -ffunction-sections -fdata-sections
-
-ifeq ($(BOXARCH), arm)
 NEUTRINO2_CPPFLAGS    += -I$(CROSS_DIR)/$(TARGET)/sys-root/usr/include
-endif
 
 ifeq ($(BOXARCH), sh4)
+NEUTRINO2_CPPFLAGS    += -I$(KERNEL_DIR)/include
 NEUTRINO2_CPPFLAGS    += -I$(DRIVER_DIR)/include
 NEUTRINO2_CPPFLAGS    += -I$(DRIVER_DIR)/bpamem
-NEUTRINO2_CPPFLAGS    += -I$(KERNEL_DIR)/include
 endif
 
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), spark spark7162))
@@ -96,12 +81,10 @@ endif
 
 ifeq ($(GRAPHLCD), graphlcd)
 NEUTRINO2_CONFIG_OPTS += --with-graphlcd
-NEUTRINO2_DEPS_ += $(D)/graphlcd
 endif
 
 ifeq ($(LCD4LINUX), lcd4linux)
 NEUTRINO2_CONFIG_OPTS += --with-lcd4linux
-NEUTRINO2_DEPS += $(D)/lcd4linux
 endif
 
 NEUTRINO2_PATCHES =

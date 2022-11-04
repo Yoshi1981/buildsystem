@@ -14,44 +14,28 @@ TITAN_DEPS += $(D)/tools-libmme_image
 TITAN_DEPS += $(D)/libcurl
 TITAN_DEPS += $(D)/ffmpeg
 
-ifeq ($(GSTREAMER), gstreamer)
-TITAN_DEPS  += $(D)/gstreamer 
-TITAN_DEPS  += $(D)/gst_plugins_base 
-TITAN_DEPS  += $(D)/gst_plugins_good 
-TITAN_DEPS  += $(D)/gst_plugins_bad 
-TITAN_DEPS  += $(D)/gst_plugins_ugly 
-TITAN_DEPS  += $(D)/gst_plugin_subsink
-TITAN_DEPS  += $(D)/gst_plugins_dvbmediasink
-endif
-
-ifeq ($(WLAN), wlandriver)
-TITAN_DEPS += $(D)/wpa_supplicant $(D)/wireless_tools
-endif
-
 ifeq ($(GRAPHLCD), graphlcd)
 TITAN_CONFIG_OPTS += --with-graphlcd
-TITAN_DEPS_ += $(D)/graphlcd
 endif
 
 ifeq ($(LCD4LINUX), lcd4linux)
 TITAN_CONFIG_OPTS += --with-lcd4linux
-TITAN_DEPS += $(D)/lcd4linux
 endif
 
 TITAN_CPPFLAGS   += -DDVDPLAYER
 TITAN_CPPFLAGS   += -Wno-unused-but-set-variable
+
 ifeq ($(BOXARCH), sh4)
 TITAN_CPPFLAGS   += -I$(KERNEL_DIR)/include
 TITAN_CPPFLAGS   += -I$(DRIVER_DIR)/include
+TITAN_CPPFLAGS   += -I$(DRIVER_DIR)/bpamem
 endif
-TITAN_CPPFLAGS   += -I$(CROSS_DIR)/$(TARGET)/sys-root/usr/include
+
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/freetype2
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/openssl
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/libpng16
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/dreamdvd
-TITAN_CPPFLAGS   += -I$(DRIVER_DIR)/bpamem
-TITAN_CPPFLAGS   += -I$(APPS_DIR)/tools
 TITAN_CPPFLAGS   += -I$(APPS_DIR)/tools/libmme_image
 TITAN_CPPFLAGS   += -L$(TARGET_DIR)/usr/lib
 TITAN_CPPFLAGS   += -I$(TARGET_DIR)/usr/include/python
@@ -75,15 +59,16 @@ endif
 ifeq ($(BOXARCH), sh4)
 TITAN_CPPFLAGS   += -DSH4
 else
-TITAN_CPPFLAGS   += -DMIPSEL
+TITAN_CPPFLAGS   += -DMIPSEL -DOEBUILD
 endif
 
 #
 #
 #
 MACHINE := $(BOXTYPE)
-ifeq ($(BOXARCH), mips)
-MACHINE = vuduo
+
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+MACHINE = generic
 endif
 
 #
