@@ -399,6 +399,12 @@ $(D)/neutrino-plugins-mediathek:
 # release-NEUTRINO
 #
 release-NEUTRINO: release-NONE $(D)/neutrino $(NEUTRINO_PLUGINS)
+	install -d $(RELEASE_DIR)/usr/share/iso-codes
+	install -d $(RELEASE_DIR)/usr/share/tuxbox
+	install -d $(RELEASE_DIR)/var/tuxbox
+	install -d $(RELEASE_DIR)/var/tuxbox/config/{webtv,zapit}
+	install -d $(RELEASE_DIR)/var/tuxbox/plugins
+	install -d $(RELEASE_DIR)/var/httpd
 	cp -af $(TARGET_DIR)/usr/local/bin/neutrino $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/backup.sh $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/install.sh $(RELEASE_DIR)/usr/local/bin/

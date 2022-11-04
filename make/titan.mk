@@ -59,7 +59,6 @@ TITAN_CPPFLAGS   += -L$(SOURCE_DIR)/titan/libipkg
 TITAN_CPPFLAGS   += -DEPLAYER3
 TITAN_CPPFLAGS   += -DEXTEPLAYER3
 TITAN_CPPFLAGS   += -I$(SOURCE_DIR)/titan/libeplayer3/include
-TITAN_CPPFLAGS   += -I$(APPS_DIR)/tools/exteplayer3/include
 
 ifeq ($(GSTREAMER), gstreamer)
 TITAN_CPPFLAGS   += -DEPLAYER4
@@ -262,6 +261,22 @@ titan-plugins-distclean:
 # release-TITAN
 #
 release-TITAN: release-NONE $(D)/titan
+	install -d $(RELEASE_DIR)/var/etc/titan
+	install -d $(RELEASE_DIR)/var/etc/autostart
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/{skin,po,web,plugins}
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/{de,el,en,es,fr,it,lt,nl,pl,ru,vi}
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/de/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/el/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/en/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/es/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/fr/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/it/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/lt/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/nl/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/pl/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/ru/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/vi/LC_MESSAGES
+	install -d $(RELEASE_DIR)/var/usr/share/fonts
 	cp -af $(TARGET_DIR)/usr/local/bin/titan $(RELEASE_DIR)/usr/local/bin/
 	cp $(SKEL_ROOT)/var/etc/titan/titan.cfg $(RELEASE_DIR)/var/etc/titan/titan.cfg
 	cp $(SKEL_ROOT)/var/etc/titan/rcconfig.$(BOXTYPE) $(RELEASE_DIR)/var/etc/titan/rcconfig

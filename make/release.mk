@@ -59,34 +59,8 @@ release-common: $(RELEASE_DEPS)
 	install -d $(RELEASE_DIR)/usr/share/{udhcpc,zoneinfo,fonts}
 	install -d $(RELEASE_DIR)/var/{bin,etc,lib,net,tuxbox,keys}
 	install -d $(RELEASE_DIR)/var/lib/{nfs,modules}
-ifeq ($(GUI), TITAN)
-	install -d $(RELEASE_DIR)/var/etc/titan
-	install -d $(RELEASE_DIR)/var/etc/autostart
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/{skin,po,web,plugins}
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/{de,el,en,es,fr,it,lt,nl,pl,ru,vi}
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/de/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/el/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/en/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/es/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/fr/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/it/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/lt/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/nl/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/pl/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/ru/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/local/share/titan/po/vi/LC_MESSAGES
-	install -d $(RELEASE_DIR)/var/usr/share/fonts
-endif
-ifeq ($(GUI), $(filter $(GUI), NEUTRINO NEUTRINO2))
-	install -d $(RELEASE_DIR)/usr/share/iso-codes
-	install -d $(RELEASE_DIR)/usr/share/tuxbox
 ifeq ($(LUA), lua)
 	install -d $(RELEASE_DIR)/usr/share/lua/5.2
-endif
-	install -d $(RELEASE_DIR)/var/tuxbox
-	install -d $(RELEASE_DIR)/var/tuxbox/config/{webtv,zapit}
-	install -d $(RELEASE_DIR)/var/tuxbox/plugins
-	install -d $(RELEASE_DIR)/var/httpd
 endif	
 	mkdir -p $(RELEASE_DIR)/etc/rc.d/rc0.d
 	ln -s ../init.d/sendsigs $(RELEASE_DIR)/etc/rc.d/rc0.d/S20sendsigs
