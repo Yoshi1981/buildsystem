@@ -8,19 +8,10 @@ LCD = vfd
 #
 KERNEL_STM ?= p0217
 
-#ifeq ($(KERNEL_STM), p0209)
-#KERNEL_VER             = 2.6.32.46_stm24_0209
-#KERNEL_REVISION        = 8c676f1a85935a94de1fb103c0de1dd25ff69014
-#STM_KERNEL_HEADERS_VER = 2.6.32.46-47
-#P0209                  = p0209
-#endif
-
-#ifeq ($(KERNEL_STM), p0217)
 KERNEL_VER             = 2.6.32.71_stm24_0217
 KERNEL_REVISION        = 3ec500f4212f9e4b4d2537c8be5ea32ebf68c43b
 STM_KERNEL_HEADERS_VER = 2.6.32.46-48
 P0217                  = p0217
-#endif
 
 split_version=$(subst _, ,$(1))
 KERNEL_UPSTREAM    =$(word 1,$(call split_version,$(KERNEL_VER)))
@@ -120,7 +111,6 @@ $(D)/kernel.do_compile: $(D)/kernel.do_prepare
 		$(DEPMOD) -ae -b $(TARGET_DIR) -F $(KERNEL_DIR)/System.map -r $(KERNEL_VER)
 	@touch $@
 
-KERNEL = $(D)/kernel
 $(D)/kernel: $(D)/bootstrap host_u_boot_tools $(D)/kernel.do_compile
 	install -m 644 $(KERNEL_DIR)/arch/sh/boot/$(KERNELNAME) $(BOOT_DIR)/vmlinux.ub
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-sh4-$(KERNEL_VER)
@@ -134,21 +124,6 @@ $(D)/kernel: $(D)/bootstrap host_u_boot_tools $(D)/kernel.do_compile
 #
 # driver
 #
-DRIVER_PLATFORM   = ATEVIO7500=atevio7500
-DRIVER_PLATFORM   += $(WLANDRIVER)
-
-#
-# driver-symlink
-#
-driver-symlink:
-	cp $(DRIVER_DIR)/stgfb/stmfb/linux/drivers/video/stmfb.h $(TARGET_DIR)/usr/include/linux
-	cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_ioctls.h $(TARGET_DIR)/usr/include/linux/dvb
-	touch $(D)/$(notdir $@)
-
-#
-# driver
-#
-driver: $(D)/driver
 $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CONFIG_DEBUG_SECTION_MISMATCH=y \
@@ -156,7 +131,8 @@ $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/kernel
 		KERNEL_LOCATION=$(KERNEL_DIR) \
 		DRIVER_TOPDIR=$(DRIVER_DIR) \
 		M=$(DRIVER_DIR) \
-		$(DRIVER_PLATFORM) \
+		ATEVIO7500=atevio7500 \
+		$(WLANDRIVER) \
 		CROSS_COMPILE=$(TARGET)- \
 		modules
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CONFIG_DEBUG_SECTION_MISMATCH=y \
@@ -164,7 +140,8 @@ $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/kernel
 		KERNEL_LOCATION=$(KERNEL_DIR) \
 		DRIVER_TOPDIR=$(DRIVER_DIR) \
 		M=$(DRIVER_DIR) \
-		$(DRIVER_PLATFORM) \
+		ATEVIO7500=atevio7500 \
+		$(WLANDRIVER) \
 		CROSS_COMPILE=$(TARGET)- \
 		BIN_DEST=$(TARGET_DIR)/bin \
 		INSTALL_MOD_PATH=$(TARGET_DIR) \

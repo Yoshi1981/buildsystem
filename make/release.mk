@@ -1,8 +1,8 @@
 #
 # release-common
 #
-RELEASE_DEPS = $(KERNEL) 
-RELEASE_DEPS += $(D)/driver 
+RELEASE_DEPS = $(D)/kernel
+RELEASE_DEPS += $(D)/driver
 RELEASE_DEPS += $(D)/busybox
 RELEASE_DEPS += $(D)/sysvinit
 RELEASE_DEPS += $(D)/util_linux

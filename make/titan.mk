@@ -92,7 +92,7 @@ $(D)/titan.do_prepare: $(TITAN_DEPS)
 	cp -ra $(ARCHIVE)/titan.svn $(SOURCE_DIR)/titan; \
 	set -e; cd $(SOURCE_DIR)/titan; \
 		$(call apply_patches, $(TITAN_PATCH))
-	@touch $@
+	$(TOUCH)
 
 $(D)/titan.config.status: $(D)/titan.do_prepare
 	cd $(SOURCE_DIR)/titan; \
@@ -102,6 +102,7 @@ $(D)/titan.config.status: $(D)/titan.do_prepare
 			--build=$(BUILD) \
 			--host=$(TARGET) \
 			$(TITAN_CONFIG_OPTS) \
+			--enable-eplayer3 \
 			--datadir=/usr/local/share \
 			--libdir=/usr/lib \
 			--bindir=/usr/local/bin \

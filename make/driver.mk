@@ -1,4 +1,21 @@
 #
+#
+#
+ifeq ($(WLAN), wlandriver)
+WLANDRIVER = WLANDRIVER=wlandriver
+endif
+
+DEPMOD = $(HOST_DIR)/bin/depmod
+
+#
+# driver-symlink
+#
+driver-symlink:
+	cp $(DRIVER_DIR)/stgfb/stmfb/linux/drivers/video/stmfb.h $(TARGET_DIR)/usr/include/linux
+	cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_ioctls.h $(TARGET_DIR)/usr/include/linux/dvb
+	touch $(D)/$(notdir $@)
+
+#
 # driver-clean
 #
 driver-clean:

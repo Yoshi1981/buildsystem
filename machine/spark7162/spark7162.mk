@@ -112,7 +112,6 @@ $(D)/kernel.do_compile: $(D)/kernel.do_prepare
 		$(DEPMOD) -ae -b $(TARGET_DIR) -F $(KERNEL_DIR)/System.map -r $(KERNEL_VER)
 	@touch $@
 
-KERNEL = $(D)/kernel
 $(D)/kernel: $(D)/bootstrap host_u_boot_tools $(D)/kernel.do_compile
 	install -m 644 $(KERNEL_DIR)/arch/sh/boot/$(KERNELNAME) $(BOOT_DIR)/vmlinux.ub
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-sh4-$(KERNEL_VER)
@@ -126,21 +125,6 @@ $(D)/kernel: $(D)/bootstrap host_u_boot_tools $(D)/kernel.do_compile
 #
 # driver
 #
-DRIVER_PLATFORM   = SPARK7162=spark7162
-DRIVER_PLATFORM   += $(WLANDRIVER)
-
-#
-# driver-symlink
-#
-driver-symlink:
-	cp $(DRIVER_DIR)/stgfb/stmfb/linux/drivers/video/stmfb.h $(TARGET_DIR)/usr/include/linux
-	cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_ioctls.h $(TARGET_DIR)/usr/include/linux/dvb
-	touch $(D)/$(notdir $@)
-
-#
-# driver
-#
-driver: $(D)/driver
 $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CONFIG_DEBUG_SECTION_MISMATCH=y \
@@ -148,7 +132,8 @@ $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/kernel
 		KERNEL_LOCATION=$(KERNEL_DIR) \
 		DRIVER_TOPDIR=$(DRIVER_DIR) \
 		M=$(DRIVER_DIR) \
-		$(DRIVER_PLATFORM) \
+		SPARK7162=spark7162 \
+		$(WLANDRIVER) \
 		CROSS_COMPILE=$(TARGET)- \
 		modules
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CONFIG_DEBUG_SECTION_MISMATCH=y \
@@ -156,7 +141,8 @@ $(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/kernel
 		KERNEL_LOCATION=$(KERNEL_DIR) \
 		DRIVER_TOPDIR=$(DRIVER_DIR) \
 		M=$(DRIVER_DIR) \
-		$(DRIVER_PLATFORM) \
+		SPARK7162=spark7162 \
+		$(WLANDRIVER) \
 		CROSS_COMPILE=$(TARGET)- \
 		BIN_DEST=$(TARGET_DIR)/bin \
 		INSTALL_MOD_PATH=$(TARGET_DIR) \

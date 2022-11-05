@@ -280,17 +280,3 @@ MAKE_OPTS := \
 	ARCH=sh \
 	CROSS_COMPILE=$(TARGET)-
 
-#
-#
-#
-WLAN ?= wlandriver
-ifeq ($(WLAN), wlandriver)
-WLANDRIVER = WLANDRIVER=wlandriver
-endif
-
-DEPMOD = $(HOST_DIR)/bin/depmod
-
-
-
-
-
