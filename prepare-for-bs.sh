@@ -23,7 +23,7 @@ if `which lsb_release > /dev/null 2>&1`; then
 		CentOS*) FEDORA=1; INSTALL="yum install -y";;
 		SUSE*)   SUSE=1;   INSTALL="zypper install -y";;
 		Ubuntu*) UBUNTU=1; INSTALL="apt-get -y install";;
-		LinuxM*) UBUNTU=2; INSTALL="apt-get --force-yes install";;
+		Linuxm*) UBUNTU=2; INSTALL="apt-get --force-yes install";;
 		Gentoo)  GENTOO=1; INSTALL="emerge -uN";;
 	esac
 fi
