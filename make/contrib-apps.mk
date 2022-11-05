@@ -1183,42 +1183,6 @@ $(D)/smartmontools: $(D)/bootstrap $(ARCHIVE)/$(SMARTMONTOOLS_SOURCE)
 #
 # nfs_utils
 #
-#NFS_UTILS_VER = 2.3.3
-#NFS_UTILS_SOURCE = nfs-utils-$(NFS_UTILS_VER).tar.bz2
-#NFS_UTILS_PATCH = nfs-utils-$(NFS_UTILS_VER).patch
-
-#$(ARCHIVE)/$(NFS_UTILS_SOURCE):
-#	$(WGET) https://sourceforge.net/projects/nfs/files/nfs-utils/$(NFS_UTILS_VER)/$(NFS_UTILS_SOURCE)
-
-#$(D)/nfs_utils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(NFS_UTILS_SOURCE)
-#	$(START_BUILD)
-#	$(REMOVE)/nfs-utils-$(NFS_UTILS_VER)
-#	$(UNTAR)/$(NFS_UTILS_SOURCE)
-#	$(CHDIR)/nfs-utils-$(NFS_UTILS_VER); \
-#		$(call apply_patches, $(NFS_UTILS_PATCH)); \
-#		$(CONFIGURE) \
-#			CC_FOR_BUILD=$(TARGET)-gcc \
-#			--prefix=/usr \
-#			--exec-prefix=/usr \
-#			--mandir=/.remove \
-#			--disable-gss \
-#			--enable-ipv6=no \
-#			--disable-tirpc \
-#			--disable-nfsv4 \
-#			--without-tcp-wrappers \
-#		; \
-#		$(MAKE); \
-#		$(MAKE) install DESTDIR=$(TARGET_DIR)
-#	install -m 755 $(SKEL_ROOT)/etc/init.d/nfs-common $(TARGET_DIR)/etc/init.d/
-#	install -m 755 $(SKEL_ROOT)/etc/init.d/nfs-kernel-server $(TARGET_DIR)/etc/init.d/
-#	install -m 644 $(SKEL_ROOT)/etc/exports $(TARGET_DIR)/etc/
-#	rm -f $(addprefix $(TARGET_DIR)/sbin/,mount.nfs mount.nfs4 umount.nfs umount.nfs4 osd_login)
-#	rm -f $(addprefix $(TARGET_DIR)/usr/sbin/,mountstats nfsiostat sm-notify start-statd)
-#	$(REMOVE)/nfs-utils-$(NFS_UTILS_VER)
-#	$(TOUCH)
-#
-# nfs_utils
-#
 NFS_UTILS_VER = 2.5.3
 NFS_UTILS_SOURCE = nfs-utils-$(NFS_UTILS_VER).tar.bz2
 NFS_UTILS_PATCH = nfs-utils-$(NFS_UTILS_VER).patch
@@ -1258,26 +1222,6 @@ $(D)/nfs_utils: $(D)/bootstrap $(D)/e2fsprogs $(ARCHIVE)/$(NFS_UTILS_SOURCE)
 #
 # vsftpd
 #
-#VSFTPD_VER = 3.0.3
-#VSFTPD_SOURCE = vsftpd-$(VSFTPD_VER).tar.gz
-#VSFTPD_PATCH = vsftpd-$(VSFTPD_VER).patch
-
-#$(ARCHIVE)/$(VSFTPD_SOURCE):
-#	$(WGET) https://security.appspot.com/downloads/$(VSFTPD_SOURCE)
-
-#$(D)/vsftpd: $(D)/bootstrap $(ARCHIVE)/$(VSFTPD_SOURCE)
-#	$(START_BUILD)
-#	$(REMOVE)/vsftpd-$(VSFTPD_VER)
-#	$(UNTAR)/$(VSFTPD_SOURCE)
-#	$(CHDIR)/vsftpd-$(VSFTPD_VER); \
-#		$(call apply_patches, $(VSFTPD_PATCH)); \
-#		$(MAKE) clean; \
-#		$(MAKE) $(BUILDENV); \
-#		$(MAKE) install PREFIX=$(TARGET_DIR)
-#	install -m 755 $(SKEL_ROOT)/etc/init.d/vsftpd $(TARGET_DIR)/etc/init.d/
-#	install -m 644 $(SKEL_ROOT)/etc/vsftpd.conf $(TARGET_DIR)/etc/
-#	$(REMOVE)/vsftpd-$(VSFTPD_VER)
-#	$(TOUCH)
 VSFTPD_VER = 3.0.5
 VSFTPD_SOURCE = vsftpd-$(VSFTPD_VER).tar.gz
 VSFTPD_PATCH  = vsftpd-$(VSFTPD_VER).patch
@@ -1899,7 +1843,7 @@ $(D)/dvb-apps: $(D)/bootstrap $(ARCHIVE)/$(DVB_APPS_SOURCE)
 #
 # minisatip
 #
-MINISATIP_PATCH = minisatip.patch
+#MINISATIP_PATCH = minisatip.patch
 
 $(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(D)/dvb-apps $(ARCHIVE)/$(MINISATIP_SOURCE)
 	$(START_BUILD)
@@ -1910,7 +1854,7 @@ $(D)/minisatip: $(D)/bootstrap $(D)/openssl $(D)/libdvbcsa $(D)/dvb-apps $(ARCHI
 		fi
 	cp -ra $(ARCHIVE)/minisatip.git $(BUILD_TMP)/minisatip
 	$(CHDIR)/minisatip; \
-#		$(call apply_patches,$(MINISATIP_PATCH)); \
+		$(call apply_patches,$(MINISATIP_PATCH)); \
 		$(BUILDENV) \
 		export CFLAGS="-pipe -Os -Wall -g0 -I$(TARGET_INCLUDE_DIR)"; \
 		export CPPFLAGS="-I$(TARGET_INCLUDE_DIR)"; \

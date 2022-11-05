@@ -133,6 +133,34 @@ $(D)/hotplug_e2_helper: $(D)/bootstrap
 	$(TOUCH)
 
 #
+# libsigc++_e2
+#
+LIBSIGC_E2_VER_MAJOR = 1
+LIBSIGC_E2_VER_MINOR = 2
+LIBSIGC_E2_VER_MICRO = 7
+LIBSIGC_E2_VER = $(LIBSIGC_E2_VER_MAJOR).$(LIBSIGC_E2_VER_MINOR).$(LIBSIGC_E2_VER_MICRO)
+LIBSIGC_E2_SOURCE = libsigc++-$(LIBSIGC_E2_VER).tar.gz
+
+$(ARCHIVE)/$(LIBSIGC_E2_SOURCE):
+	$(WGET) https://ftp.gnome.org/pub/GNOME/sources/libsigc++/$(LIBSIGC_E2_VER_MAJOR).$(LIBSIGC_E2_VER_MINOR)/$(LIBSIGC_E2_SOURCE)
+
+$(D)/libsigc_e2: $(D)/bootstrap $(ARCHIVE)/$(LIBSIGC_E2_SOURCE)
+	$(START_BUILD)
+	$(REMOVE)/libsigc++-$(LIBSIGC_E2_VER)
+	$(UNTAR)/$(LIBSIGC_E2_SOURCE)
+	set -e; cd $(BUILD_TMP)/libsigc++-$(LIBSIGC_E2_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--disable-checks \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(TARGET_DIR)
+	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/sigc++-1.2.pc
+	$(REWRITE_LIBTOOL)/libsigc-1.2.la
+	$(REMOVE)/libsigc++-$(LIBSIGC_E2_VER)
+	$(TOUCH)
+
+#
 # tuxtxtlib
 #
 TUXTXTLIB_PATCH = tuxtxtlib-1.0-fix-dbox-headers.patch tuxtxtlib-fix-found-dvbversion.patch

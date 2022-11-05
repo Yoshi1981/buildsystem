@@ -147,4 +147,3 @@ flash-image-bre2zet2c:
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 
-

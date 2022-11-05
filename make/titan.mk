@@ -9,10 +9,12 @@ TITAN_DEPS += $(D)/libjpeg
 TITAN_DEPS += $(D)/zlib
 TITAN_DEPS += $(D)/openssl
 TITAN_DEPS += $(D)/timezone
-TITAN_DEPS += $(D)/tools-libmme_host
-TITAN_DEPS += $(D)/tools-libmme_image
 TITAN_DEPS += $(D)/libcurl
 TITAN_DEPS += $(D)/ffmpeg
+ifeq ($(BOXARCH), sh4)
+TITAN_DEPS += $(D)/tools-libmme_host
+TITAN_DEPS += $(D)/tools-libmme_image
+endif
 
 ifeq ($(GRAPHLCD), graphlcd)
 TITAN_CONFIG_OPTS += --with-graphlcd
@@ -20,6 +22,10 @@ endif
 
 ifeq ($(LCD4LINUX), lcd4linux)
 TITAN_CONFIG_OPTS += --with-lcd4linux
+endif
+
+ifeq ($(BOXARCH), sh4)
+TITAN_CONFIG_OPTS += --enable-multicom324
 endif
 
 TITAN_CPPFLAGS   += -DDVDPLAYER
@@ -102,7 +108,6 @@ $(D)/titan.config.status: $(D)/titan.do_prepare
 			--prefix=/usr \
 			--sysconfdir=/etc \
 			--with-boxtype=$(BOARD) \
-			--enable-multicom324 \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			CPPFLAGS="$(TITAN_CPPFLAGS)"
 	@touch $@
@@ -134,7 +139,6 @@ $(SOURCE_DIR)/titan/plugins/config.status: $(D)/titan.do_prepare $(D)/python
 			--bindir=/usr/local/bin \
 			--prefix=/usr \
 			--sysconfdir=/etc \
-			--enable-multicom324 \
 			PKG_CONFIG=$(PKG_CONFIG) \
 			CPPFLAGS="$(TITAN_CPPFLAGS)"
 #		$(MAKE) all
