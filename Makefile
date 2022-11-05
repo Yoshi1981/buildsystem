@@ -165,7 +165,7 @@ init:
 # lua
 	@echo -e "\nlua support ?:"
 	@echo -e "   \033[01;32m1)  yes\033[00m"
-	@echo "   2)  yes"
+	@echo "   2)  no"
 	@read -p "Select lua support (1-2)?" LUA; \
 	LUA=$${LUA}; \
 	case "$$LUA" in \
