@@ -181,5 +181,5 @@ flash-image-cuberevo_2000hd:
 usb-image-$(BOXTYPE):
 	mkdir -p $(FLASH_DIR)
 	cd $(RELEASE_DIR) && \
-		tar -cvzf $(FLASH_DIR)/$(BOXTYPE)_$(GUI)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
+	tar -cvzf $(FLASH_DIR)/$(BOXTYPE)_$(GUI)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
 
