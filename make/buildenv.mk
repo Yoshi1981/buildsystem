@@ -280,3 +280,8 @@ MAKE_OPTS := \
 	ARCH=sh \
 	CROSS_COMPILE=$(TARGET)-
 
+#
+#
+#	
+DEPMOD = $(HOST_DIR)/bin/depmod
+

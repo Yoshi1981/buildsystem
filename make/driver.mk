@@ -5,15 +5,20 @@ ifeq ($(WLAN), wlandriver)
 WLANDRIVER = WLANDRIVER=wlandriver
 endif
 
-DEPMOD = $(HOST_DIR)/bin/depmod
+#
+# driver
+#
+driver: $(D)/driver
 
 #
 # driver-symlink
 #
+ifeq ($(BOXARCH), sh4)
 driver-symlink:
 	cp $(DRIVER_DIR)/stgfb/stmfb/linux/drivers/video/stmfb.h $(TARGET_DIR)/usr/include/linux
 	cp $(DRIVER_DIR)/player2/linux/include/linux/dvb/stm_ioctls.h $(TARGET_DIR)/usr/include/linux/dvb
 	touch $(D)/$(notdir $@)
+endif
 
 #
 # driver-clean
