@@ -114,7 +114,7 @@ $(D)/kernel.do_compile: $(D)/kernel.do_prepare
 		$(DEPMOD) -ae -b $(TARGET_DIR) -F $(KERNEL_DIR)/System.map -r $(KERNEL_VER)
 	@touch $@
 
-$(D)/kernel: $(D)/bootstrap host_u_boot_tools $(D)/kernel.do_compile
+$(D)/kernel: $(D)/bootstrap $(D)/kernel.do_compile
 	install -m 644 $(KERNEL_DIR)/arch/sh/boot/$(KERNELNAME) $(BOOT_DIR)/vmlinux.ub
 	install -m 644 $(KERNEL_DIR)/vmlinux $(TARGET_DIR)/boot/vmlinux-sh4-$(KERNEL_VER)
 	install -m 644 $(KERNEL_DIR)/System.map $(TARGET_DIR)/boot/System.map-$(BOXARCH)-$(KERNEL_VER)
@@ -127,7 +127,7 @@ $(D)/kernel: $(D)/bootstrap host_u_boot_tools $(D)/kernel.do_compile
 #
 # driver
 #
-$(D)/driver: $(DRIVER_DIR)/Makefile $(D)/bootstrap $(D)/kernel
+$(D)/driver: $(D)/bootstrap $(D)/kernel
 	$(START_BUILD)
 	$(MAKE) -C $(KERNEL_DIR) ARCH=sh CONFIG_DEBUG_SECTION_MISMATCH=y \
 		CONFIG_MODULES_PATH=$(CROSS_DIR)/target \
