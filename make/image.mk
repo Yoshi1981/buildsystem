@@ -30,5 +30,5 @@ endif
 # image-clean
 #
 image-clean:
-	cd $(FLASH_DIR) && rm -rf *
+	cd $(IMAGE_DIR) && rm -rf *
 

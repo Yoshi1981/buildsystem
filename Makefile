@@ -9,7 +9,7 @@ warn:
 else
 LC_ALL:=C
 LANG:=C
-export TOPDIR LC_ALL LANG
+export LC_ALL LANG
 
 # Boxtype
 init:
@@ -243,7 +243,7 @@ printenv:
 	@echo "CUSTOM_DIR       : $(CUSTOM_DIR)"
 	@echo "APPS_DIR         : $(APPS_DIR)"
 	@echo "DRIVER_DIR       : $(DRIVER_DIR)"
-	@echo "FLASH_DIR        : $(FLASH_DIR)"
+	@echo "IMAGE_DIR        : $(IMAGE_DIR)"
 	@echo "CROSS_DIR        : $(CROSS_DIR)"
 	@echo "RELEASE_DIR      : $(RELEASE_DIR)"
 	@echo "HOST_DIR         : $(HOST_DIR)"
@@ -314,31 +314,30 @@ help:
 	@echo " make print-boards		- show all supported boards"
 	@echo
 
-# define package versions first...
-include make/contrib-libs.mk
-include make/contrib-apps.mk
-include make/ffmpeg.mk
 ifeq ($(BOXARCH), sh4)
 include make/crosstool-sh4.mk
 endif
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 include make/crosstool.mk
 endif
+include make/bootstrap.mk
 include make/linux-kernel.mk
 include make/driver.mk
+include make/contrib-libs.mk
+include make/contrib-apps.mk
+include make/ffmpeg.mk
 include make/gstreamer.mk
 include make/root-etc.mk
 include make/python.mk
 include make/lua.mk
 include make/tools.mk
 include make/cleantargets.mk
-include make/bootstrap.mk
 include make/neutrino2.mk
 include make/enigma2.mk
 include make/titan.mk
 include make/neutrino.mk
 include make/release.mk
-include make/flashimage.mk
+include make/image.mk
 
 update:
 	@if test -d $(BASE_DIR); then \

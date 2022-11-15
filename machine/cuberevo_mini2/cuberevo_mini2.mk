@@ -172,14 +172,14 @@ release-cuberevo_mini2:
 # flashimage
 #
 flash-image-cuberevo_mini2:
-	mkdir -p $(FLASH_DIR)
+	mkdir -p $(IMAGE_DIR)
 	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) cuberevo_mini2 $(GUI)
 
 #
 # usbimage
 #
 usb-image-cuberevo_mini2:
-	mkdir -p $(FLASH_DIR)
+	mkdir -p $(IMAGE_DIR)
 	cd $(RELEASE_DIR) && \
-	tar -cvzf $(FLASH_DIR)/$(BOXTYPE)_$(GUI)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
+	tar -cvzf $(IMAGE_DIR)/$(BOXTYPE)_$(GUI)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
 		

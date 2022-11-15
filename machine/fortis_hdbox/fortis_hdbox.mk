@@ -170,14 +170,14 @@ release-fortis_hdbox:
 # flashimage
 #
 flash-image-fortis_hdbox:
-	mkdir -p $(FLASH_DIR)
+	mkdir -p $(IMAGE_DIR)
 	cd $(HOSTAPPS_DIR)/nor_flash && $(SUDOCMD) ./make_flash.sh $(MAINTAINER) fortis_hdbox $(GUI)
 
 #
 # usbimage
 #
 usb-image-$(BOXTYPE):
-	mkdir -p $(FLASH_DIR)
+	mkdir -p $(IMAGE_DIR)
 	cd $(RELEASE_DIR) && \
-	tar -cvzf $(FLASH_DIR)/$(BOXTYPE)_$(GUI)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
+	tar -cvzf $(IMAGE_DIR)/$(BOXTYPE)_$(GUI)_$(shell date '+%d.%m.%Y-%H.%M')_usb.tgz *
 		

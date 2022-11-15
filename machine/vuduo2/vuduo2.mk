@@ -173,7 +173,7 @@ FLASHIMAGE_PREFIX = vuplus/duo2
 flash-image-vuduo2:
 	rm -rf $(IMAGE_BUILD_DIR) || true
 	mkdir -p $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)
-	mkdir -p $(FLASH_DIR)
+	mkdir -p $(IMAGE_DIR)
 	touch $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/reboot.update
 	cp $(SKEL_ROOT)/boot/splash.bin $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/splash_cfe_auto.bin
 	# kernel
@@ -192,7 +192,7 @@ flash-image-vuduo2:
 	rm -f $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/ubinize.cfg
 	echo $(BOXTYPE)_$(GUI)_$(shell date '+%d%m%Y-%H%M%S') > $(IMAGE_BUILD_DIR)/$(FLASHIMAGE_PREFIX)/imageversion
 	cd $(IMAGE_BUILD_DIR)/ && \
-	zip -r $(FLASH_DIR)/$(BOXTYPE)_$(GUI)_$(shell date '+%d.%m.%Y-%H.%M')_usb.zip $(FLASHIMAGE_PREFIX)*
+	zip -r $(IMAGE_DIR)/$(BOXTYPE)_$(GUI)_$(shell date '+%d.%m.%Y-%H.%M')_usb.zip $(FLASHIMAGE_PREFIX)*
 	# cleanup
 	rm -rf $(IMAGE_BUILD_DIR)
 

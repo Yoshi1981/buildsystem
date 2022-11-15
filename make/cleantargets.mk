@@ -20,6 +20,7 @@ endif
 
 distclean:
 	@echo -e "$(TERM_YELLOW)---> cleaning whole build system .. $(TERM_NORMAL)"
+	@-rm -rf $(IMAGE_DIR)
 	@-rm -rf $(RELEASE_DIR)
 	@-rm -rf $(TARGET_DIR)
 	@-rm -rf $(HOST_DIR)

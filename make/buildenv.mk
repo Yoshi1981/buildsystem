@@ -34,7 +34,7 @@ BOOT_DIR              = $(TUFSBOX_DIR)/cdkroot-tftpboot
 CROSS_DIR             = $(TUFSBOX_DIR)/cross
 HOST_DIR              = $(TUFSBOX_DIR)/host
 RELEASE_DIR           = $(TUFSBOX_DIR)/release
-FLASH_DIR             = $(TUFSBOX_DIR)/image
+IMAGE_DIR             = $(TUFSBOX_DIR)/image
 D                     = $(TUFSBOX_DIR)/.deps
 
 #
@@ -227,7 +227,7 @@ TUXBOX_CUSTOMIZE = [ -x $(CUSTOM_DIR)/$(notdir $@)-local.sh ] && \
 	$(TARGET_DIR) \
 	$(BASE_DIR) \
 	$(SOURCE_DIR) \
-	$(FLASH_DIR) \
+	$(IMAGE_DIR) \
 	$(BOXTYPE) \
 	|| true
 
