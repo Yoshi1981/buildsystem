@@ -539,22 +539,29 @@ endif
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/zapit/services.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/zapit/bouquets.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/zapit/ubouquets.xml
-ifeq ($(GUI), ENIGMA2)
 	cp -aR $(TARGET_DIR)/usr/lib/enigma2 $(RELEASE_DIR)/usr/lib
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/DVDBurn
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaScanner
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaPlayer
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/
+ifeq ($(GUI), ENIGMA2)
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.pyc' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.py' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.a' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.o' -exec rm -f {} \;
 	find $(RELEASE_DIR)/usr/lib/enigma2/ -name '*.la' -exec rm -f {} \;
+endif
+ifeq ($(GUI), ENIGMA2)
 ifeq ($(BOXARCH), sh4)
 	rm -rf $(RELEASE_DIR)/usr/lib/lua
 	rm -rf $(RELEASE_DIR)/usr/share/lua
 	rm -rf $(RELEASE_DIR)/usr/share/tuxbox
+endif
+endif
+ifeq ($(GUI), $(filter $(GUI), NEUTRINO2 NEUTRINO TITAN))
+ifeq ($(BOXARCH), sh4)
+	rm -rf $(RELEASE_DIR)/usr/lib/enigma2
 endif
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
