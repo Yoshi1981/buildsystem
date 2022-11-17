@@ -529,8 +529,6 @@ endif
 	rm -f $(RELEASE_DIR)/usr/lib/libc.so
 	rm -f $(RELEASE_DIR)/usr/lib/xml2Conf.sh
 	rm -f $(RELEASE_DIR)/usr/lib/libfontconfig*
-	rm -f $(RELEASE_DIR)/usr/lib/libcurses.so
-	[ ! -e $(RELEASE_DIR)/usr/bin/mc ] && rm -f $(RELEASE_DIR)/usr/lib/libncurses* || true
 	rm -f $(RELEASE_DIR)/usr/lib/libthread_db*
 	rm -f $(RELEASE_DIR)/usr/lib/libanl*
 	rm -f $(RELEASE_DIR)/usr/lib/libopkg*
