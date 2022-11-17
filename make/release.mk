@@ -539,7 +539,6 @@ endif
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/zapit/services.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/zapit/bouquets.xml
 	rm -f $(RELEASE_DIR)/var/tuxbox/config/zapit/ubouquets.xml
-	cp -aR $(TARGET_DIR)/usr/lib/enigma2 $(RELEASE_DIR)/usr/lib
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/DVDBurn
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/TuxboxPlugins
 	rm -rf $(RELEASE_DIR)/usr/lib/enigma2/python/Plugins/Extensions/MediaScanner

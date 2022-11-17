@@ -9,7 +9,7 @@ warn:
 else
 LC_ALL:=C
 LANG:=C
-export LC_ALL LANG
+export TOPDIR LC_ALL LANG
 
 # Boxtype
 init:
