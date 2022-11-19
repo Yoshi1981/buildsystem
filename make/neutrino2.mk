@@ -191,7 +191,7 @@ release-NEUTRINO2: release-NONE $(D)/neutrino2 $(D)/neutrino2-plugins
 	install -d $(RELEASE_DIR)/var/tuxbox/config/{webtv,zapit}
 	install -d $(RELEASE_DIR)/var/tuxbox/plugins
 	install -d $(RELEASE_DIR)/var/httpd
-	cp -af $(TARGET_DIR)/usr/local/bin/neutrino $(RELEASE_DIR)/usr/local/bin/
+	cp -af $(TARGET_DIR)/usr/local/bin/neutrino2 $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/backup.sh $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/init_hdd.sh $(RELEASE_DIR)/usr/local/bin/
 	cp -af $(TARGET_DIR)/usr/local/bin/install.sh $(RELEASE_DIR)/usr/local/bin/

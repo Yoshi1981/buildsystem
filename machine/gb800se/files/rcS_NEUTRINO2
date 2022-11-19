@@ -106,10 +106,10 @@ echo "[rcS] starting neutrino2 ->"
 
 until false
 do
-	if [ -e /var/bin/neutrino ];then
-		/var/bin/neutrino
+	if [ -e /var/bin/neutrino2 ];then
+		/var/bin/neutrino2
 	else
-		/usr/local/bin/neutrino
+		/usr/local/bin/neutrino2
 	fi
 	rtv=$?
 	echo "neutrino2 ended <- RTV: " $rtv
