@@ -35,7 +35,7 @@ $:~ make print-boards
 
 * tested with:
  debian 8 Jessie, 9 Stretch and 11 Bullseye
- linuxmint 20.1 Ulyssa, 20.2 Uma, 20.3 Una and LMDE 5 Elsie
- Ubuntu 20.04 Focal Fossa and 22.04 Jammy Jellyfish
+ linuxmint 20.1 Ulyssa, 20.2 Uma, 20.3 Una, 21 Vanessa and LMDE 5 Elsie
+ Ubuntu 20.04 Focal Fossa, 22.04 Jammy Jellyfish and 22.10 Kinetic Kudu
  
  
