@@ -115,7 +115,7 @@ PACKAGES="\
 	${UBUNTU:+libmount-dev}                                                                                       \
 	${UBUNTU:+mtools}                                                                                             \
 	${UBUNTU:+u-boot-tools}                                                                                       \
-	${UBUNTU:+simg2img}                                                                                           \
+	${UBUNTU:+android-sdk-libsparse-utils}                                                                        \
 	${UBUNTU:+lua5.2}                                                                                             \
     	${UBUNTU:+python2-dev}                                                                                        \
 ";
