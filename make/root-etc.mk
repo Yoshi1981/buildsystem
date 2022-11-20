@@ -48,7 +48,8 @@ BASE_FILES_ADAPTED_ETC_FILES = \
 	host.conf \
 	nsswitch.conf \
 	inetd.conf \
-	irexec.keys
+	irexec.keys \
+	issue.net
 
 BASE_PASSWD_ADAPTED_ETC_FILES = \
 	passwd \
@@ -93,5 +94,4 @@ define adapted-etc-files
 		[ "$${i%%/*}" = "init.d" ] && chmod 755 $(TARGET_DIR)/etc/$$i || true; \
 	done
 endef
-
 

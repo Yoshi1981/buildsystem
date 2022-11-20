@@ -1,4 +1,10 @@
+#########################################################
+#							#
+#		mohousch buildsystem			#
+#							#
+#########################################################
 
-STMicroelectronics Base Distribution version 2.x
-%s/%m %r
+%d %t
+%s %m 
+%r %v
 
