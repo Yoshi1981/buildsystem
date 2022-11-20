@@ -65,7 +65,8 @@ LUAEXPAT_SOURCE = luaexpat-$(LUAEXPAT_VER).tar.gz
 LUAEXPAT_PATCH = luaexpat-$(LUAEXPAT_VER).patch
 
 $(ARCHIVE)/$(LUAEXPAT_SOURCE):
-	$(WGET) https://sources.voidlinux-ppc.org/luaexpat-1.3.0/$(LUAEXPAT_SOURCE)
+#	$(WGET) https://sources.voidlinux-ppc.org/luaexpat-1.3.0/$(LUAEXPAT_SOURCE)
+	$(WGET) https://src.fedoraproject.org/lookaside/pkgs/lua-expat/luaexpat-1.3.0.tar.gz/3c20b5795e7107f847f8da844fbfe2da/$(LUAEXPAT_SOURCE)
 
 $(D)/luaexpat: $(D)/bootstrap $(D)/lua $(D)/expat $(ARCHIVE)/$(LUAEXPAT_SOURCE)
 	$(START_BUILD)
@@ -109,7 +110,7 @@ LUAFEEDPARSER_URL = https://github.com/slact/lua-feedparser.git
 $(ARCHIVE)/$(LUAFEEDPARSER_SOURCE):
 	$(SCRIPTS_DIR)/get-git-archive.sh $(LUAFEEDPARSER_URL) $(LUAFEEDPARSER_VER) $(notdir $@) $(ARCHIVE)
 
-$(D)/luafeedparser: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/$(LUAFEEDPARSER_SOURCE)
+$(D)/luafeedparser: $(D)/bootstrap $(D)/lua $(ARCHIVE)/$(LUAFEEDPARSER_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/luafeedparser-git-$(LUAFEEDPARSER_VER)
 	$(UNTAR)/$(LUAFEEDPARSER_SOURCE)
@@ -129,7 +130,7 @@ LUASOAP_PATCH = luasoap-$(LUASOAP_VER).patch
 $(ARCHIVE)/$(LUASOAP_SOURCE):
 	$(WGET) https://github.com/downloads/tomasguisasola/luasoap/$(LUASOAP_SOURCE)
 
-$(D)/luasoap: $(D)/bootstrap $(D)/lua $(D)/luasocket $(D)/luaexpat $(ARCHIVE)/$(LUASOAP_SOURCE)
+$(D)/luasoap: $(D)/bootstrap $(D)/lua $(ARCHIVE)/$(LUASOAP_SOURCE)
 	$(START_BUILD)
 	$(REMOVE)/luasoap-$(LUASOAP_VER)
 	$(UNTAR)/$(LUASOAP_SOURCE)
