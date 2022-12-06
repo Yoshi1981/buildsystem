@@ -75,7 +75,7 @@ INITSCRIPTS_ADAPTED_ETC_FILES = \
 	init.d/sendsigs \
 	init.d/udhcpc \
 	init.d/umountfs
-
+	
 ifeq ($(BOXARCH), sh4)
 INITSCRIPTS_ADAPTED_ETC_FILES += \
 	init.d/getfb.awk \
@@ -85,7 +85,7 @@ endif
 
 #
 # Functions for copying customized etc files from /root/etc into cdkroot targets and
-# for updating init scripts in runlevel for yaud targets
+# for updating init scripts in runlevel for release targets
 #
 define adapted-etc-files
 	cd root/etc && \
