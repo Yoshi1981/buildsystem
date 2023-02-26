@@ -195,9 +195,7 @@ release-NEUTRINO2: release-NONE $(D)/neutrino2 $(D)/neutrino2-plugins
 	[ -e $(TARGET_DIR)/usr/local/bin/backup.sh ] && cp -af $(TARGET_DIR)/usr/local/bin/backup.sh $(RELEASE_DIR)/usr/local/bin/ || true
 	[ -e $(TARGET_DIR)/usr/local/bin/init_hdd.sh ] && cp -af $(TARGET_DIR)/usr/local/bin/init_hdd.sh $(RELEASE_DIR)/usr/local/bin/ || true
 	[ -e $(TARGET_DIR)/usr/local/bin/install.sh ] && cp -af $(TARGET_DIR)/usr/local/bin/install.sh $(RELEASE_DIR)/usr/local/bin/ || true
-	[ -e $(TARGET_DIR)/usr/local/bin/pzapit ] && cp -af $(TARGET_DIR)/usr/local/bin/pzapit $(RELEASE_DIR)/usr/local/bin/ || true
 	[ -e $(TARGET_DIR)/usr/local/bin/restore.sh ] && cp -af $(TARGET_DIR)/usr/local/bin/restore.sh $(RELEASE_DIR)/usr/local/bin/ || true
-	[ -e $(TARGET_DIR)/usr/local/bin/sectionsdcontrol ] && cp -af $(TARGET_DIR)/usr/local/bin/sectionsdcontrol $(RELEASE_DIR)/usr/local/bin/
 	[ -d $(TARGET_DIR)/usr/share/tuxbox/neutrino2 ] && cp -aR $(TARGET_DIR)/usr/share/tuxbox/neutrino2 $(RELEASE_DIR)/usr/share/tuxbox || true
 	cp -aR $(TARGET_DIR)/var/tuxbox/* $(RELEASE_DIR)/var/tuxbox
 	
