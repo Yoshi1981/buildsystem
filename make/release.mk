@@ -16,7 +16,6 @@ endif
 RELEASE_DEPS += $(D)/vsftpd
 RELEASE_DEPS += $(D)/autofs
 RELEASE_DEPS += $(D)/udpxy
-RELEASE_DEPS += $(D)/dvbsnoop
 RELEASE_DEPS += $(D)/fbshot
 ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
 RELEASE_DEPS += $(D)/ofgwrite
@@ -69,6 +68,8 @@ RELEASE_DEPS += $(D)/tools-initfb
 endif
 RELEASE_DEPS += $(D)/tools-exteplayer3
 RELEASE_DEPS += $(LIRC)
+RELEASE_DEPS += $(D)/dvb-apps
+RELEASE_DEPS += $(D)/dvbsnoop
 
 #
 # diverse-tools
@@ -114,7 +115,6 @@ RELEASE_DEPS  += $(D)/gst_plugins_bad
 RELEASE_DEPS  += $(D)/gst_plugins_ugly 
 RELEASE_DEPS  += $(D)/gst_plugin_subsink
 RELEASE_DEPS  += $(D)/gst_plugins_dvbmediasink
-RELEASE_DEPS  += $(D)/tools-eplayer4
 endif
 
 #
