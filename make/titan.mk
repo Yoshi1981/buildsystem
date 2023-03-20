@@ -92,7 +92,7 @@ $(D)/titan.do_prepare: $(TITAN_DEPS)
 	cp -ra $(ARCHIVE)/titan.svn $(SOURCE_DIR)/titan; \
 	set -e; cd $(SOURCE_DIR)/titan; \
 		$(call apply_patches, $(TITAN_PATCH))
-	$(TOUCH)
+	@touch $@ 
 
 $(D)/titan.config.status: $(D)/titan.do_prepare
 	cd $(SOURCE_DIR)/titan; \

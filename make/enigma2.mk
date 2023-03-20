@@ -51,7 +51,7 @@ endif
 
 ENIGMA2_CONFIG_OPTS += PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
 
-ENIGMA2_PATCHES = enigma2.patch
+#ENIGMA2_PATCHES = enigma2.patch
 
 #
 # enigma2
@@ -103,10 +103,12 @@ $(D)/enigma2: $(D)/enigma2.do_compile
 enigma2-clean:
 	rm -f $()/enigma2.do_compile
 	$(MAKE) -C $(SOURCE_DIR)/enigma2 clean
+	rm -f $(TARGET_DIR)/usr/local/share/fonts/fallback.font
 	rm -f $(D)/enigma2
 
 enigma2-distclean:
 	rm -f $(D)/enigma2*
+	rm -f $(TARGET_DIR)/usr/local/share/fonts/fallback.font
 	$(MAKE) -C $(SOURCE_DIR)/enigma2 distclean
 	
 #
