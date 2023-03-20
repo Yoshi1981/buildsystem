@@ -153,13 +153,14 @@ init:
 	echo ""
 # Gstreamer
 	@echo -e "\nGstreamer:"
-	@echo "   1) yes (recommended for mips and arm boxes)"
-	@echo -e "   \033[01;32m2) no\033[00m"
+	@echo -e "   \033[01;32m1) yes (recommended for mips and arm boxes)\033[00m"
+	@echo "   2) no"
 	@read -p "Select Gstreamer (1-2)?" GSTREAMER; \
 	GSTREAMER=$${GSTREAMER}; \
 	case "$$GSTREAMER" in \
 		1) echo "GSTREAMER=gstreamer" >> config;; \
-		2|*) echo "GSTREAMER=" >> config;; \
+		2) echo "GSTREAMER=" >> config;; \
+		*) echo "GSTREAMER=gstreamer" >> config;; \
 	esac; \
 	echo ""
 # lua
