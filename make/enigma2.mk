@@ -51,7 +51,7 @@ endif
 
 ENIGMA2_CONFIG_OPTS += PYTHON_CPPFLAGS="-I$(TARGET_DIR)/usr/include/python2.7" PYTHON_LIBS="-L$(TARGET_DIR)/usr/lib -lpython2.7" PYTHON_SITE_PKG="$(TARGET_DIR)/usr/lib/python2.7/site-packages"
 
-#ENIGMA2_PATCHES = enigma2.patch
+ENIGMA2_PATCHES = enigma2.patch
 
 #
 # enigma2
@@ -245,4 +245,5 @@ release-ENIGMA2: release-NONE $(D)/enigma2
 	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/en $(RELEASE_DIR)/usr/local/share/enigma2/po
 	cp -Rf $(TARGET_DIR)/usr/local/share/enigma2/po/de $(RELEASE_DIR)/usr/local/share/enigma2/po
 	cp -aR $(SKEL_ROOT)/usr/local/share/enigma2/* $(RELEASE_DIR)/usr/local/share/enigma2
+	mkdir -p $(RELEASE_DIR)/etc/enigma2
 		
