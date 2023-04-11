@@ -266,6 +266,7 @@ printenv:
 	@echo "CICAM            : $(CICAM)"
 	@echo "SCART            : $(SCART)"
 	@echo "F-KEYS           : $(FKEYS)"
+	@echo "LCD              : $(LCD)"
 	@echo "GRAPHLCD         : $(GRAPHLCD)"
 	@echo "LCD4LINUX        : $(LCD4LINUX)"
 	@echo "PARALLEL_JOBS    : $(PARALLEL_JOBS)"

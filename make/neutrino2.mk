@@ -72,7 +72,7 @@ NEUTRINO2_CONFIG_OPTS += --enable-lcd
 endif
 
 ifeq ($(LCD), tftlcd)
-NEUTRINO2_OPTS += --enable-lcd --enable-tftlcd
+NEUTRINO2_CONFIG_OPTS += --enable-lcd --enable-tftlcd
 endif
 
 ifeq ($(LCD), 4-digits)
