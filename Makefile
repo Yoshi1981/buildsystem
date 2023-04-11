@@ -265,7 +265,6 @@ printenv:
 	@echo "PYTHON           : $(PYTHON)"
 	@echo "CICAM            : $(CICAM)"
 	@echo "SCART            : $(SCART)"
-	@echo "LCD              : $(LCD)"
 	@echo "F-KEYS           : $(FKEYS)"
 	@echo "GRAPHLCD         : $(GRAPHLCD)"
 	@echo "LCD4LINUX        : $(LCD4LINUX)"
