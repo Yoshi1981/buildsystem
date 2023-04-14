@@ -62,7 +62,7 @@ $(D)/enigma2.do_prepare: $(ENIGMA2_DEPS)
 	[ -d "$(ARCHIVE)/enigma2.git" ] && \
 	(cd $(ARCHIVE)/enigma2.git; git pull;); \
 	[ -d "$(ARCHIVE)/enigma2.git" ] || \
-	git clone -b 6.4 https://github.com/openatv/enigma2.git $(ARCHIVE)/enigma2.git; \
+	git clone -b release-8.3 https://github.com/Yoshi1981/enigma2.git $(ARCHIVE)/enigma2.git; \
 	cp -ra $(ARCHIVE)/enigma2.git $(SOURCE_DIR)/enigma2; \
 	set -e; cd $(SOURCE_DIR)/enigma2; \
 		$(call apply_patches,$(ENIGMA2_PATCHES))
