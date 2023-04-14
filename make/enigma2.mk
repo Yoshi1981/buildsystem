@@ -16,7 +16,7 @@ ENIGMA2_DEPS += $(D)/tuxtxt32bpp
 ENIGMA2_DEPS += $(D)/hotplug_e2_helper
 ENIGMA2_DEPS += $(D)/avahi
 ENIGMA2_DEPS += $(D)/python
-ENIGMA2_DEPS  += $(D)/libsigc
+ENIGMA2_DEPS += $(D)/libsigc
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), size))
 ENIGMA2_DEPS += $(D)/ethtool
 ENIGMA2_DEPS += $(D)/alsa_utils
