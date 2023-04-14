@@ -10,7 +10,7 @@ export LD_LIBRARY_PATH
 
 BASE_DIR             := $(shell pwd)
 
-ARCHIVE               = $(HOME)/Archive
+ARCHIVE               = $(HOME)/ArchiveMoh
 APPS_DIR              = $(BASE_DIR)/apps
 DRIVER_DIR            = $(BASE_DIR)/driver
 HOSTAPPS_DIR          = $(BASE_DIR)/hostapps
