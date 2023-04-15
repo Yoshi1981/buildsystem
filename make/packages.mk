@@ -7,6 +7,200 @@
 #
 
 #
+# fbshot-pkg
+#
+fbshot-pkg: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(FBSHOT_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/fbshot-$(FBSHOT_VER)
+	$(UNTAR)/$(FBSHOT_SOURCE)
+	$(CHDIR)/fbshot-$(FBSHOT_VER); \
+		$(call apply_patches, $(FBSHOT_PATCH)); \
+		sed -i s~'gcc'~"$(TARGET)-gcc $(TARGET_CFLAGS) $(TARGET_LDFLAGS)"~ Makefile; \
+		sed -i 's/strip fbshot/$(TARGET)-strip fbshot/' Makefile; \
+		$(MAKE) all; \
+		install -D -m 755 fbshot $(PKGPREFIX)/bin/fbshot
+	$(REMOVE)/fbshot-$(FBSHOT_VER)
+	cp -R $(PACKAGES)/fbshot/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/fbshot.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+
+#
+# samba-pkg
+#	
+samba-pkg: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGPREFIX)/etc/init.d
+	install -d $(PKGS_DIR)
+	$(REMOVE)/samba-$(SAMBA_VER)
+	$(UNTAR)/$(SAMBA_SOURCE)
+	$(CHDIR)/samba-$(SAMBA_VER); \
+		$(call apply_patches, $(SAMBA_PATCH)); \
+		cd source3; \
+		./autogen.sh; \
+		$(BUILDENV) \
+		ac_cv_lib_attr_getxattr=no \
+		ac_cv_search_getxattr=no \
+		ac_cv_file__proc_sys_kernel_core_pattern=yes \
+		libreplace_cv_HAVE_C99_VSNPRINTF=yes \
+		libreplace_cv_HAVE_GETADDRINFO=yes \
+		libreplace_cv_HAVE_IFACE_IFCONF=yes \
+		LINUX_LFS_SUPPORT=no \
+		samba_cv_CC_NEGATIVE_ENUM_VALUES=yes \
+		samba_cv_HAVE_GETTIMEOFDAY_TZ=yes \
+		samba_cv_HAVE_IFACE_IFCONF=yes \
+		samba_cv_HAVE_KERNEL_OPLOCKS_LINUX=yes \
+		samba_cv_HAVE_SECURE_MKSTEMP=yes \
+		samba_cv_HAVE_WRFILE_KEYTAB=no \
+		samba_cv_USE_SETREUID=yes \
+		samba_cv_USE_SETRESUID=yes \
+		samba_cv_have_setreuid=yes \
+		samba_cv_have_setresuid=yes \
+		ac_cv_header_zlib_h=no \
+		samba_cv_zlib_1_2_3=no \
+		ac_cv_path_PYTHON="" \
+		ac_cv_path_PYTHON_CONFIG="" \
+		libreplace_cv_HAVE_GETADDRINFO=no \
+		libreplace_cv_READDIR_NEEDED=no \
+		./configure $(SILENT_OPT) \
+			--build=$(BUILD) \
+			--host=$(TARGET) \
+			--prefix= \
+			--includedir=/usr/include \
+			--exec-prefix=/usr \
+			--disable-pie \
+			--disable-avahi \
+			--disable-cups \
+			--disable-relro \
+			--disable-swat \
+			--disable-shared-libs \
+			--disable-socket-wrapper \
+			--disable-nss-wrapper \
+			--disable-smbtorture4 \
+			--disable-fam \
+			--disable-iprint \
+			--disable-dnssd \
+			--disable-pthreadpool \
+			--disable-dmalloc \
+			--with-included-iniparser \
+			--with-included-popt \
+			--with-sendfile-support \
+			--without-aio-support \
+			--without-cluster-support \
+			--without-ads \
+			--without-krb5 \
+			--without-dnsupdate \
+			--without-automount \
+			--without-ldap \
+			--without-pam \
+			--without-pam_smbpass \
+			--without-winbind \
+			--without-wbclient \
+			--without-syslog \
+			--without-nisplus-home \
+			--without-quotas \
+			--without-sys-quotas \
+			--without-utmp \
+			--without-acl-support \
+			--with-configdir=/etc/samba \
+			--with-privatedir=/etc/samba \
+			--with-mandir=no \
+			--with-piddir=/var/run \
+			--with-logfilebase=/var/log \
+			--with-lockdir=/var/lock \
+			--with-swatdir=/usr/share/swat \
+			--disable-cups \
+			--without-winbind \
+			--without-libtdb \
+			--without-libtalloc \
+			--without-libnetapi \
+			--without-libsmbclient \
+			--without-libsmbsharemodes \
+			--without-libtevent \
+			--without-libaddns \
+		; \
+		$(MAKE) $(MAKE_OPTS); \
+		$(MAKE) $(MAKE_OPTS) installservers installbin installscripts installdat installmodules \
+			SBIN_PROGS="bin/samba_multicall" DESTDIR=$(PKGPREFIX) prefix=./. ; \
+			ln -s samba_multicall $(PKGPREFIX)/usr/sbin/nmbd
+			ln -s samba_multicall $(PKGPREFIX)/usr/sbin/smbd
+			ln -s samba_multicall $(PKGPREFIX)/usr/sbin/smbpasswd
+	install -m 755 $(SKEL_ROOT)/etc/init.d/samba $(PKGPREFIX)/etc/init.d/
+	install -m 644 $(SKEL_ROOT)/etc/samba/smb.conf $(PKGPREFIX)/etc/samba/
+	$(REMOVE)/samba-$(SAMBA_VER)
+	cp -R $(PACKAGES)/samba/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/samba.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
+#
+# ofgwrite-pkg
+#
+ofgwrite-pkg: $(D)/bootstrap $(ARCHIVE)/$(OFGWRITE_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGPREFIX)/usr/bin
+	install -d $(PKGS_DIR)
+	$(REMOVE)/ofgwrite-ddt
+	set -e; if [ -d $(ARCHIVE)/ofgwrite-ddt.git ]; \
+		then cd $(ARCHIVE)/ofgwrite-ddt.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/ofgwrite-ddt.git ofgwrite-ddt.git; \
+		fi
+	cp -ra $(ARCHIVE)/ofgwrite-ddt.git $(BUILD_TMP)/ofgwrite-ddt
+	$(CHDIR)/ofgwrite-ddt; \
+		$(call apply_patches,$(OFGWRITE_PATCH)); \
+		$(BUILDENV) \
+		$(MAKE); \
+	install -m 755 $(BUILD_TMP)/ofgwrite-ddt/ofgwrite_bin $(PKGPREFIX)/usr/bin
+	install -m 755 $(BUILD_TMP)/ofgwrite-ddt/ofgwrite_caller $(PKGPREFIX)/usr/bin
+	install -m 755 $(BUILD_TMP)/ofgwrite-ddt/ofgwrite $(PKGPREFIX)/usr/bin
+	$(REMOVE)/ofgwrite-ddt
+	cp -R $(PACKAGES)/ofgwrite/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/ofgwrite.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+
+#
+# xupnpd-pkg
+#	
+xupnpd-pkg: $(D)/bootstrap $(D)/openssl
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGPREFIX)/etc/init.d
+	install -d $(PKGS_DIR)
+	$(REMOVE)/xupnpd
+	set -e; if [ -d $(ARCHIVE)/xupnpd.git ]; \
+		then cd $(ARCHIVE)/xupnpd.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/clark15b/xupnpd.git xupnpd.git; \
+		fi
+	cp -ra $(ARCHIVE)/xupnpd.git $(BUILD_TMP)/xupnpd
+	($(CHDIR)/xupnpd; git checkout -q $(XUPNPD_BRANCH);)
+	$(CHDIR)/xupnpd; \
+		$(call apply_patches, $(XUPNPD_PATCH))
+	$(CHDIR)/xupnpd/src; \
+		$(BUILDENV) \
+		$(MAKE) embedded TARGET=$(TARGET) PKG_CONFIG=$(PKG_CONFIG) LUAFLAGS="$(TARGET_LDFLAGS) -I$(TARGET_INCLUDE_DIR)"; \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(PKGPREFIX)/etc/init.d/
+	mkdir -p $(PKGPREFIX)/usr/share/xupnpd/config
+	$(REMOVE)/xupnpd
+	cp -R $(PACKAGES)/xupnpd/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/xupnpd.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+
+#
 # contrib-libs pkgs
 #
 
@@ -737,7 +931,66 @@ python-pkg: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl 
 #
 # apps-tools pkgs
 #
-
+#
+# aio-grab-pkg
+#
+aio-grab-pkg: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	set -e; cd $(APPS_DIR)/tools/aio-grab-$(BOXARCH); \
+		$(CONFIGURE_TOOLS) CPPFLAGS="$(CPPFLAGS) -I$(DRIVER_DIR)/bpamem" \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	cp -R $(PACKAGES)/aio-grab/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/aio-grab.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
+#
+# exteplayer3-pkg
+#
+exteplayer3-pkg: $(D)/bootstrap $(D)/ffmpeg $(D)/libass
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	set -e; cd $(APPS_DIR)/tools/$(TOOLS_EXTEPLAYER3); \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	cp -R $(PACKAGES)/exteplayer3/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/exteplayer3.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
+#
+# showiframe-pkg
+#
+showiframe-pkg: $(D)/bootstrap
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	set -e; cd $(APPS_DIR)/tools/showiframe-$(BOXARCH); \
+		$(CONFIGURE_TOOLS) \
+			--prefix= \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	cp -R $(PACKAGES)/showiframe/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/showiframe.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
 #
 # apps-libs
 #
