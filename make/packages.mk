@@ -16,6 +16,9 @@ libupnp-pkg: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
 	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
 	$(REMOVE)/libupnp-$(LIBUPNP_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/libupnp/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/libupnp.tgz *
@@ -41,6 +44,9 @@ minidlna-pkg: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(D
 		$(MAKE); \
 		$(MAKE) install prefix=/usr DESTDIR=$(PKGPREFIX)
 	$(REMOVE)/minidlna-$(MINIDLNA_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/minidlna/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/minidlna.tgz *
@@ -64,6 +70,9 @@ fbshot-pkg: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(FBSHOT_SOURCE)
 		$(MAKE) all; \
 		install -D -m 755 fbshot $(PKGPREFIX)/bin/fbshot
 	$(REMOVE)/fbshot-$(FBSHOT_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/fbshot/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/fbshot.tgz *
@@ -175,6 +184,9 @@ samba-pkg: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 	install -m 755 $(SKEL_ROOT)/etc/init.d/samba $(PKGPREFIX)/etc/init.d/
 	install -m 644 $(SKEL_ROOT)/etc/samba/smb.conf $(PKGPREFIX)/etc/samba/
 	$(REMOVE)/samba-$(SAMBA_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/samba/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/samba.tgz *
@@ -204,6 +216,9 @@ ofgwrite-pkg: $(D)/bootstrap $(ARCHIVE)/$(OFGWRITE_SOURCE)
 	install -m 755 $(BUILD_TMP)/ofgwrite-ddt/ofgwrite_caller $(PKGPREFIX)/usr/bin
 	install -m 755 $(BUILD_TMP)/ofgwrite-ddt/ofgwrite $(PKGPREFIX)/usr/bin
 	$(REMOVE)/ofgwrite-ddt
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/ofgwrite/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/ofgwrite.tgz *
@@ -235,6 +250,9 @@ xupnpd-pkg: $(D)/bootstrap $(D)/openssl
 	install -m 755 $(SKEL_ROOT)/etc/init.d/xupnpd $(PKGPREFIX)/etc/init.d/
 	mkdir -p $(PKGPREFIX)/usr/share/xupnpd/config
 	$(REMOVE)/xupnpd
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/xupnpd/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/xupnpd.tgz *
@@ -261,6 +279,9 @@ graphlcd-pkg: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SOU
 		cp -a graphlcd.conf $(PKGPREFIX)/etc
 		rm -r $(PKGPREFIX)/usr/include
 	$(REMOVE)/graphlcd-git-$(GRAPHLCD_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/graphlcd/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/graphlcd.tgz *
@@ -292,6 +313,9 @@ lcd4linux-pkg: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf
 	install -m 755 $(SKEL_ROOT)/etc/init.d/lcd4linux $(PKGPREFIX)/etc/init.d/
 	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux.conf $(PKGPREFIX)/etc/lcd4linux.conf
 	$(REMOVE)/lcd4linux-git-$(LCD4LINUX_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/lcd4linux/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/lcd4linux.tgz *
@@ -332,6 +356,9 @@ gstreamer-pkg: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $(
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
 	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
 	$(REMOVE)/gstreamer-$(GSTREAMER_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/gstreamer/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/gstreamer.tgz *
@@ -364,6 +391,9 @@ gst_plugins_base-pkg: $(D)/bootstrap $(D)/zlib $(D)/libglib2 $(D)/orc $(D)/gstre
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
 	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
 	$(REMOVE)/gst-plugins-base-$(GST_PLUGINS_BASE_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/gst-plugins-base/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/gst-plugins-base.tgz *
@@ -397,6 +427,9 @@ gst_plugins_good-pkg: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/gstreamer $(D
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
 	$(REMOVE)/gst-plugins-good-$(GST_PLUGINS_GOOD_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/gst-plugins-good/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/gst-plugins-good.tgz *
@@ -431,6 +464,9 @@ gst_plugins_bad-pkg: $(D)/bootstrap $(D)/libass $(D)/libcurl $(D)/libxml2 $(D)/o
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
 	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
 	$(REMOVE)/gst-plugins-bad-$(GST_PLUGINS_BAD_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/gst-plugins-bad/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/gst-plugins-bad.tgz *
@@ -461,6 +497,9 @@ gst_plugins_ugly-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCH
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
 	$(REMOVE)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/gst-plugins-ugly/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/gst-plugins-ugly.tgz *
@@ -494,6 +533,9 @@ gst_plugins_subsink-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
 	$(REMOVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/gst-plugins-subsink/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/gst-plugins-subsink.tgz *
@@ -538,6 +580,9 @@ gst_plugins_dvbmediasink-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_bas
 		$(MAKE) all; \
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
 	$(REMOVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/gst-plugins-dvbmediasink/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/gst-plugins-dvbmediasink.tgz *
@@ -859,6 +904,9 @@ ffmpeg-pkg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
 	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
 	$(REMOVE)/ffmpeg-$(FFMPEG_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/ffmpeg/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/ffmpeg.tgz *
@@ -888,6 +936,9 @@ lua-pkg: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$(
 		$(MAKE) install INSTALL_TOP=$(PKGPREFIX)/usr INSTALL_MAN=$(PKGPREFIX)/.remove
 	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/bin/luac
 	$(REMOVE)/lua-$(LUA_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/lua/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/lua.tgz *
@@ -959,6 +1010,9 @@ python-pkg: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl 
 	ln -sf $(PKGPREFIX)/$(PYTHON_INCLUDE_DIR) $(TARGET_DIR)/usr/include/python
 	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
 	$(REMOVE)/Python-$(PYTHON_VER)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/python/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/python.tgz *
@@ -979,6 +1033,9 @@ aio-grab-pkg: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/aio-grab/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/aio-grab.tgz *
@@ -999,6 +1056,9 @@ exteplayer3-pkg: $(D)/bootstrap $(D)/ffmpeg $(D)/libass
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/exteplayer3/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/exteplayer3.tgz *
@@ -1019,6 +1079,9 @@ showiframe-pkg: $(D)/bootstrap
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/showiframe/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/showiframe.tgz *
@@ -1047,6 +1110,9 @@ $(D)/neutrino-pkg: $(D)/neutrino.do_prepare $(D)/neutrino.do_compile
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(PKGPREFIX); \
 	rm -f $(PKGPREFIX)/.version
 	make $(PKGPREFIX)/.version
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/neutrino/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/neutrino.tgz *
@@ -1062,6 +1128,9 @@ titan-pkg: $(D)/titan.do_compile
 	install -d $(PKGPREFIX)
 	install -d $(PKGS_DIR)
 	$(MAKE) -C $(SOURCE_DIR)/titan install DESTDIR=$(PKGPREFIX)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/titan/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/titan.tgz *
@@ -1078,6 +1147,9 @@ enigma2-pkg: $(D)/enigma2.do_compile
 	install -d $(PKGS_DIR)
 	$(MAKE) -C $(SOURCE_DIR)/enigma2 install DESTDIR=$(PKGPREFIX)
 	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/enigma2/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/enigma2.tgz *
@@ -1093,6 +1165,9 @@ neutrino2-pkg: $(D)/neutrino2.do_compile
 	install -d $(PKGPREFIX)
 	install -d $(PKGS_DIR)
 	$(MAKE) -C $(SOURCE_DIR)/neutrino2/neutrino2 install DESTDIR=$(PKGPREFIX)
+ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
+	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
+endif
 	cp -R $(PACKAGES)/neutrino2/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/neutrino2.tgz *
