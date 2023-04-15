@@ -1,10 +1,51 @@
 #
-# drivers pkgs
+# libupnp-pkg
 #
+libupnp-pkg: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/libupnp-$(LIBUPNP_VER)
+	$(UNTAR)/$(LIBUPNP_SOURCE)
+	$(CHDIR)/libupnp-$(LIBUPNP_VER); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
+	$(REMOVE)/libupnp-$(LIBUPNP_VER)
+	cp -R $(PACKAGES)/libupnp/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/libupnp.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
 
 #
-# contrib-apps pkgs
-#
+# minidlna-pkg
+#	
+minidlna-pkg: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(D)/libid3tag $(D)/libogg $(D)/libvorbis $(D)/flac $(D)/ffmpeg $(ARCHIVE)/$(MINIDLNA_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/minidlna-$(MINIDLNA_VER)
+	$(UNTAR)/$(MINIDLNA_SOURCE)
+	$(CHDIR)/minidlna-$(MINIDLNA_VER); \
+		$(call apply_patches, $(MINIDLNA_PATCH)); \
+		autoreconf -fi $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+		; \
+		$(MAKE); \
+		$(MAKE) install prefix=/usr DESTDIR=$(PKGPREFIX)
+	$(REMOVE)/minidlna-$(MINIDLNA_VER)
+	cp -R $(PACKAGES)/minidlna/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/minidlna.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
 
 #
 # fbshot-pkg
@@ -201,11 +242,7 @@ xupnpd-pkg: $(D)/bootstrap $(D)/openssl
 	$(END_BUILD)
 
 #
-# contrib-libs pkgs
-#
-
-#
-#
+# graphlcd-pkg
 #
 graphlcd-pkg: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SOURCE)
 	$(START_BUILD)
@@ -929,9 +966,6 @@ python-pkg: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl 
 	$(END_BUILD)
 
 #
-# apps-tools pkgs
-#
-#
 # aio-grab-pkg
 #
 aio-grab-pkg: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
@@ -990,10 +1024,6 @@ showiframe-pkg: $(D)/bootstrap
 	tar -cvzf $(PKGS_DIR)/showiframe.tgz *
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
-	
-#
-# apps-libs
-#
 
 #
 # neutrino-pkg
