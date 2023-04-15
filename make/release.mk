@@ -304,10 +304,6 @@ ifeq ($(WLAN), wlandriver)
 	cp -aR $(SKEL_ROOT)/lib/firmware/rtlwifi $(RELEASE_DIR)/lib/firmware/
 	cp -aR $(SKEL_ROOT)/lib/firmware/*.bin $(RELEASE_DIR)/lib/firmware/
 endif
-#
-# modules.available
-#
-	cp -aR $(SKEL_ROOT)/etc/modules.available_$(BOXARCH) $(RELEASE_DIR)/etc/modules.available
 	
 #
 # release-NONE

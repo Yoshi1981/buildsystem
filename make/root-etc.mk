@@ -25,14 +25,12 @@ $(D)/diverse-tools:
 # Adapted etc files and etc read-write files
 #
 DIVERSE_TOOLS_ADAPTED_ETC_FILES =
-#init.d/swap
 
 OPENRDATE_ADAPTED_ETC_FILES = \
 	init.d/rdate.sh
 
 MODULE_INIT_TOOLS_ADAPTED_ETC_FILES = \
 	modules
-#init.d/module-init-tools
 
 FUSE_ADAPTED_ETC_FILES = \
 	init.d/fuse
