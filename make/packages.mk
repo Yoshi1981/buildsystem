@@ -11,6 +11,63 @@
 #
 
 #
+#
+#
+graphlcd-pkg: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGPREFIX)/etc
+	install -d $(PKGS_DIR)
+	$(REMOVE)/graphlcd-git-$(GRAPHLCD_VER)
+	$(UNTAR)/$(GRAPHLCD_SOURCE)
+	$(CHDIR)/graphlcd-git-$(GRAPHLCD_VER); \
+		$(call apply_patches, $(GRAPHLCD_PATCH)); \
+		$(MAKE) -C glcdgraphics all TARGET=$(TARGET)- DESTDIR=$(PKGPREFIX); \
+		$(MAKE) -C glcddrivers all TARGET=$(TARGET)- DESTDIR=$(PKGPREFIX); \
+		$(MAKE) -C glcdgraphics install DESTDIR=$(PKGPREFIX); \
+		$(MAKE) -C glcddrivers install DESTDIR=$(PKGPREFIX); \
+		cp -a graphlcd.conf $(PKGPREFIX)/etc
+		rm -r $(PKGPREFIX)/usr/include
+	$(REMOVE)/graphlcd-git-$(GRAPHLCD_VER)
+	cp -R $(PACKAGES)/graphlcd/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/graphlcd.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
+#
+# lcd4linux-pkg
+#
+lcd4linux-pkg: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf $(ARCHIVE)/$(LCD4LINUX_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGPREFIX)/etc/init.d
+	install -d $(PKGS_DIR)
+	$(REMOVE)/lcd4linux-git-$(LCD4LINUX_VER)
+	$(UNTAR)/$(LCD4LINUX_SOURCE)
+	$(CHDIR)/lcd4linux-git-$(LCD4LINUX_VER); \
+		$(call apply_patches, $(LCD4LINUX_PATCH)); \
+		$(BUILDENV) ./bootstrap $(SILENT_OPT); \
+		$(BUILDENV) ./configure $(CONFIGURE_OPTS) $(SILENT_OPT) \
+			--prefix=/usr \
+			--with-drivers='DPF,SamsungSPF$(LCD4LINUX_DRV),PNG' \
+			--with-plugins='all,!apm,!asterisk,!dbus,!dvb,!gps,!hddtemp,!huawei,!imon,!isdn,!kvv,!mpd,!mpris_dbus,!mysql,!pop3,!ppp,!python,!qnaplog,!raspi,!sample,!seti,!w1retap,!wireless,!xmms' \
+			--without-ncurses \
+		; \
+		$(MAKE) vcs_version all; \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	install -m 755 $(SKEL_ROOT)/etc/init.d/lcd4linux $(PKGPREFIX)/etc/init.d/
+	install -D -m 0600 $(SKEL_ROOT)/etc/lcd4linux.conf $(PKGPREFIX)/etc/lcd4linux.conf
+	$(REMOVE)/lcd4linux-git-$(LCD4LINUX_VER)
+	cp -R $(PACKAGES)/lcd4linux/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/lcd4linux.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+
+#
 # gstreamer-pkg
 #
 gstreamer-pkg: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $(ARCHIVE)/$(GSTREAMER_SOURCE)
@@ -47,6 +104,212 @@ gstreamer-pkg: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $(
 	cp -R $(PACKAGES)/gstreamer/* $(PKGPREFIX)/
 	cd $(PKGPREFIX) && \
 	tar -cvzf $(PKGS_DIR)/gstreamer.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
+#
+# gst_plugins_base-pkg
+#
+gst_plugins_base-pkg: $(D)/bootstrap $(D)/zlib $(D)/libglib2 $(D)/orc $(D)/gstreamer $(D)/alsa_lib $(D)/libogg $(D)/libvorbis $(ARCHIVE)/$(GST_PLUGINS_BASE_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/gst-plugins-base-$(GST_PLUGINS_BASE_VER)
+	$(UNTAR)/$(GST_PLUGINS_BASE_SOURCE)
+	$(CHDIR)/gst-plugins-base-$(GST_PLUGINS_BASE_VER); \
+		$(call apply_patches, $(GST_PLUGINS_BASE_PATCH)); \
+		./autogen.sh --noconfigure $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--datarootdir=/.remove \
+			--enable-silent-rules \
+			--disable-valgrind \
+			$(GST_PLUGIN_CONFIG_DEBUG) \
+			--disable-examples \
+			--disable-gtk-doc-html \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
+	$(REMOVE)/gst-plugins-base-$(GST_PLUGINS_BASE_VER)
+	cp -R $(PACKAGES)/gst-plugins-base/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/gst-plugins-base.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+
+#
+# gst_plugins_good-pkg
+#
+gst_plugins_good-pkg: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/gstreamer $(D)/gst_plugins_base $(D)/libsoup $(D)/flac $(ARCHIVE)/$(GST_PLUGINS_GOOD_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/gst-plugins-good-$(GST_PLUGINS_GOOD_VER)
+	$(UNTAR)/$(GST_PLUGINS_GOOD_SOURCE)
+	$(CHDIR)/gst-plugins-good-$(GST_PLUGINS_GOOD_VER); \
+		$(call apply_patches, $(GST_PLUGINS_GOOD_PATCH)); \
+		./autogen.sh --noconfigure $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--build=$(BUILD) \
+			--host=$(TARGET) \
+			--prefix=/usr \
+			--datarootdir=/.remove \
+			--enable-silent-rules \
+			--disable-valgrind \
+			$(GST_PLUGIN_CONFIG_DEBUG) \
+			--disable-examples \
+			--disable-gtk-doc-html \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	$(REMOVE)/gst-plugins-good-$(GST_PLUGINS_GOOD_VER)
+	cp -R $(PACKAGES)/gst-plugins-good/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/gst-plugins-good.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
+#
+# gst_plugins_bad-pkg
+#
+gst_plugins_bad-pkg: $(D)/bootstrap $(D)/libass $(D)/libcurl $(D)/libxml2 $(D)/openssl $(D)/librtmp $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$(GST_PLUGINS_BAD_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/gst-plugins-bad-$(GST_PLUGINS_BAD_VER)
+	$(UNTAR)/$(GST_PLUGINS_BAD_SOURCE)
+	$(CHDIR)/gst-plugins-bad-$(GST_PLUGINS_BAD_VER); \
+		$(call apply_patches, $(GST_PLUGINS_BAD_PATCH)); \
+		./autogen.sh --noconfigure $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--build=$(BUILD) \
+			--host=$(TARGET) \
+			--prefix=/usr \
+			--datarootdir=/.remove \
+			--enable-silent-rules \
+			--disable-valgrind \
+			$(GST_PLUGIN_CONFIG_DEBUG) \
+			--disable-examples \
+			--disable-gtk-doc-html \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
+	$(REMOVE)/gst-plugins-bad-$(GST_PLUGINS_BAD_VER)
+	cp -R $(PACKAGES)/gst-plugins-bad/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/gst-plugins-bad.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
+#
+# gst_plugins_ugly-pkg
+#
+gst_plugins_ugly-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$(GST_PLUGINS_UGLY_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VER)
+	$(UNTAR)/$(GST_PLUGINS_UGLY_SOURCE)
+	$(CHDIR)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VER); \
+		./autogen.sh --noconfigure $(SILENT_OPT); \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--datarootdir=/.remove \
+			--enable-silent-rules \
+			--disable-valgrind \
+			$(GST_PLUGIN_CONFIG_DEBUG) \
+			--disable-examples \
+			--disable-gtk-doc-html \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	$(REMOVE)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VER)
+	cp -R $(PACKAGES)/gst-plugins-ugly/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/gst-plugins-ugly.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
+#
+# gst_plugins_subsink-pkg
+#
+gst_plugins_subsink-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/gstreamer-$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink
+	set -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git ]; \
+		then cd $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/christophecvr/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git; \
+		fi
+	cp -ra $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git $(BUILD_TMP)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink
+	$(CHDIR)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink; \
+		aclocal --force -I m4; \
+		libtoolize --copy --ltdl --force; \
+		autoconf --force; \
+		autoheader --force; \
+		automake --add-missing --copy --force-missing --foreign; \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--enable-silent-rules \
+		; \
+		$(MAKE); \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	$(REMOVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink
+	cp -R $(PACKAGES)/gst-plugins-subsink/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/gst-plugins-subsink.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
+#
+# gst_plugins_dvbmediasink-pkg
+#
+gst_plugins_dvbmediasink-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly $(D)/gst_plugin_subsink $(D)/libdca
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink
+	set -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink.git ]; \
+		then cd $(ARCHIVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink.git; git pull; \
+		else cd $(ARCHIVE); git clone -b gst-1.0 https://github.com/OpenPLi/gst-plugin-dvbmediasink.git gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink.git; \
+		fi
+	cp -ra $(ARCHIVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink.git $(BUILD_TMP)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink
+	$(CHDIR)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink; \
+		aclocal --force -I m4; \
+		libtoolize --copy --ltdl --force; \
+		autoconf --force; \
+		autoheader --force; \
+		automake --add-missing --copy --force-missing --foreign; \
+		$(CONFIGURE) \
+			--prefix=/usr \
+			--enable-silent-rules \
+			--with-wma \
+			--with-wmv \
+			--with-pcm \
+			--with-dts \
+			--with-eac3 \
+			--with-h265 \
+			--with-vb6 \
+			--with-vb8 \
+			--with-vb9 \
+			--with-spark \
+			--with-gstversion=1.0 \
+		; \
+		$(MAKE) all; \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	$(REMOVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink
+	cp -R $(PACKAGES)/gst-plugins-dvbmediasink/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/gst-plugins-dvbmediasink.tgz *
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
