@@ -17,6 +17,7 @@ gstreamer-pkg: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $(
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
 	$(REMOVE)/gstreamer-$(GSTREAMER_VER)
 	$(UNTAR)/$(GSTREAMER_SOURCE)
 	$(CHDIR)/gstreamer-$(GSTREAMER_VER); \
@@ -43,7 +44,10 @@ gstreamer-pkg: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $(
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
 	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
 	$(REMOVE)/gstreamer-$(GSTREAMER_VER)
-#	rm -rf $(PKGPREFIX)
+	cp -R $(PACKAGES)/gstreamer/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/gstreamer.tgz *
+	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
@@ -72,8 +76,13 @@ $(D)/neutrino-pkg: $(D)/neutrino.do_prepare $(D)/neutrino.do_compile
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
 	$(MAKE) -C $(N_OBJDIR) install DESTDIR=$(PKGPREFIX); \
 	rm -f $(PKGPREFIX)/.version
 	make $(PKGPREFIX)/.version
+	cp -R $(PACKAGES)/neutrino/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/neutrino.tgz *
+	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
