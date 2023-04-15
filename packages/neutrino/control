@@ -1,0 +1,10 @@
+Package: neutrino-DDT
+Version: 1.0-1
+Description: The Multiplatform Neutrino STB GUI
+Section: extras/servers
+Priority: optional
+Maintainer: @MAINT@
+Architecture: @ARCH@
+Homepage: https://github.com/Duckbox-Developers/neutrino-ddt.git
+Source: https://github.com/Duckbox-Developers/neutrino-ddt.git
+Depends: @DEP@
