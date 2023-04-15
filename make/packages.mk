@@ -371,6 +371,34 @@ ffmpeg-pkg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
+#
+# lua
+#
+lua-pkg: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$(LUA_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/lua-$(LUA_VER)
+	mkdir -p $(PKGPREFIX)/usr/share/lua/$(LUA_VER_SHORT)
+	$(UNTAR)/$(LUA_SOURCE)
+	$(CHDIR)/lua-$(LUA_VER); \
+		$(call apply_patches, $(LUAPOSIX_PATCH)); \
+		tar xf $(ARCHIVE)/$(LUAPOSIX_SOURCE); \
+		cd luaposix-git-$(LUAPOSIX_VER)/ext; cp posix/posix.c include/lua52compat.h ../../src/; cd ../..; \
+		cd luaposix-git-$(LUAPOSIX_VER)/lib; cp *.lua $(TARGET_DIR)/usr/share/lua/$(LUA_VER_SHORT); cd ../..; \
+		sed -i 's/<config.h>/"config.h"/' src/posix.c; \
+		sed -i '/^#define/d' src/lua52compat.h; \
+		sed -i 's|man/man1|/.remove|' Makefile; \
+		$(MAKE) linux CC=$(TARGET)-gcc CPPFLAGS="$(TARGET_CPPFLAGS) -fPIC" LDFLAGS="-L$(TARGET_DIR)/usr/lib" BUILDMODE=dynamic PKG_VERSION=$(LUA_VER); \
+		$(MAKE) install INSTALL_TOP=$(PKGPREFIX)/usr INSTALL_MAN=$(PKGPREFIX)/.remove
+	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/bin/luac
+	$(REMOVE)/lua-$(LUA_VER)
+	cp -R $(PACKAGES)/lua/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/lua.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
 
 #
 # apps-tools pkgs
@@ -407,4 +435,50 @@ $(D)/neutrino-pkg: $(D)/neutrino.do_prepare $(D)/neutrino.do_compile
 	tar -cvzf $(PKGS_DIR)/neutrino.tgz *
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
+
+#
+# titan
+#
+titan-pkg: $(D)/titan.do_compile
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(MAKE) -C $(SOURCE_DIR)/titan install DESTDIR=$(PKGPREFIX)
+	cp -R $(PACKAGES)/titan/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/titan.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
 	
+#
+# enigma2-pkg
+#
+enigma2-pkg: $(D)/enigma2.do_compile
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(MAKE) -C $(SOURCE_DIR)/enigma2 install DESTDIR=$(PKGPREFIX)
+	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
+	cp -R $(PACKAGES)/enigma2/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/enigma2.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+	
+#
+# neutrino2
+#
+neutrino2-pkg: $(D)/neutrino2.do_compile
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(MAKE) -C $(SOURCE_DIR)/neutrino2/neutrino2 install DESTDIR=$(PKGPREFIX)
+	cp -R $(PACKAGES)/neutrino2/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/neutrino2.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
+		

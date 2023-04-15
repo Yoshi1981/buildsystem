@@ -1,0 +1,10 @@
+Package: openatv enigma2
+Version: 6.4
+Description: STB GUI
+Section:
+Priority: optional
+Maintainer: @MAINT@
+Architecture: @ARCH@
+Homepage: https://www.opena.tv/
+Source: https://github.com/openatv/enigma2.git
+Depends: @DEP@

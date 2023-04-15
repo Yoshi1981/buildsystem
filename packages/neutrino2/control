@@ -1,0 +1,10 @@
+Package: neutrino2
+Version: 4.6
+Description: Multiplatform STB GUI
+Section:
+Priority: optional
+Maintainer: @MAINT@
+Architecture: @ARCH@
+Homepage: https://github.com/mohousch
+Source: https://github.com/mohousch/neutrino2.git
+Depends: @DEP@
