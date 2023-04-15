@@ -399,6 +399,77 @@ lua-pkg: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$(
 	tar -cvzf $(PKGS_DIR)/lua.tgz *
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
+	
+#
+# python
+#
+python-pkg: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl $(D)/libffi $(D)/bzip2 $(D)/readline $(D)/sqlite $(ARCHIVE)/$(PYTHON_SOURCE)
+	$(START_BUILD)
+	rm -rf $(PKGPREFIX)
+	install -d $(PKGPREFIX)
+	install -d $(PKGS_DIR)
+	$(REMOVE)/Python-$(PYTHON_VER)
+	$(UNTAR)/$(PYTHON_SOURCE)
+	$(CHDIR)/Python-$(PYTHON_VER); \
+		$(call apply_patches, $(PYTHON_PATCH)); \
+		CONFIG_SITE= \
+		$(BUILDENV) \
+		autoreconf -fiv Modules/_ctypes/libffi; \
+		autoconf $(SILENT_OPT); \
+		./configure $(SILENT_OPT) \
+			--build=$(BUILD) \
+			--host=$(TARGET) \
+			--target=$(TARGET) \
+			--prefix=/usr \
+			--mandir=/.remove \
+			--sysconfdir=/etc \
+			--enable-shared \
+			--with-lto \
+			--enable-ipv6 \
+			--with-threads \
+			--with-pymalloc \
+			--with-signal-module \
+			--with-wctype-functions \
+			ac_sys_system=Linux \
+			ac_sys_release=2 \
+			ac_cv_file__dev_ptmx=no \
+			ac_cv_file__dev_ptc=no \
+			ac_cv_have_long_long_format=yes \
+			ac_cv_no_strict_aliasing_ok=yes \
+			ac_cv_pthread=yes \
+			ac_cv_cxx_thread=yes \
+			ac_cv_sizeof_off_t=8 \
+			ac_cv_have_chflags=no \
+			ac_cv_have_lchflags=no \
+			ac_cv_py_format_size_t=yes \
+			ac_cv_broken_sem_getvalue=no \
+			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VER_MAJOR) \
+		; \
+		$(MAKE) $(MAKE_OPTS) \
+			PYTHON_MODULES_INCLUDE="$(PKGPREFIX)/usr/include" \
+			PYTHON_MODULES_LIB="$(PKGPREFIX)/usr/lib" \
+			PYTHON_XCOMPILE_DEPENDENCIES_PREFIX="$(PKGPREFIX)" \
+			CROSS_COMPILE_TARGET=yes \
+			CROSS_COMPILE=$(TARGET) \
+			MACHDEP=linux2 \
+			HOSTARCH=$(TARGET) \
+			CFLAGS="$(TARGET_CFLAGS)" \
+			LDFLAGS="$(TARGET_LDFLAGS)" \
+			LD="$(TARGET)-gcc" \
+			HOSTPYTHON=$(HOST_DIR)/bin/python$(PYTHON_VER_MAJOR) \
+			HOSTPGEN=$(HOST_DIR)/bin/pgen \
+			all DESTDIR=$(PKGPREFIX) \
+		; \
+		$(MAKE) install DESTDIR=$(PKGPREFIX)
+	ln -sf ../../libpython$(PYTHON_VER_MAJOR).so.1.0 $(PKGPREFIX)/$(PYTHON_DIR)/config/libpython$(PYTHON_VER_MAJOR).so; \
+	ln -sf $(PKGPREFIX)/$(PYTHON_INCLUDE_DIR) $(TARGET_DIR)/usr/include/python
+	rm -r $(PKGPREFIX)/usr/include $(PKGPREFIX)/usr/lib/pkgconfig
+	$(REMOVE)/Python-$(PYTHON_VER)
+	cp -R $(PACKAGES)/python/* $(PKGPREFIX)/
+	cd $(PKGPREFIX) && \
+	tar -cvzf $(PKGS_DIR)/python.tgz *
+	rm -rf $(PKGPREFIX)
+	$(END_BUILD)
 
 #
 # apps-tools pkgs
