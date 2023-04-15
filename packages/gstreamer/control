@@ -1,0 +1,11 @@
+Package: gstreamer
+Version: @VER@-1
+Description: A library for constructing graphs of media-handling components
+Section: extras/libraries
+Priority: optional
+Maintainer: @MAINT@
+Architecture: @ARCH@
+Homepage: http://gstreamer.freedesktop.org/
+Source:
+Depends: @DEP@
+Provides: @PROV@

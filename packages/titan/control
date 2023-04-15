@@ -1,0 +1,10 @@
+Package: titan
+Version: 1.9
+Description: STB GUI
+Section:
+Priority: optional
+Maintainer: @MAINT@
+Architecture: @ARCH@
+Homepage:
+Source:
+Depends: @DEP@

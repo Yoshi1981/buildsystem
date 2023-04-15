@@ -1,0 +1,11 @@
+Package: ffmpeg
+Version: @VER@-1
+Description: ffmpeg Audio/Video Processing Libraries
+Section: base/libraries
+Priority: standard
+Maintainer: @MAINT@
+Architecture: @ARCH@
+Homepage: http://ffmpeg.org/
+Source:
+Depends:
+Provides: @PROV@

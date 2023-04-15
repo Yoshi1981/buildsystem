@@ -341,6 +341,7 @@ include make/titan.mk
 include make/neutrino.mk
 include make/release.mk
 include make/image.mk
+include make/packages.mk
 
 update:
 	@if test -d $(BASE_DIR); then \
