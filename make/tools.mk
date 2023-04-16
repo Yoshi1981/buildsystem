@@ -29,9 +29,6 @@ endif
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl clean
 	-$(MAKE) -C $(APPS_DIR)/tools/wait4button clean
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
-	-$(MAKE) -C $(APPS_DIR)/tools/initfb clean
-endif
 
 #
 # tools-distclean
@@ -63,9 +60,6 @@ endif
 	-$(MAKE) -C $(APPS_DIR)/tools/ustslave distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/vfdctl distclean
 	-$(MAKE) -C $(APPS_DIR)/tools/wait4button distclean
-endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
-	-$(MAKE) -C $(APPS_DIR)/tools/initfb distclean
 endif
 
 #

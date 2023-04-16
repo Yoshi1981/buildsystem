@@ -63,9 +63,6 @@ RELEASE_DEPS += $(D)/tools-ustslave
 RELEASE_DEPS += $(D)/tools-vfdctl
 RELEASE_DEPS += $(D)/tools-wait4button
 endif
-ifeq ($(BOXTYPE), $(filter $(BOXTYPE), vusolo4k))
-RELEASE_DEPS += $(D)/tools-initfb
-endif
 RELEASE_DEPS += $(D)/tools-exteplayer3
 RELEASE_DEPS += $(LIRC)
 RELEASE_DEPS += $(D)/dvb-apps
@@ -113,7 +110,7 @@ RELEASE_DEPS  += $(D)/gst_plugins_base
 RELEASE_DEPS  += $(D)/gst_plugins_good 
 RELEASE_DEPS  += $(D)/gst_plugins_bad 
 RELEASE_DEPS  += $(D)/gst_plugins_ugly 
-RELEASE_DEPS  += $(D)/gst_plugin_subsink
+RELEASE_DEPS  += $(D)/gst_plugins_subsink
 RELEASE_DEPS  += $(D)/gst_plugins_dvbmediasink
 endif
 
