@@ -1,0 +1,5 @@
+#!/bin/sh
+if test -x /sbin/ldconfig; then
+	echo "updating dynamic linker cache..."
+	/sbin/ldconfig
+fi
