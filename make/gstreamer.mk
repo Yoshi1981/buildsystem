@@ -265,19 +265,19 @@ $(D)/gst_plugins_ugly: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARC
 	$(TOUCH)
 
 #
-# gst_plugin_subsink
+# gst_plugins_subsink
 #
-GST_PLUGIN_SUBSINK_VER = 1.0
+GST_PLUGINS_SUBSINK_VER = 1.0
 
-$(D)/gst_plugin_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
+$(D)/gst_plugins_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
 	$(START_BUILD)
-	$(REMOVE)/gstreamer-$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink
-	set -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git ]; \
-		then cd $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/christophecvr/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git; \
+	$(REMOVE)/gstreamer-$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink
+	set -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink.git ]; \
+		then cd $(ARCHIVE)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/christophecvr/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink.git gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink.git; \
 		fi
-	cp -ra $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git $(BUILD_TMP)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink
-	$(CHDIR)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink; \
+	cp -ra $(ARCHIVE)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink.git $(BUILD_TMP)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink
+	$(CHDIR)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink; \
 		aclocal --force -I m4; \
 		libtoolize --copy --ltdl --force; \
 		autoconf --force; \
@@ -291,7 +291,7 @@ $(D)/gst_plugin_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D
 		$(MAKE) install DESTDIR=$(TARGET_DIR)
 	for i in `cd $(TARGET_DIR)/usr/lib/gstreamer-1.0; echo *.la`; do \
 		$(REWRITE_LIBTOOL)/gstreamer-1.0/$$i; done
-	$(REMOVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink
+	$(REMOVE)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink
 	$(TOUCH)
 
 #
@@ -299,7 +299,7 @@ $(D)/gst_plugin_subsink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D
 #
 GST_PLUGINS_DVBMEDIASINK_VER = 1.0
 
-$(D)/gst_plugins_dvbmediasink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly $(D)/gst_plugin_subsink $(D)/libdca
+$(D)/gst_plugins_dvbmediasink: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly $(D)/gst_plugins_subsink $(D)/libdca
 	$(START_BUILD)
 	$(REMOVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink
 	set -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGINS_DVBMEDIASINK_VER)-plugin-dvbmediasink.git ]; \

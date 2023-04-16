@@ -1,7 +1,7 @@
 #
-# libupnp-pkg
+# libupnp-ipk
 #
-libupnp-pkg: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
+libupnp-ipk: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -19,16 +19,16 @@ libupnp-pkg: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/libupnp/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/libupnp.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/libupnp && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/libupnp_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
-# minidlna-pkg
+# minidlna-ipk
 #	
-minidlna-pkg: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(D)/libid3tag $(D)/libogg $(D)/libvorbis $(D)/flac $(D)/ffmpeg $(ARCHIVE)/$(MINIDLNA_SOURCE)
+minidlna-ipk: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(D)/libid3tag $(D)/libogg $(D)/libvorbis $(D)/flac $(D)/ffmpeg $(ARCHIVE)/$(MINIDLNA_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -47,16 +47,16 @@ minidlna-pkg: $(D)/bootstrap $(D)/zlib $(D)/sqlite $(D)/libexif $(D)/libjpeg $(D
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/minidlna/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/minidlna.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/minidlna && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/minidlna_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
-# fbshot-pkg
+# fbshot-ipk
 #
-fbshot-pkg: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(FBSHOT_SOURCE)
+fbshot-ipk: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(FBSHOT_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -73,16 +73,16 @@ fbshot-pkg: $(D)/bootstrap $(D)/libpng $(ARCHIVE)/$(FBSHOT_SOURCE)
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/fbshot/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/fbshot.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/fbshot && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/fbshot_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
-# samba-pkg
+# samba-ipk
 #	
-samba-pkg: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
+samba-ipk: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -187,16 +187,16 @@ samba-pkg: $(D)/bootstrap $(ARCHIVE)/$(SAMBA_SOURCE)
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/samba/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/samba.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/samba && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/samba_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
-# ofgwrite-pkg
+# ofgwrite-ipk
 #
-ofgwrite-pkg: $(D)/bootstrap $(ARCHIVE)/$(OFGWRITE_SOURCE)
+ofgwrite-ipk: $(D)/bootstrap $(ARCHIVE)/$(OFGWRITE_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -219,16 +219,16 @@ ofgwrite-pkg: $(D)/bootstrap $(ARCHIVE)/$(OFGWRITE_SOURCE)
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/ofgwrite/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/ofgwrite.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/ofgwrite && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/ofgwrite_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
-# xupnpd-pkg
+# xupnpd-ipk
 #	
-xupnpd-pkg: $(D)/bootstrap $(D)/openssl
+xupnpd-ipk: $(D)/bootstrap $(D)/openssl
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -253,16 +253,16 @@ xupnpd-pkg: $(D)/bootstrap $(D)/openssl
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/xupnpd/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/xupnpd.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/xupnpd && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/xupnpd_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
-# graphlcd-pkg
+# graphlcd-ipk
 #
-graphlcd-pkg: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SOURCE)
+graphlcd-ipk: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -282,16 +282,16 @@ graphlcd-pkg: $(D)/bootstrap $(D)/freetype $(D)/libusb $(ARCHIVE)/$(GRAPHLCD_SOU
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/graphlcd/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/graphlcd.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/graphlcd && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/graphlcd_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
-# lcd4linux-pkg
+# lcd4linux-ipk
 #
-lcd4linux-pkg: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf $(ARCHIVE)/$(LCD4LINUX_SOURCE)
+lcd4linux-ipk: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf $(ARCHIVE)/$(LCD4LINUX_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -316,16 +316,16 @@ lcd4linux-pkg: $(D)/bootstrap $(D)/libusb_compat $(D)/gd $(D)/libusb $(D)/libdpf
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/lcd4linux/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/lcd4linux.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/lcd4linux && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/lcd4linux_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
-# gstreamer-pkg
+# gstreamer-ipk
 #
-gstreamer-pkg: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $(ARCHIVE)/$(GSTREAMER_SOURCE)
+gstreamer-ipk: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $(ARCHIVE)/$(GSTREAMER_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -359,16 +359,16 @@ gstreamer-pkg: $(D)/bootstrap $(D)/libglib2 $(D)/libxml2 $(D)/glib_networking $(
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/gstreamer/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/gstreamer.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/gstreamer && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gstreamer_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
-# gst_plugins_base-pkg
+# gst_plugins_base-ipk
 #
-gst_plugins_base-pkg: $(D)/bootstrap $(D)/zlib $(D)/libglib2 $(D)/orc $(D)/gstreamer $(D)/alsa_lib $(D)/libogg $(D)/libvorbis $(ARCHIVE)/$(GST_PLUGINS_BASE_SOURCE)
+gst_plugins_base-ipk: $(D)/bootstrap $(D)/zlib $(D)/libglib2 $(D)/orc $(D)/gstreamer $(D)/alsa_lib $(D)/libogg $(D)/libvorbis $(ARCHIVE)/$(GST_PLUGINS_BASE_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -394,16 +394,16 @@ gst_plugins_base-pkg: $(D)/bootstrap $(D)/zlib $(D)/libglib2 $(D)/orc $(D)/gstre
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/gst-plugins-base/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/gst-plugins-base.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/gst-plugins-base && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-base_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
-# gst_plugins_good-pkg
+# gst_plugins_good-ipk
 #
-gst_plugins_good-pkg: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/gstreamer $(D)/gst_plugins_base $(D)/libsoup $(D)/flac $(ARCHIVE)/$(GST_PLUGINS_GOOD_SOURCE)
+gst_plugins_good-ipk: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/gstreamer $(D)/gst_plugins_base $(D)/libsoup $(D)/flac $(ARCHIVE)/$(GST_PLUGINS_GOOD_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -430,16 +430,16 @@ gst_plugins_good-pkg: $(D)/bootstrap $(D)/libpng $(D)/libjpeg $(D)/gstreamer $(D
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/gst-plugins-good/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/gst-plugins-good.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/gst-plugins-good && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-good_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
-# gst_plugins_bad-pkg
+# gst_plugins_bad-ipk
 #
-gst_plugins_bad-pkg: $(D)/bootstrap $(D)/libass $(D)/libcurl $(D)/libxml2 $(D)/openssl $(D)/librtmp $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$(GST_PLUGINS_BAD_SOURCE)
+gst_plugins_bad-ipk: $(D)/bootstrap $(D)/libass $(D)/libcurl $(D)/libxml2 $(D)/openssl $(D)/librtmp $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$(GST_PLUGINS_BAD_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -467,16 +467,16 @@ gst_plugins_bad-pkg: $(D)/bootstrap $(D)/libass $(D)/libcurl $(D)/libxml2 $(D)/o
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/gst-plugins-bad/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/gst-plugins-bad.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/gst-plugins-bad && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-bad_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
-# gst_plugins_ugly-pkg
+# gst_plugins_ugly-ipk
 #
-gst_plugins_ugly-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$(GST_PLUGINS_UGLY_SOURCE)
+gst_plugins_ugly-ipk: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCHIVE)/$(GST_PLUGINS_UGLY_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -500,27 +500,27 @@ gst_plugins_ugly-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(ARCH
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/gst-plugins-ugly/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/gst-plugins-ugly.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/gst-plugins-ugly && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-ugly_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
-# gst_plugins_subsink-pkg
+# gst_plugins_subsink-ipk
 #
-gst_plugins_subsink-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
+gst_plugins_subsink-ipk: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
 	install -d $(PKGS_DIR)
-	$(REMOVE)/gstreamer-$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink
-	set -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git ]; \
-		then cd $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git; git pull; \
-		else cd $(ARCHIVE); git clone https://github.com/christophecvr/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git; \
+	$(REMOVE)/gstreamer-$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink
+	set -e; if [ -d $(ARCHIVE)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink.git ]; \
+		then cd $(ARCHIVE)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink.git; git pull; \
+		else cd $(ARCHIVE); git clone https://github.com/christophecvr/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink.git gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink.git; \
 		fi
-	cp -ra $(ARCHIVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink.git $(BUILD_TMP)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink
-	$(CHDIR)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink; \
+	cp -ra $(ARCHIVE)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink.git $(BUILD_TMP)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink
+	$(CHDIR)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink; \
 		aclocal --force -I m4; \
 		libtoolize --copy --ltdl --force; \
 		autoconf --force; \
@@ -532,20 +532,20 @@ gst_plugins_subsink-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D
 		; \
 		$(MAKE); \
 		$(MAKE) install DESTDIR=$(PKGPREFIX)
-	$(REMOVE)/gstreamer$(GST_PLUGIN_SUBSINK_VER)-plugin-subsink
+	$(REMOVE)/gstreamer$(GST_PLUGINS_SUBSINK_VER)-plugin-subsink
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/gst-plugins-subsink/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/gst-plugins-subsink.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/gst-plugins-subsink && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-subsink_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
-# gst_plugins_dvbmediasink-pkg
+# gst_plugins_dvbmediasink-ipk
 #
-gst_plugins_dvbmediasink-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly $(D)/gst_plugin_subsink $(D)/libdca
+gst_plugins_dvbmediasink-ipk: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_base $(D)/gst_plugins_good $(D)/gst_plugins_bad $(D)/gst_plugins_ugly $(D)/gst_plugin_subsink $(D)/libdca
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -583,16 +583,16 @@ gst_plugins_dvbmediasink-pkg: $(D)/bootstrap $(D)/gstreamer $(D)/gst_plugins_bas
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/gst-plugins-dvbmediasink/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/gst-plugins-dvbmediasink.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/gst-plugins-dvbmediasink && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-dvbmediasink_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
 # ffmpeg
 #
-ffmpeg-pkg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D)/libxml2 $(D)/libroxml $(D)/librtmp $(ARCHIVE)/$(FFMPEG_SOURCE)
+ffmpeg-ipk: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D)/libxml2 $(D)/libroxml $(D)/librtmp $(ARCHIVE)/$(FFMPEG_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -907,16 +907,16 @@ ffmpeg-pkg: $(D)/bootstrap $(D)/openssl $(D)/bzip2 $(D)/freetype $(D)/libass $(D
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/ffmpeg/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/ffmpeg.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/ffmpeg && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/ffmpeg_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
 # lua
 #
-lua-pkg: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$(LUA_SOURCE)
+lua-ipk: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$(LUA_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -939,16 +939,16 @@ lua-pkg: $(D)/bootstrap $(D)/ncurses $(ARCHIVE)/$(LUAPOSIX_SOURCE) $(ARCHIVE)/$(
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/lua/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/lua.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/lua && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/lua_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
 # python
 #
-python-pkg: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl $(D)/libffi $(D)/bzip2 $(D)/readline $(D)/sqlite $(ARCHIVE)/$(PYTHON_SOURCE)
+python-ipk: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl $(D)/libffi $(D)/bzip2 $(D)/readline $(D)/sqlite $(ARCHIVE)/$(PYTHON_SOURCE)
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -1013,16 +1013,16 @@ python-pkg: $(D)/bootstrap $(D)/host_python $(D)/ncurses $(D)/zlib $(D)/openssl 
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/python/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/python.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/python && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/python_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
-# aio-grab-pkg
+# aio-grab-ipk
 #
-aio-grab-pkg: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
+aio-grab-ipk: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -1036,16 +1036,16 @@ aio-grab-pkg: $(D)/bootstrap $(D)/libpng $(D)/libjpeg
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/aio-grab/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/aio-grab.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/aio-grab && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/aio-grab_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
-# exteplayer3-pkg
+# exteplayer3-ipk
 #
-exteplayer3-pkg: $(D)/bootstrap $(D)/ffmpeg $(D)/libass
+exteplayer3-ipk: $(D)/bootstrap $(D)/ffmpeg $(D)/libass
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -1059,16 +1059,16 @@ exteplayer3-pkg: $(D)/bootstrap $(D)/ffmpeg $(D)/libass
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/exteplayer3/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/exteplayer3.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/exteplayer3 && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/exteplayer3_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
-# showiframe-pkg
+# showiframe-ipk
 #
-showiframe-pkg: $(D)/bootstrap
+showiframe-ipk: $(D)/bootstrap
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -1082,14 +1082,14 @@ showiframe-pkg: $(D)/bootstrap
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/showiframe/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/showiframe.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/showiframe && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/showiframe_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
-# neutrino-pkg
+# neutrino-ipk
 #
 $(PKGPREFIX)/.version:
 	echo "distro=$(MAINTAINER)" > $@
@@ -1102,7 +1102,7 @@ $(PKGPREFIX)/.version:
 	echo "version=0200`date +%Y%m%d%H%M`" >> $@
 	echo "git=`git log | grep "^commit" | wc -l`" >> $@
 	
-$(D)/neutrino-pkg: $(D)/neutrino.do_prepare $(D)/neutrino.do_compile
+$(D)/neutrino-ipk: $(D)/neutrino.do_prepare $(D)/neutrino.do_compile
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -1113,16 +1113,16 @@ $(D)/neutrino-pkg: $(D)/neutrino.do_prepare $(D)/neutrino.do_compile
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/neutrino/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/neutrino.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/neutrino && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/neutrino_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
 #
 # titan
 #
-titan-pkg: $(D)/titan.do_compile
+titan-ipk: $(D)/titan.do_compile
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -1131,16 +1131,16 @@ titan-pkg: $(D)/titan.do_compile
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/titan/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/titan.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/titan && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/titan_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
-# enigma2-pkg
+# enigma2-ipk
 #
-enigma2-pkg: $(D)/enigma2.do_compile
+enigma2-ipk: $(D)/enigma2.do_compile
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -1150,16 +1150,16 @@ enigma2-pkg: $(D)/enigma2.do_compile
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/enigma2/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/enigma2.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/enigma2 && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/enigma2_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
 #
 # neutrino2
 #
-neutrino2-pkg: $(D)/neutrino2.do_compile
+neutrino2-ipk: $(D)/neutrino2.do_compile
 	$(START_BUILD)
 	rm -rf $(PKGPREFIX)
 	install -d $(PKGPREFIX)
@@ -1168,9 +1168,15 @@ neutrino2-pkg: $(D)/neutrino2.do_compile
 ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 	find $(PKGPREFIX)/ -name '*' -exec $(TARGET)-strip --strip-unneeded {} &>/dev/null \;
 endif
-	cp -R $(PACKAGES)/neutrino2/* $(PKGPREFIX)/
-	cd $(PKGPREFIX) && \
-	tar -cvzf $(PKGS_DIR)/neutrino2.tgz *
+	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
+	cd $(PACKAGES)/neutrino2 && tar -cvzf $(PKGS_DIR)/control.tar.gz *
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/neutrino2_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
+	
+#
+# pkg-clean
+#
+ipk-clean:
+	cd $(PKGS_DIR) && rm -rf *
 		
