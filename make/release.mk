@@ -17,7 +17,7 @@ RELEASE_DEPS += $(D)/vsftpd
 RELEASE_DEPS += $(D)/autofs
 RELEASE_DEPS += $(D)/udpxy
 RELEASE_DEPS += $(D)/fbshot
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mipsel))
 RELEASE_DEPS += $(D)/ofgwrite
 endif
 ifeq ($(BOXTYPE), $(filter $(BOXTYPE), atevio7500 spark spark7162 ufs912 ufs913))
@@ -266,7 +266,7 @@ ifeq ($(WLAN), wlandriver)
 	[ -e $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/wireless/rtl8192du/8192du.ko ] && cp $(TARGET_DIR)/lib/modules/$(KERNEL_VER)/extra/wireless/rtl8192du/8192du.ko $(RELEASE_DIR)/lib/modules/ || true
 endif
 endif
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mipsel))
 #
 # modules
 #
@@ -569,7 +569,7 @@ ifeq ($(BOXTYPE), $(filter $(BOXTYPE), ufs910 ufs922))
 	rm -f $(RELEASE_DIR)/sbin/ffmpeg
 	rm -f $(RELEASE_DIR)/etc/ssl/certs/ca-certificates.crt
 endif
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mipsel))
 	rm -rf $(RELEASE_DIR)/dev.static
 	rm -rf $(RELEASE_DIR)/ram
 	rm -rf $(RELEASE_DIR)/root

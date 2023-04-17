@@ -86,9 +86,9 @@ TARGET_MARCH_CFLAGS   = -march=armv7ve -mtune=cortex-a15 -mfpu=neon-vfpv4 -mfloa
 CORTEX_STRINGS        = -lcortex-strings
 endif
 
-ifeq ($(BOXARCH), mips)
+ifeq ($(BOXARCH), mipsel)
 TARGET		     ?= mipsel-unknown-linux-gnu
-BOXARCH		     ?= mips
+BOXARCH		     ?= mipsel
 TARGET_MARCH_CFLAGS   = -march=mips32 -mtune=mips32
 CORTEX_STRINGS        =
 endif

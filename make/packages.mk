@@ -21,7 +21,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/libupnp && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/libupnp_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/libupnp-$(LIBUPNP_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -49,7 +49,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/minidlna && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/minidlna_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/minidlna-$(MINIDLNA_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -75,7 +75,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/fbshot && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/fbshot_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/fbshot-$(FBSHOT_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -189,7 +189,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/samba && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/samba_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/samba-$(SAMBA_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -221,7 +221,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/ofgwrite && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/ofgwrite_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/ofgwrite_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -255,7 +255,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/xupnpd && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/xupnpd_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/xupnpd_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -284,7 +284,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/graphlcd && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/graphlcd_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/graphlcd-$(GRAPHLCD_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -318,7 +318,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/lcd4linux && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/lcd4linux_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/lcd4linux-$(LCD4LINUX_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -361,7 +361,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/gstreamer && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gstreamer_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gstreamer-$(GSTREAMER_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -396,7 +396,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/gst-plugins-base && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-base_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-base-$(GST_PLUGINS_BASE_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -432,7 +432,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/gst-plugins-good && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-good_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-good-$(GST_PLUGINS_GOOD_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -469,7 +469,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/gst-plugins-bad && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-bad_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-bad-$(GST_PLUGINS_BAD_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -502,7 +502,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/gst-plugins-ugly && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-ugly_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-ugly-$(GST_PLUGINS_UGLY_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -538,7 +538,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/gst-plugins-subsink && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-subsink_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-subsink-$(GST_PLUGINS_SUBSINK_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -585,7 +585,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/gst-plugins-dvbmediasink && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-dvbmediasink_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/gst-plugins-dvbmediasink-$(GST_PLUGINS_DVBMEDIASINK_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -909,7 +909,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/ffmpeg && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/ffmpeg_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/ffmpeg-$(FFMPEG_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -941,7 +941,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/lua && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/lua_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/lua-$(LUA_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -966,7 +966,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/luacurl && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luacurl_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luacurl-$(LUACURL_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -990,7 +990,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/luaexpat && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luaexpat_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luaexpat-$(LUAEXPAT_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -1014,7 +1014,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/luasocket && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luasocket_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luasocket-$(LUASOCKET_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -1038,7 +1038,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/luafeedparser && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luafeedparser_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luafeedparser-$(LUAFEEDPARSER_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -1062,7 +1062,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/luasoap && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luasoap_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luasoap-$(LUASOAP_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -1081,7 +1081,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/luajson && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luajson_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/luajson_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -1155,7 +1155,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/python && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/python_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/python-$(PYTHON_VER)_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -1178,7 +1178,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/aio-grab && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/aio-grab_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/aio-grab_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -1201,7 +1201,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/exteplayer3 && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/exteplayer3_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/exteplayer3_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -1224,7 +1224,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/showiframe && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/showiframe_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/showiframe_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -1255,7 +1255,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/neutrino && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/neutrino_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/neutrino_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 
@@ -1273,7 +1273,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/titan && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/titan_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/titan_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -1292,7 +1292,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/enigma2 && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/enigma2_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/enigma2_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	
@@ -1310,7 +1310,7 @@ ifneq ($(OPTIMIZATIONS), $(filter $(OPTIMIZATIONS), kerneldebug debug normal))
 endif
 	cd $(PKGPREFIX) && tar -cvzf $(PKGS_DIR)/data.tar.gz *
 	cd $(PACKAGES)/neutrino2 && tar -cvzf $(PKGS_DIR)/control.tar.gz *
-	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/neutrino2_$(BOXARCH).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
+	cd $(PKGS_DIR) && echo 2.0 > debian-binary && tar -cvzf $(PKGS_DIR)/neutrino2_$(BOXARCH)_$(BOXTYPE).tar.gz data.tar.gz control.tar.gz debian-binary && rm -rf data.tar.gz control.tar.gz debian-binary
 	rm -rf $(PKGPREFIX)
 	$(END_BUILD)
 	

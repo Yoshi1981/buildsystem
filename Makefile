@@ -155,7 +155,7 @@ init:
 # Gstreamer
 	@echo -e "\nGstreamer:"
 	@echo -e "   \033[01;32m1) no\033[00m"
-	@echo "   2) yes (recommended for mips and arm boxes)"
+	@echo "   2) yes (recommended for mipsel and arm boxes)"
 	@read -p "Select Gstreamer (1-2)?" GSTREAMER; \
 	GSTREAMER=$${GSTREAMER}; \
 	case "$$GSTREAMER" in \
@@ -324,7 +324,7 @@ help:
 ifeq ($(BOXARCH), sh4)
 include make/crosstool-sh4.mk
 endif
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mipsel))
 include make/crosstool.mk
 endif
 include make/bootstrap.mk

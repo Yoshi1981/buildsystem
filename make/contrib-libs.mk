@@ -979,7 +979,6 @@ $(D)/libmad: $(D)/bootstrap $(ARCHIVE)/$(LIBMAD_SOURCE)
 		$(CONFIGURE) \
 			--prefix=/usr \
 			--disable-debugging \
-			$(if $(filter $(BOXARCH), arm mips),--enable-fpm=$(BOXARCH),) \
 			--enable-shared=yes \
 			--enable-speed \
 			--enable-sso \
@@ -2172,7 +2171,7 @@ $(D)/libupnp: $(D)/bootstrap $(ARCHIVE)/$(LIBUPNP_SOURCE)
 	$(REWRITE_PKGCONF) $(PKG_CONFIG_PATH)/libupnp.pc
 	$(REWRITE_LIBTOOL)/libixml.la
 	$(REWRITE_LIBTOOL)/libthreadutil.la
-	$(REWRITE_LIBTOOL)/libupnp.la
+	$(REWRITE_LIBTOOL)/libupnp.la	
 	$(REMOVE)/libupnp-$(LIBUPNP_VER)
 	$(TOUCH)
 
