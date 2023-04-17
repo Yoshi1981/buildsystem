@@ -139,7 +139,7 @@ static void sem_up(void)
 	if (keydown_sem_helper == 0)
 	{
 #endif
-		printf("[SEM] UP\n");
+		//printf("[SEM] UP\n");
 		sem_post(&keydown_sem);
 #ifdef NITS_SEM_PATCH_WOULD_WORK
 #else
@@ -150,7 +150,7 @@ static void sem_up(void)
 
 static void sem_down(void)
 {
-	printf("[SEM] DOWN\n");
+	//printf("[SEM] DOWN\n");
 #ifdef NITS_SEM_PATCH_WOULD_WORK
 #else
 	keydown_sem_helper = 0;
@@ -207,7 +207,7 @@ int processComplex(Context_t *context, int argc, char *argv[])
 	bool newKey = false;
 	bool startFlag = false;
 
-	printf("%s >\n", __func__);
+	//printf("%s >\n", __func__);
 
 	if (((RemoteControl_t *)context->r)->Init)
 		context->fd = (((RemoteControl_t *)context->r)->Init)(context, argc, argv);
@@ -228,7 +228,7 @@ int processComplex(Context_t *context, int argc, char *argv[])
 		tLongKeyPressSupport lkps = *((RemoteControl_t *)context->r)->LongKeyPressSupport;
 		gBtnPeriod = (cmdBtnPeriod) ? cmdBtnPeriod : lkps.period;
 		gBtnDelay = (cmdBtnDelay) ? cmdBtnDelay : lkps.delay;
-		printf("Using period=%d delay=%d\n", gBtnPeriod, gBtnDelay);
+		//printf("Using period=%d delay=%d\n", gBtnPeriod, gBtnDelay);
 	}
 
 	if (cmdBtnPeriod  && cmdBtnDelay && (cmdBtnPeriod + cmdBtnDelay) < 200)
@@ -267,7 +267,7 @@ int processComplex(Context_t *context, int argc, char *argv[])
 
 		gettimeofday(&time, NULL);
 		diffTime = (unsigned int)diffMilli(profilerLast, time);
-		printf("**** %12u %d ****\n", diffTime, gNextKey);
+		//printf("**** %12u %d ****\n", diffTime, gNextKey);
 		profilerLast = time;
 
 		if (countFlag)
@@ -278,13 +278,13 @@ int processComplex(Context_t *context, int argc, char *argv[])
 			if (waitTime < 10000)  				// reboot if pressing 5 times power within 10 seconds
 			{
 				keyCount += 1;
-				printf("Power Count= %d\n", keyCount);
+				//printf("Power Count= %d\n", keyCount);
 				if (keyCount >= 5)
 				{
 					countFlag = false;
 					keyCount = 0;
 					waitTime = 0;
-					printf("[evremote2] > Emergency REBOOT !!!\n");
+					//printf("[evremote2] > Emergency REBOOT !!!\n");
 					fflush(stdout);
 					system("init 6");
 					sleep(4);
@@ -308,7 +308,7 @@ int processComplex(Context_t *context, int argc, char *argv[])
 			countFlag = true;
 			waitTime = diffTime;
 			keyCount = 1;
-			printf("Power Count= %d\n", keyCount);
+			//printf("Power Count= %d\n", keyCount);
 		}
 
 		if (gKeyCode == 0x160) //KEY_OK > initiates reboot counter when pressing power within 1 second
@@ -325,7 +325,7 @@ int processComplex(Context_t *context, int argc, char *argv[])
 	else
 		close(context->fd);
 
-	printf("%s <\n", __func__);
+	//printf("%s <\n", __func__);
 
 	return 0;
 }
@@ -352,7 +352,7 @@ void *detectKeyUpTask(void *dummy)
 			if (((RemoteControl_t *)context->r)->Notification)
 				((RemoteControl_t *)context->r)->Notification(context, 1);
 
-			printf("KEY_PRESS - %02x %d\n", keyCode, nextKey);
+			//printf("KEY_PRESS - %02x %d\n", keyCode, nextKey);
 
 			//Check if tuxtxt is running
 			tux = checkTuxTxt(keyCode);
@@ -369,12 +369,12 @@ void *detectKeyUpTask(void *dummy)
 				if (sleep > (gBtnPeriod + gBtnDelay))
 					sleep = (gBtnPeriod + gBtnDelay);
 
-				printf("++++ %12u ms ++++\n", (unsigned int)diffMilli(profilerLast, time));
+				//printf("++++ %12u ms ++++\n", (unsigned int)diffMilli(profilerLast, time));
 				gKeyCode = 0;
 				usleep(sleep * 1000);
 			}
 
-			printf("KEY_RELEASE - %02x %02x %d %d CAUSE=%s\n", keyCode, gKeyCode, nextKey, gNextKey, (gKeyCode == 0) ? "Timeout" : "New key");
+			//printf("KEY_RELEASE - %02x %02x %d %d CAUSE=%s\n", keyCode, gKeyCode, nextKey, gNextKey, (gKeyCode == 0) ? "Timeout" : "New key");
 
 			//Check if tuxtxt is running
 			if (tux == false && !countFlag)
@@ -385,7 +385,7 @@ void *detectKeyUpTask(void *dummy)
 				((RemoteControl_t *)context->r)->Notification(context, 0);
 
 			gettimeofday(&time, NULL);
-			printf("---- %12u ms ----\n", (unsigned int)diffMilli(profilerLast, time));
+			//printf("---- %12u ms ----\n", (unsigned int)diffMilli(profilerLast, time));
 
 			if (nextKey == gNextKey)
 				break;
@@ -429,7 +429,7 @@ int getModel()
 	{
 		vName[vLen - 1] = '\0';
 
-		printf("Model: '%s'\n", vName);
+		//printf("Model: '%s'\n", vName);
 
 		if (!strncasecmp(vName, "ufs910", 6))
 		{
@@ -514,7 +514,7 @@ int getModel()
 			vBoxType = LircdName;
 	}
 
-	printf("vBoxType: %d\n", vBoxType);
+	//printf("vBoxType: %d\n", vBoxType);
 
 	return vBoxType;
 }
