@@ -1,4 +1,4 @@
-BOXARCH = mips
+BOXARCH = mipsel
 CICAM = ci-cam
 SCART = scart
 LCD = 4-digits

@@ -86,9 +86,9 @@ TARGET_MARCH_CFLAGS   = -march=armv7ve -mtune=cortex-a15 -mfpu=neon-vfpv4 -mfloa
 CORTEX_STRINGS        = -lcortex-strings
 endif
 
-ifeq ($(BOXARCH), mips)
+ifeq ($(BOXARCH), mipsel)
 TARGET		     ?= mipsel-unknown-linux-gnu
-BOXARCH		     ?= mips
+BOXARCH		     ?= mipsel
 TARGET_MARCH_CFLAGS   = -march=mips32 -mtune=mips32
 CORTEX_STRINGS        =
 endif
@@ -146,19 +146,6 @@ CA_BUNDLE_DIR         = /etc/ssl/certs
 REWRITE_LIBTOOL       = sed -i "s,^libdir=.*,libdir='$(TARGET_DIR)/usr/lib'," $(TARGET_DIR)/usr/lib
 REWRITE_LIBTOOLDEP    = sed -i -e "s,\(^dependency_libs='\| \|-L\|^dependency_libs='\)/usr/lib,\ $(TARGET_DIR)/usr/lib,g" $(TARGET_DIR)/usr/lib
 REWRITE_PKGCONF       = sed -i "s,^prefix=.*,prefix='$(TARGET_DIR)/usr',"
-
-# helper-function for pkg
-PKG_CONFIG_PATH_PKG       = $(PKGPREFIX)/usr/lib/pkgconfig
-REWRITE_PKGCONF_PKG       = sed -i "s,^prefix=.*,prefix='$(PKGPREFIX)/usr',"
-REWRITE_LIBTOOL_PKG       = sed -i "s,^libdir=.*,libdir='$(PKGPREFIX)/usr/lib'," $(PKGPREFIX)/usr/lib
-REWRITE_LIBTOOLDEP_PKG    = sed -i -e "s,\(^dependency_libs='\| \|-L\|^dependency_libs='\)/usr/lib,\ $(PKGPREFIX)/usr/lib,g" $(PKGPREFIX)/usr/lib
-OPKG_SH_ENV  = PACKAGE_DIR=$(PKG_DIR)
-OPKG_SH_ENV += STRIP=$(TARGET)-strip
-OPKG_SH_ENV += MAINTAINER="$(MAINTAINER)"
-OPKG_SH_ENV += ARCH=$(BOXARCH)
-OPKG_SH_ENV += SOURCE=$(PKGPREFIX)
-OPKG_SH_ENV += BUILD_TMP=$(BUILD_TMP)
-OPKG_SH = $(OPKG_SH_ENV) opkg.sh
 
 # unpack tarballs, clean up
 UNTAR                 = tar -C $(BUILD_TMP) -xf $(ARCHIVE)

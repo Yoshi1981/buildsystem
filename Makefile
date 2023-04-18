@@ -124,13 +124,14 @@ init:
 	@echo;
 # WLAN driver
 	@echo -e "\nDo you want to build WLAN drivers and tools"
-	@echo "   1) yes (includes WLAN drivers and tools)"
-	@echo -e "   \033[01;32m2) no\033[00m"
+	@echo -e "   \033[01;32m1) no\033[00m"
+	@echo "   2) yes (includes WLAN drivers and tools)"
 	@read -p "Select to build (1-2)?" WLAN; \
 	WLAN=$${WLAN}; \
 	case "$$WLAN" in \
-		1) echo "WLAN=wlandriver" >> config;; \
-		2|*) echo "WLAN=" >> config;; \
+		1) echo "WLAN=" >> config;; \
+		2) echo "WLAN=wlandriver" >> config;; \
+		*) echo "WLAN=" >> config;; \
 	esac; \
 	echo ""
 # GUI
@@ -154,7 +155,7 @@ init:
 # Gstreamer
 	@echo -e "\nGstreamer:"
 	@echo -e "   \033[01;32m1) no\033[00m"
-	@echo "   2) yes (recommended for mips and arm boxes)"
+	@echo "   2) yes (recommended for mipsel and arm boxes)"
 	@read -p "Select Gstreamer (1-2)?" GSTREAMER; \
 	GSTREAMER=$${GSTREAMER}; \
 	case "$$GSTREAMER" in \
@@ -165,47 +166,50 @@ init:
 	echo ""
 # lua
 	@echo -e "\nlua support ?:"
-	@echo -e "   \033[01;32m1)  yes\033[00m"
-	@echo "   2)  no"
+	@echo -e "   \033[01;32m1)  no\033[00m"
+	@echo "   2)  yes"
 	@read -p "Select lua support (1-2)?" LUA; \
 	LUA=$${LUA}; \
 	case "$$LUA" in \
-		1) echo "LUA=lua" >> config;; \
-		2) echo "LUA=" >> config;; \
-		*) echo "LUA=lua" >> config;; \
+		1) echo "LUA=" >> config;; \
+		2) echo "LUA=lua" >> config;; \
+		*) echo "LUA=" >> config;; \
 	esac; \
 	echo ""
 # python
 	@echo -e "\npython support ?:"
-	@echo "   1)  yes"
-	@echo -e "   \033[01;32m2)  no\033[00m"
+	@echo -e "   \033[01;32m1)  no\033[00m"
+	@echo "   2)  yes"
 	@read -p "Select python support (1-2)?" PYTHON; \
 	PYTHON=$${PYTHON}; \
 	case "$$PYTHON" in \
-		1) echo "PYTHON=python" >> config;; \
-		2|*) echo "PYTHON=" >> config;; \
+		1) echo "PYTHON=" >> config;; \
+		2) echo "PYTHON=python" >> config;; \
+		*) echo "PYTHON=" >> config;; \
 	esac; \
 	echo ""
 # GraphLCD
 	@echo -e "\nGraphLCD:"
-	@echo "   1) yes"
-	@echo -e "   \033[01;32m2) no\033[00m"
+	@echo -e "   \033[01;32m1) no\033[00m"
+	@echo "   2) yes"
 	@read -p "Select  GraphLCD (1-2)?" GRAPHLCD; \
 	GRAPHLCD=$${GRAPHLCD}; \
 	case "$$GRAPHLCD" in \
-		1) echo "GRAPHLCD=graphlcd" >> config;; \
-		2|*) ;; \
+		1) echo "GRAPHLCD=" >> config;; \
+		2) echo "GRAPHLCD=graphlcd" >> config;; \
+		*) echo "GRAPHLCD=" >> config;; \
 	esac; \
 	echo ""
 # LCD4Linux
 	@echo -e "\nLCD4linux:"
-	@echo "   1) yes"
-	@echo -e "   \033[01;32m2) no\033[00m"
+	@echo -e "   \033[01;32m1) no\033[00m"
+	@echo "   2) yes"
 	@read -p "Select  LCD4Linux (1-2)?" LCD4LINUX; \
 	LCD4LINUX=$${LCD4LINUX}; \
 	case "$$LCD4LINUX" in \
-		1) echo "LCD4LINUX=lcd4linux" >> config;; \
-		2|*) ;; \
+		1) echo "LCD4LINUX=" >> config;; \
+		2) echo "LCD4LINUX=lcd4linux" >> config;; \
+		*) echo "LCD4LINUX=" >> config;; \
 	esac; \
 	echo ""	
 #	
@@ -320,7 +324,7 @@ help:
 ifeq ($(BOXARCH), sh4)
 include make/crosstool-sh4.mk
 endif
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mipsel))
 include make/crosstool.mk
 endif
 include make/bootstrap.mk

@@ -97,7 +97,7 @@ MACHINE = $(BOXTYPE)
 ifeq ($(BOXARCH), arm)
 MACHINE = hd51
 endif
-ifeq ($(BOXARCH), mips)
+ifeq ($(BOXARCH), mipsel)
 MACHINE = vuduo
 endif
 
@@ -285,7 +285,7 @@ $(D)/neutrino-plugins.do_prepare:
 		else cd $(ARCHIVE); git clone https://github.com/Duckbox-Developers/neutrino-ddt-plugins.git neutrino-plugins.git; \
 		fi
 	cp -ra $(ARCHIVE)/neutrino-plugins.git $(SOURCE_DIR)/neutrino-plugins
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mipsel))
 	sed -i -e 's#shellexec fx2#shellexec#g' $(SOURCE_DIR)/neutrino-plugins/Makefile.am
 endif
 	set -e; cd $(SOURCE_DIR)/neutrino-plugins; \

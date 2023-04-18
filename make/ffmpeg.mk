@@ -25,7 +25,7 @@ ifeq ($(BOXARCH), arm)
 FFMPEG_CONF_OPTS  += --cpu=cortex-a15
 endif
 
-ifeq ($(BOXARCH), $(filter $(BOXARCH), mips sh4))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), mipsel sh4))
 FFMPEG_CONF_OPTS  += --cpu=generic
 endif
 

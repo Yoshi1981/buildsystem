@@ -73,7 +73,7 @@ endif
 #
 BOARD = $(BOXTYPE)
 
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mipsel))
 BOARD = vuduo
 endif
 

@@ -29,8 +29,8 @@ $(D)/busybox: $(D)/bootstrap $(ARCHIVE)/$(BUSYBOX_SOURCE) $(PATCHES)/$(BUSYBOX_C
 		install -m 0644 $(lastword $^) .config; \
 		sed -i -e 's#^CONFIG_PREFIX.*#CONFIG_PREFIX="$(TARGET_DIR)"#' .config; \
 		$(BUILDENV) \
-		$(MAKE) busybox ARCH=$(BOXARCH) CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)"; \
-		$(MAKE) install ARCH=$(BOXARCH) CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)" CONFIG_PREFIX=$(TARGET_DIR)
+		$(MAKE) busybox CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)"; \
+		$(MAKE) install CROSS_COMPILE=$(TARGET)- CFLAGS_EXTRA="$(TARGET_CFLAGS)" CONFIG_PREFIX=$(TARGET_DIR)
 	$(REMOVE)/busybox-$(BUSYBOX_VER)
 	$(TOUCH)
 
@@ -319,7 +319,7 @@ E2FSPROGS_VER = 1.45.6
 E2FSPROGS_SOURCE = e2fsprogs-$(E2FSPROGS_VER).tar.gz
 E2FSPROGS_PATCH = e2fsprogs-$(E2FSPROGS_VER).patch
 
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mipsel))
 E2FSPROGS_ARGS = --enable-resizer
 else
 E2FSPROGS_ARGS = --disable-resizer
@@ -926,7 +926,7 @@ AUTOFS_PATCH = autofs-$(AUTOFS_VER).patch
 $(ARCHIVE)/$(AUTOFS_SOURCE):
 	$(WGET) https://www.kernel.org/pub/linux/daemons/autofs/v4/$(AUTOFS_SOURCE)
 
-ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mips))
+ifeq ($(BOXARCH), $(filter $(BOXARCH), arm mipsel))
 AUTOFS_LIBNSL = $(D)/libnsl
 endif
 
